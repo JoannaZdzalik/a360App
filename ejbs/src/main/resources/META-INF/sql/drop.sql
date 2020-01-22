@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS sessions, participants, questions, answers, sessions_questions CASCADE

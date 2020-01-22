@@ -1,0 +1,6 @@
+com\avenga\a360\Participant.class
+com\avenga\a360\Answer.class
+com\avenga\a360\Question$QuestionType.class
+com\avenga\a360\JPAExample.class
+com\avenga\a360\Question.class
+com\avenga\a360\Session.class

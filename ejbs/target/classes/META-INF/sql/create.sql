@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS sessions (id BIGSERIAL PRIMARY KEY, name VARCHAR (255) UNIQUE NOT NULL, end_date TIMESTAMP NOT NULL, is_sent BOOLEAN DEFAULT 'false' )
+CREATE TABLE IF NOT EXISTS participants (id BIGSERIAL PRIMARY KEY, email VARCHAR (255) NOT NULL, id_session BIGINT REFERENCES sessions (id), UNIQUE (email, id_session))
+CREATE TABLE IF NOT EXISTS questions (id BIGSERIAL PRIMARY KEY, question_text VARCHAR (255) NOT NULL, type VARCHAR (50) NOT NULL, default_answers VARCHAR (255), is_active BOOLEAN DEFAULT 'false')
+CREATE TABLE IF NOT EXISTS sessions_questions (id_session BIGINT REFERENCES sessions (id), id_question BIGINT REFERENCES questions (id), UNIQUE (id_session, id_question))
+CREATE TABLE IF NOT EXISTS answers (id BIGSERIAL PRIMARY KEY, id_question INTEGER REFERENCES questions (id), id_participant INTEGER REFERENCES participants (id), answer_text VARCHAR (255))
