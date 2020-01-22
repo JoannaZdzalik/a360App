@@ -17,6 +17,18 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-jpa</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.4.10.Final</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.avenga.a360</groupId>
       <artifactId>primary-source</artifactId>
     </dependency>
