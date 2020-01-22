@@ -4,12 +4,12 @@ VALUES
 
 
 INSERT INTO participants (email, id_session)
-VALUES
-('anna@avenga.com', 1),
-('asia@avenga.com', 1),
-('lukasz@avenga.com', 1),
-('piotr@avenga.com', 1)
-;
+ VALUES
+ ('anna@avenga.com', 1),
+ ('asia@avenga.com', 1),
+ ('lukasz@avenga.com', 1),
+ ('piotr@avenga.com', 1)
+ ;
 
 INSERT INTO questions (question_text, question_type, default_answers)
 VALUES
