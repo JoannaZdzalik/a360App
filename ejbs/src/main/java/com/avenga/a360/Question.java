@@ -22,6 +22,9 @@ public class Question {
     @Column(name = "default_answers", length=255)
     private String defaultAnswers;
 
+    @Column(name = "is_active", columnDefinition ="BOOLEAN DEFAULT FALSE")
+    private Boolean isActive;
+
     @ManyToMany(mappedBy="questions")
     private Set<Session> sessions;
 
@@ -31,10 +34,11 @@ public class Question {
     public Question() {
     }
 
-    public Question(String questionText, QuestionType questionType, String defaultAnswers, Set<Session> sessions, Set<Answer> answers) {
+    public Question(String questionText, QuestionType questionType, String defaultAnswers, Boolean isActive, Set<Session> sessions, Set<Answer> answers) {
         this.questionText = questionText;
         this.questionType = questionType;
         this.defaultAnswers = defaultAnswers;
+        this.isActive = isActive;
         this.sessions = sessions;
         this.answers = answers;
     }
@@ -85,6 +89,14 @@ public class Question {
 
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public enum QuestionType {
