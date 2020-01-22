@@ -1,0 +1,34 @@
+
+CREATE TABLE sessions (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR (100) UNIQUE NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+    is_sent BOOLEAN DEFAULT 'false'
+);
+
+CREATE TABLE participants (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR (50) NOT NULL,
+    id_session BIGINT REFERENCES sessions (id);
+    UNIQUE (email, id_session)
+);
+
+CREATE TABLE questions (
+    id BIGSERIAL PRIMARY KEY,
+    question_text VARCHAR (255) NOT NULL,
+    type VARCHAR (50) NOT NULL,
+    default_value VARCHAR (255) 
+);
+
+CREATE TABLE sessions_questions (
+    id_session BIGINT REFERENCES sessions (id),
+    id_question BIGINT REFERENCES questions (id),
+    UNIQUE (id_session, id_question)
+);
+
+CREATE TABLE answers (
+    id BIGSERIAL PRIMARY KEY,
+    id_question INTEGER REFERENCES questions (id),
+    id_participant INTEGER REFERENCES participants (id),
+    answer_text VARCHAR (255)    
+)

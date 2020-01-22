@@ -1,0 +1,83 @@
+INSERT INTO sessions (name, end_date)
+VALUES
+('Avenga Spring edition', '2020-01-30 04:05:06');
+
+
+INSERT INTO participants (email, id_session)
+VALUES
+('anna@avenga.com', 1),
+('asia@avenga.com', 1),
+('lukasz@avenga.com', 1),
+('piotr@avenga.com', 1)
+;
+
+INSERT INTO questions (question_text, question_type, default_answers)
+VALUES
+('What do you value him for', 'text', ),
+('What's he or she doing wrong?', 'text', ),
+('What can change to make working with hhim or her better?', 'text',),
+('How his person affects the atmosphere in the team?', 'radial', 'Negative;Neutral;Positive')
+;
+
+INSERT INTO sessions_questions (id_session, id_question)
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4)
+;
+
+INSERT INTO answers (id_question, id_participant, answer_text)
+VALUES
+(1, 1, 'domyslny'),
+(1, 1, 'domyslny'),
+(1, 1, 'domyslny'),
+(2, 1, 'domyslny'),
+(2, 1, 'domyslny'),
+(2, 1, 'domyslny'),
+(3, 1, 'domyslny'),
+(3, 1, 'domyslny'),
+(3, 1, 'domyslny'),
+(4, 1, 'neutral'),
+(4, 1, 'neutral'),
+(4, 1, 'neutral'),
+(1, 2, 'domyslny'),
+(1, 2, 'domyslny'),
+(1, 2, 'domyslny'),
+(2, 2, 'domyslny'),
+(2, 2, 'domyslny'),
+(2, 2, 'domyslny'),
+(3, 2, 'domyslny'),
+(3, 2, 'domyslny'),
+(3, 2, 'domyslny'),
+(4, 2, 'neutral'),
+(4, 2, 'neutral'),
+(4, 2, 'neutral'),
+(1, 3, 'domyslny'),
+(1, 3, 'domyslny'),
+(1, 3, 'domyslny'),
+(2, 3, 'domyslny'),
+(2, 3, 'domyslny'),
+(2, 3, 'domyslny'),
+(3, 3, 'domyslny'),
+(3, 3, 'domyslny'),
+(3, 3, 'domyslny'),
+(4, 3, 'neutral'),
+(4, 3, 'neutral'),
+(4, 3, 'neutral'),
+(1, 4, 'domyslny'),
+(1, 4, 'domyslny'),
+(1, 4, 'domyslny'),
+(2, 4, 'domyslny'),
+(2, 4, 'domyslny'),
+(2, 4, 'domyslny'),
+(3, 4, 'domyslny'),
+(3, 4, 'domyslny'),
+(3, 4, 'domyslny'),
+(4, 4, 'neutral'),
+(4, 4, 'neutral'),
+(4, 4, 'neutral'),
+(1, 1, 'domyslny'),
+(2, 2, 'domyslny'),
+(1, 3, 'domyslny'),
+(2, 4, 'domyslny');

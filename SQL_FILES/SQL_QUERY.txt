@@ -1,0 +1,57 @@
+<!-- wyciągnij pytania z session o id = 1 -->
+
+SELECT question_text, type, name 
+FROM questions 
+LEFT JOIN sessions_questions
+ON questions.id = sessions_questions.id_question
+LEFT JOIN sessions
+ON sessions_questions.id_session = sessions.id
+WHERE sessions.id = 1 ;
+
+<!-- wyciągnij odpowiedzi dla emailu ania z sesji 1 -->
+
+SELECT id FROM participants WHERE id_session = 1 AND email LIKE 'anna%';
+
+SELECT question_text, answer_text, id_participant
+FROM answers
+LEFT JOIN questions
+ON answers.id_question = questions.id
+WHERE answers.id_participant = 1; 
+
+SELECT question_text, answer_text, id_participant
+FROM answers
+LEFT JOIN questions
+ON answers.id_question = questions.id
+WHERE answers.id_participant = (SELECT id FROM participants WHERE id_session = 1 AND email LIKE 'anna%');
+
+<!-- ile osób brało udział w sesji -->
+
+SELECT count(id) FROM participants WHERE id.session = 1;
+
+
+<!-- które sessie jeszcze nie zostały wysłane a end_date jest z przeszłości -->
+
+SELECT * FROM sessions WHERE is_sent = 'false' AND end_date < now();
+
+<!-- zlicz po ile odpowiedzi uzyskali uczestnicy w danej sesji =-
+
+Select id_participant, email, sum(id_participant) as feadbackAnswer from answers left join participants on answers.id_participant = participants.id group by id_participant 
+
+
+
+=========================
+select s.session_name, p.email, q.question_text, a.answer_text 
+from answers a 
+left join participants p 
+on ( a.id_participant = p.id)
+left join sessions s 
+on (p.id_session = s.id) 
+left join questions q 
+on (a.id_question = q.id) 
+where s.id = 1 and p.email = 'a@a.com' and s.end_date < now();
+
+
+
+
+
+
