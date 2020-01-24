@@ -16,16 +16,15 @@ ON sessions.id = participants.id_session
 WHERE participants.id = ?;
 
 <!-- wyciągnij wszystkie odpowiedzi dla uczestników z sesji w której end_date < now() -->
-SELECT question_text, answer_text, id_participant, name
-FROM questions
-LEFT JOIN answers
-ON questions.id = answers.id_question
+SELECT sessions.name, participants.email, questions.question_text, answers.answer_text
+FROM sessions
 LEFT JOIN participants
-ON answers.id_participant = participants.id
-LEFT JOIN sessions
-ON participants.id_session = sessions.id
-WHERE sessions.end_date < now() AND is_sent = 'false'
-ORDER BY id_participant, question_text, answer_text, name
+ON sessions.id = participants.id_session
+LEFT JOIN answers
+ON participants.id = answers.id_participant
+LEFT JOIN questions
+ON answers.id_question = questions.id
+WHERE sessions.end_date < now() AND is_sent = 'false';
 
 
 
