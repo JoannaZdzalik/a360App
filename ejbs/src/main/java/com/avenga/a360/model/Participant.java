@@ -1,8 +1,19 @@
 package com.avenga.a360.model;
 
+
 import javax.persistence.*;
 import java.util.Set;
 
+@NamedQueries({
+        @NamedQuery(name = "getAllParticipantsListBySessionId",
+                query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
+
+        @NamedQuery(name = "getAllAnswersFromSessionToSent",
+                query="SELECT p\n" +
+                        "FROM Participant p\n" +
+                        "LEFT JOIN p.session s\n" +
+                        "WHERE s.endDate > now() AND s.isSent = false\n")
+})
 
 @Entity
 @Table(name="participants", uniqueConstraints={

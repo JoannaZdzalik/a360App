@@ -3,7 +3,19 @@ package com.avenga.a360.model;
 import javax.persistence.*;
 import java.util.Set;
 
-@NamedQuery(name = "getActiveQuestionList", query="SELECT q FROM Question q")
+@NamedQueries({
+        @NamedQuery(name = "getActiveQuestionList",
+                query="SELECT q FROM Question q WHERE q.isActive = true"),
+
+        @NamedQuery(name = "getAllQuestionByParticipant",
+                query = "SELECT q \n" +
+                        "FROM Question q\n" +
+                        "LEFT JOIN q.sessions s\n" +
+                        "LEFT JOIN s.participants p\n" +
+                        "WHERE p = :idParticipant")
+})
+
+
 
 @Entity
 @Table(name="questions")
