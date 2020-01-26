@@ -1,9 +1,7 @@
-package com.avenga.a360;
-
+package com.avenga.a360.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

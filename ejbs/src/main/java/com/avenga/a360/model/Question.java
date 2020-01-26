@@ -1,8 +1,9 @@
-package com.avenga.a360;
+package com.avenga.a360.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
+
+@NamedQuery(name = "getActiveQuestionList", query="SELECT q FROM Question q")
 
 @Entity
 @Table(name="questions")

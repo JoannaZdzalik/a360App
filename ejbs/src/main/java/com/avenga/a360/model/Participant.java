@@ -1,4 +1,4 @@
-package com.avenga.a360;
+package com.avenga.a360.model;
 
 import javax.persistence.*;
 import java.util.Set;
