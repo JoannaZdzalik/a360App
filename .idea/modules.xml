@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ear/ear.iml" filepath="$PROJECT_DIR$/ear/ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ejb-test/ejb-test.iml" filepath="$PROJECT_DIR$/ejb-test/ejb-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/ejbs/ejbs.iml" filepath="$PROJECT_DIR$/ejbs/ejbs.iml" />
       <module fileurl="file://$PROJECT_DIR$/projects/logging/logging.iml" filepath="$PROJECT_DIR$/projects/logging/logging.iml" />
       <module fileurl="file://$PROJECT_DIR$/primary-source/primary-source.iml" filepath="$PROJECT_DIR$/primary-source/primary-source.iml" />
