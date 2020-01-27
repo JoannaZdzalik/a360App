@@ -12,32 +12,28 @@ import static org.junit.Assert.*;
 public class QuestionTest extends JpaTest {
 
     @Test
-    public void testGetAllActiveQuestion() {
+    public void shouldFindActiveQuestionList() {
 
+        //act
         Query query = em.createNamedQuery("getActiveQuestionList");
         List<Question> result = query.getResultList();
 
+        //assert
         assertTrue(result.size() == 4);
-
     }
 
     @Test
-    public void testGetAllQuestionByParticipant() {
+    public void shouldFindQuestionListByParticipantId() {
 
-
-//        Session session = new Session();
-//        session.setId(1L);
-//        session.setName("Avenga Spring edition");
-//        LocalDateTime end = LocalDateTime.of(2020, Month.JANUARY, 20, 07, 00, 00);
-//        session.setEndDate(end);
+        //arrange
         Participant participant = new Participant();
         participant.setId(1L);
-//        Set<Participant> participantSet = new HashSet<Participant>();
-//        participantSet.add(participant);
 
+        //act
         Query query = em.createNamedQuery("getAllQuestionByParticipant");
         List<Question> result = query.setParameter("idParticipant", participant).getResultList();
 
+        //assert
         assertTrue(result.size() == 4);
 
     }

@@ -8,11 +8,11 @@ import java.util.Set;
         @NamedQuery(name = "getAllParticipantsListBySessionId",
                 query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
 
-        @NamedQuery(name = "getAllAnswersFromSessionToSent",
+        @NamedQuery(name = "getAllParticipantsAnswersFromSessionToSent",
                 query="SELECT p\n" +
                         "FROM Participant p\n" +
                         "LEFT JOIN p.session s\n" +
-                        "WHERE s.endDate > now() AND s.isSent = false\n")
+                        "WHERE s.endDate < now() AND s.isSent = false\n")
 })
 
 @Entity
