@@ -1,0 +1,5 @@
+com\avenga\a360\AnswerTest.class
+com\avenga\a360\QuestionTest.class
+com\avenga\a360\SessionTest.class
+com\avenga\a360\ParticipantTest.class
+com\avenga\a360\JpaTest.class

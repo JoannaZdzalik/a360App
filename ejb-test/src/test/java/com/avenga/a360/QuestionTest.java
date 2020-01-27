@@ -20,6 +20,7 @@ public class QuestionTest extends JpaTest {
 
         //assert
         assertTrue(result.size() == 4);
+//        assertTrue(result.get(0).getClass().equals(Question.class));
     }
 
     @Test

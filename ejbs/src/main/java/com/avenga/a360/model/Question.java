@@ -35,7 +35,7 @@ public class Question {
     @Column(name = "default_answers", length=255)
     private String defaultAnswers;
 
-    @Column(name = "is_active", columnDefinition ="BOOLEAN DEFAULT FALSE")
+    @Column(name = "is_active", columnDefinition ="BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
 
     @ManyToMany(mappedBy="questions")

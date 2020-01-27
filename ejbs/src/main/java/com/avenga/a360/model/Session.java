@@ -4,7 +4,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-
+@NamedQueries({
+        @NamedQuery(name = "getSessionToSent",
+                query="SELECT s FROM Session s\n" +
+                        "WHERE s.endDate < now() AND s.isSent = false\n"),
+})
 
 @Entity
 @Table(name="sessions")

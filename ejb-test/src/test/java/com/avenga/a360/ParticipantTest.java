@@ -25,24 +25,5 @@ public class ParticipantTest extends JpaTest {
 
         //assert
         assertTrue(result.size() == 4);
-//        assertTrue(result.get(0).getClass().equals(Participant.class));
     }
-
-    @Test
-    public void shouldFindParticipantListWithAllAnswersFromSessionToSent() {
-
-        //act
-        Query query = em.createNamedQuery("getAllParticipantsAnswersFromSessionToSent");
-        List<Participant> result = query.getResultList();
-
-        assertTrue(result.size() == 4);
-        assertTrue(result.get(0).getAnswers().size() == 5);
-
-        //assert
-//        assertAll("shouldFindParticipantListWithAllAnswersFromSessionToSent",
-//                () ->  assertTrue(result.size() == 4),
-//                () ->  assertTrue(result.get(0).getAnswers().size() == 5)
-//        );
-    }
-
 }

@@ -7,12 +7,6 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "getAllParticipantsListBySessionId",
                 query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
-
-        @NamedQuery(name = "getAllParticipantsAnswersFromSessionToSent",
-                query="SELECT p\n" +
-                        "FROM Participant p\n" +
-                        "LEFT JOIN p.session s\n" +
-                        "WHERE s.endDate < now() AND s.isSent = false\n")
 })
 
 @Entity
@@ -20,7 +14,6 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"email", "id_session"})
 })
 
-//@Table (name="participant")
 public class Participant {
 
     @Id
