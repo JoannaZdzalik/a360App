@@ -1,8 +1,17 @@
 package com.avenga.a360.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="answers")
 public class Answer {
 
@@ -21,44 +30,4 @@ public class Answer {
     @Column (name = "answer_text")
     private String answerText;
 
-    public Answer() {
-    }
-
-    public Answer(Question question, Participant participant, String answerText) {
-        this.question = question;
-        this.participant = participant;
-        this.answerText = answerText;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    public Participant getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(Participant participant) {
-        this.participant = participant;
-    }
-
-    public String getAnswerText() {
-        return answerText;
-    }
-
-    public void setAnswerText(String answerText) {
-        this.answerText = answerText;
-    }
 }

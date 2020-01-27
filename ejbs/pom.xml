@@ -36,6 +36,11 @@
       <groupId>com.avenga.a360</groupId>
       <artifactId>logging</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.8</version>
+    </dependency>
   </dependencies>
 
   <build>

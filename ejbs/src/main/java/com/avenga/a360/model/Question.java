@@ -1,5 +1,10 @@
 package com.avenga.a360.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,10 +20,14 @@ import java.util.Set;
                         "WHERE p = :idParticipant")
 })
 
-
-
 @Entity
-@Table(name="questions")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="questions",
+        indexes = {@Index(name="indexedIsActive", columnList="is_active")}
+        )
 public class Question {
 
     @Id
@@ -36,81 +45,13 @@ public class Question {
     private String defaultAnswers;
 
     @Column(name = "is_active", columnDefinition ="BOOLEAN DEFAULT TRUE")
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @ManyToMany(mappedBy="questions")
     private Set<Session> sessions;
 
     @OneToMany (mappedBy = "question")
     private Set<Answer> answers;
-
-    public Question() {
-    }
-
-    public Question(String questionText, QuestionType questionType, String defaultAnswers, Boolean isActive, Set<Session> sessions, Set<Answer> answers) {
-        this.questionText = questionText;
-        this.questionType = questionType;
-        this.defaultAnswers = defaultAnswers;
-        this.isActive = isActive;
-        this.sessions = sessions;
-        this.answers = answers;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
-
-    public QuestionType getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
-    }
-
-    public String getDefaultAnswers() {
-        return defaultAnswers;
-    }
-
-    public void setDefaultAnswers(String defaultAnswers) {
-        this.defaultAnswers = defaultAnswers;
-    }
-
-    public Set<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(Set<Session> sessions) {
-        this.sessions = sessions;
-    }
-
-    public Set<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
 
     public enum QuestionType {
         TEXT,
