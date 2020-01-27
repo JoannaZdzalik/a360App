@@ -10,13 +10,4 @@ import static org.junit.Assert.assertTrue;
 
 public class SessionTest extends JpaTest {
 
-    @Test
-    public void testGetAllAnswersFromEndSessionParticipant() {
-
-        Query query = em.createNamedQuery("getAllAnswersFromSessionToSent");
-        List<Answer> result = query.getResultList();
-
-        assertTrue(result.size() == 8);
-
-    }
 }
