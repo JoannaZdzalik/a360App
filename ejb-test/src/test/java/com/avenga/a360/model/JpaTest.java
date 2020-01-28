@@ -1,4 +1,4 @@
-package com.avenga.a360;
+package com.avenga.a360.model;
 
 import org.junit.After;
 import org.junit.AfterClass;

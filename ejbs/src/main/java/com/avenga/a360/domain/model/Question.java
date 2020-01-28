@@ -1,4 +1,4 @@
-package com.avenga.a360.model;
+package com.avenga.a360.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = "getActiveQuestionList",
                 query="SELECT q FROM Question q WHERE q.isActive = true"),
 
-        @NamedQuery(name = "getAllQuestionByParticipant",
+        @NamedQuery(name = "findAllQuestionsByParticipantId",
                 query = "SELECT q \n" +
                         "FROM Question q\n" +
                         "LEFT JOIN q.sessions s\n" +
@@ -41,17 +42,17 @@ public class Question {
     @Column(name = "question_type")
     private QuestionType questionType;
 
-    @Column(name = "default_answers", length=255)
+    @Column(name = "default_answers")
     private String defaultAnswers;
 
     @Column(name = "is_active", columnDefinition ="BOOLEAN DEFAULT TRUE")
     private Boolean isActive = true;
 
     @ManyToMany(mappedBy="questions")
-    private Set<Session> sessions;
+    private List<Session> sessions;
 
     @OneToMany (mappedBy = "question")
-    private Set<Answer> answers;
+    private List<Answer> answers;
 
     public enum QuestionType {
         TEXT,

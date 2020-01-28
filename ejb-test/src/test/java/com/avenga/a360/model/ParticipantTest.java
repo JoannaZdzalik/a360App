@@ -1,8 +1,8 @@
-package com.avenga.a360;
+package com.avenga.a360.model;
 
 
-import com.avenga.a360.model.Participant;
-import com.avenga.a360.model.Session;
+import com.avenga.a360.domain.model.Participant;
+import com.avenga.a360.domain.model.Session;
 
 import org.junit.Test;
 

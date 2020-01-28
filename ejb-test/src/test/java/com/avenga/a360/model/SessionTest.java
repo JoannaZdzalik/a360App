@@ -1,6 +1,6 @@
-package com.avenga.a360;
+package com.avenga.a360.model;
 
-import com.avenga.a360.model.Session;
+import com.avenga.a360.domain.model.Session;
 import org.junit.Test;
 
 import javax.persistence.Query;
@@ -10,13 +10,13 @@ import static org.junit.Assert.assertTrue;
 
 public class SessionTest extends JpaTest {
     @Test
-    public void shouldFindParticipantListWithAllAnswersFromSessionToSent() {
+    public void shouldFindSessionsToSend() {
 
         //act
-        Query query = em.createNamedQuery("getSessionToSent");
+        Query query = em.createNamedQuery("findSessionsToSent");
         List<Session> result = query.getResultList();
 
         assertTrue(result.size() == 1);
-        assertTrue(result.get(0).getParticipants().size() == 4);
+     //   assertTrue(result.get(0).getParticipants().size() == 4);
     }
 }

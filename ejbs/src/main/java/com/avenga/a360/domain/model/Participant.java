@@ -1,4 +1,4 @@
-package com.avenga.a360.model;
+package com.avenga.a360.domain.model;
 
 
 import lombok.AllArgsConstructor;
@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
-@NamedQueries({
-        @NamedQuery(name = "getAllParticipantsListBySessionId",
-                query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
-})
+
 
 @Entity
 @Getter
@@ -21,7 +19,11 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name="participants",
         uniqueConstraints={@UniqueConstraint(columnNames = {"email", "id_session"})}
-        )
+)
+@NamedQueries({
+        @NamedQuery(name = "getAllParticipantsListBySessionId",
+                query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
+})
 
 public class Participant {
 
@@ -37,6 +39,9 @@ public class Participant {
     private Session session;
 
     @OneToMany(mappedBy="participant")
-    private Set<Answer> answers;
+    private List<Answer> answers;
 
 }
+
+
+

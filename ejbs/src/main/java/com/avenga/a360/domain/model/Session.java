@@ -1,6 +1,4 @@
-package com.avenga.a360.model;
-
-
+package com.avenga.a360.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @NamedQueries({
-        @NamedQuery(name = "getSessionToSent",
+        @NamedQuery(name = "findSessionsToSent",
                 query="SELECT s FROM Session s\n" +
                         "WHERE s.endDate < now() AND s.isSent = false\n"),
 })
@@ -41,13 +40,13 @@ public class Session {
     private boolean isSent = false;
 
     @OneToMany (mappedBy = "session")
-    private Set<Participant> participants;
+    private List<Participant> participants;
 
     @ManyToMany
     @JoinTable(
         name = "sessions_questions",
         joinColumns = @JoinColumn(name = "id_session"),
         inverseJoinColumns = @JoinColumn(name = "id_question"))
-    private Set<Question> questions;
+    private List<Question> questions;
 
 }

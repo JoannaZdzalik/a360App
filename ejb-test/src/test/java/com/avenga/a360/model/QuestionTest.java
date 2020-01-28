@@ -1,7 +1,7 @@
-package com.avenga.a360;
+package com.avenga.a360.model;
 
-import com.avenga.a360.model.Participant;
-import com.avenga.a360.model.Question;
+import com.avenga.a360.domain.model.Participant;
+import com.avenga.a360.domain.model.Question;
 import org.junit.Test;
 
 import javax.persistence.Query;
@@ -14,27 +14,26 @@ public class QuestionTest extends JpaTest {
     @Test
     public void shouldFindActiveQuestionList() {
 
-        //act
+        //when
         Query query = em.createNamedQuery("getActiveQuestionList");
         List<Question> result = query.getResultList();
 
-        //assert
+        //then
         assertTrue(result.size() == 4);
-//        assertTrue(result.get(0).getClass().equals(Question.class));
     }
 
     @Test
     public void shouldFindQuestionListByParticipantId() {
 
-        //arrange
+        //given
         Participant participant = new Participant();
         participant.setId(1L);
 
-        //act
-        Query query = em.createNamedQuery("getAllQuestionByParticipant");
+        //when
+        Query query = em.createNamedQuery("findAllQuestionsByParticipantId");
         List<Question> result = query.setParameter("idParticipant", participant).getResultList();
 
-        //assert
+        //then
         assertTrue(result.size() == 4);
 
     }

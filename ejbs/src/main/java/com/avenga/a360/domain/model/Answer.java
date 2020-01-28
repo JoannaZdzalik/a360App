@@ -1,4 +1,4 @@
-package com.avenga.a360.model;
+package com.avenga.a360.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

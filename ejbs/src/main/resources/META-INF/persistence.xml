@@ -6,17 +6,15 @@
     <persistence-unit name = "a360" transaction-type = "JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/a360</jta-data-source>
+
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
             <property name="hibernate.transaction.auto_close_session" value="true" />
             <property name="hibernate.show_sql" value="true"/>
-
-<!--            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/a360"/>-->
-<!--            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>-->
-<!--            <property name="hibernate.connection.username" value="postgres"/>-->
-<!--            <property name="hibernate.connection.password" value="SuperPos1"/>-->
 
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 
@@ -25,9 +23,9 @@
 <!--            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/drop.sql"/>-->
 <!--            <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/create.sql"/>-->
 
-            <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/load.sql"/>
+            <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/import.sql"/>
 
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
 </persistence>

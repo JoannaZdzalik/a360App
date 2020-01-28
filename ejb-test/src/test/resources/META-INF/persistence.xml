@@ -9,10 +9,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- add classes -->
-        <class>com.avenga.a360.model.Question</class>
-        <class>com.avenga.a360.model.Answer</class>
-        <class>com.avenga.a360.model.Session</class>
-        <class>com.avenga.a360.model.Participant</class>
+        <class>com.avenga.a360.domain.model.Question</class>
+        <class>com.avenga.a360.domain.model.Answer</class>
+        <class>com.avenga.a360.domain.model.Session</class>
+        <class>com.avenga.a360.domain.model.Participant</class>
 
         <properties>
             <!-- Configuring JDBC properties -->
