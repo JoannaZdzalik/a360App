@@ -49,4 +49,7 @@ public class Session {
         inverseJoinColumns = @JoinColumn(name = "id_question"))
     private List<Question> questions;
 
+    public boolean isSent() {
+        return isSent;
+    }
 }

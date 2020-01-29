@@ -54,6 +54,7 @@ public class Question {
     @OneToMany (mappedBy = "question")
     private List<Answer> answers;
 
+
     public enum QuestionType {
         TEXT,
         RADIO,

@@ -1,5 +1,7 @@
-C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\AnswerTest.java
-C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\SessionTest.java
-C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\JpaTest.java
-C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\ParticipantTest.java
-C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\QuestionTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\model\JpaTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\model\SessionTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\model\ParticipantTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\model\QuestionTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\service\SessionServiceImplTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\service\QuestionServiceImplTest.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejb-test\src\test\java\com\avenga\a360\service\ParticipantServiceImplTest.java

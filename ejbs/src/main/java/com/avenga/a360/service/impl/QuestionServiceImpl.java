@@ -16,12 +16,20 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionDao = questionDao;
     }
 
-    @Override
-    public List<QuestionDto> findAllActiveQuestions() {
-        return questionDao.getAll().stream()
-                .filter(QuestionDto::getIsActive)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<QuestionDto> findAllActiveQuestions() {
+//        return questionDao.getAll().stream()
+//                .filter(QuestionDto::getIsActive)
+//                .collect(Collectors.toList());
+//    }
+
+//    @Override
+//    public List<QuestionDto> findQuestionsByParticipantId() {
+//        return questionDao.getAll().stream()
+//                .filter(p-> p.)
+//                .collect(Collectors.toList());
+//
+//    }
 
 }
 

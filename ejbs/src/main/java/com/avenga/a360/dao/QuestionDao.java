@@ -9,28 +9,31 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class QuestionDao implements Dao<QuestionDto> {
+public class QuestionDao implements Dao<Question> {
 
-    List<QuestionDto> questions = new ArrayList<>();
-
+    List<Question> questions = new ArrayList<>();
 
     @Override
-    public Optional<QuestionDto> get(long id) {
+    public Optional<Question> get(long id) {
         return Optional.ofNullable(questions.get((int) id));
     }
 
     @Override
-    public List<QuestionDto> getAll() {
+    public List<Question> getAll() {
         return questions;
     }
 
     @Override
-    public void save(QuestionDto question) {
+    public void save(Question question) {
         questions.add(question);
     }
 
     @Override
-    public void delete(QuestionDto question) {
+    public void delete(Question question) {
         questions.remove(question);
+    }
+
+    public List<Question> getAllActiveQuestions() {
+        return questions;
     }
 }

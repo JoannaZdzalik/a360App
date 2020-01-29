@@ -1,5 +1,7 @@
-com\avenga\a360\AnswerTest.class
-com\avenga\a360\QuestionTest.class
-com\avenga\a360\SessionTest.class
-com\avenga\a360\ParticipantTest.class
-com\avenga\a360\JpaTest.class
+com\avenga\a360\service\ParticipantServiceImplTest.class
+com\avenga\a360\service\QuestionServiceImplTest.class
+com\avenga\a360\model\QuestionTest.class
+com\avenga\a360\model\SessionTest.class
+com\avenga\a360\model\ParticipantTest.class
+com\avenga\a360\model\JpaTest.class
+com\avenga\a360\service\SessionServiceImplTest.class

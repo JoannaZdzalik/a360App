@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,5 +16,6 @@ public class ParticipantDto {
 
     private Long id;
     private String email;
-    private Long sessionId;
+    private Long idSession;
+    private List<AnswerDto> answers;
 }

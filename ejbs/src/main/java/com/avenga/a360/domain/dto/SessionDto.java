@@ -2,6 +2,7 @@ package com.avenga.a360.domain.dto;
 
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Question;
+import com.avenga.a360.domain.model.Session;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,21 +20,9 @@ public class SessionDto {
     private Long id;
     private String name;
     private LocalDateTime endDate;
-    private Boolean isSent;
-    private List<Participant> participants;
-    private List<Question> questions;
-
-    @Override
-    public String toString() {
-        return "SessionDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", endDate=" + endDate +
-                ", isSent=" + isSent +
-                ", participants=" + participants +
-                ", questions=" + questions +
-                '}';
-    }
-
+    private boolean isSent;
+//
+//    private List<ParticipantDto> participants;
+//        private List<QuestionDto> questions;
 
 }

@@ -20,7 +20,8 @@ public class QuestionDto {
     private Question.QuestionType questionType;
     private String defaultAnswers;
     private Boolean isActive;
-    private List<Session> sessions;
-    private List<Answer> answers;
+    private List<SessionDto> sessions;
+    private List<AnswerDto> answers;
+
 
 }
