@@ -14,7 +14,7 @@ import lombok.Setter;
 public class AnswerDto {
 
     private Long id;
-    private QuestionDto question;
-    private ParticipantDto participant;
+    private Long questionId;
+    private Long participantId;
     private String answerText;
 }

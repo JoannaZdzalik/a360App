@@ -12,48 +12,46 @@ import com.avenga.a360.service.SessionService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class SessionServiceImpl implements SessionService {
 
- SessionDao sessionDao;
+    SessionDao sessionDao;
 
-    QuestionDao qDao;
+    QuestionDao questionDao;
 
-    public SessionServiceImpl(SessionDao sessionDao) {
-        this.sessionDao = sessionDao;
-    }
-
-
-//    @Override
-//    public List<SessionDto> findSessionsToSend() {
-//        List<Session> sessions = sessionDao.getAllSessionsToSend();
-//        return sessions.stream()
-//              .map(u -> new SessionDto(u.getId(), u.getName(), u.getEndDate(), u.isSent(), u.getParticipants(), u.getQuestions()))
-//                .collect(Collectors.toList());
+//    public SessionServiceImpl(SessionDao sessionDao) {
+//        this.sessionDao = sessionDao;
 //    }
 
-    //    @Override
+
+    @Override
+    public List<SessionDto> findSessionsEndedInThePastButNotSent() {
+        List<Session> sessions = sessionDao.getAllSessionsToSend();
+        return sessions.stream()
+              .map(u -> new SessionDto(u.getId(), u.getName(), u.getEndDate(), u.isSent()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean createNewSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
-        Session newSession = sessionDtoToSession(sessionDto);
-        newSession.setParticipants(participantDtoListTParticipantList(participantsDto,newSession));
+        Session session = sessionDtoToSession(sessionDto);
+        session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
 
-        List<Question> questions = qDao.getAll();
-        newSession.setQuestions(questions);
-    //    newSession.setQuestions(new ArrayList<>(qDao.getAll()));
+        List<Question> questions = questionDao.getAllActiveQuestions();
+        session.setQuestions(questions);
 
-        if (qDao.getAll().isEmpty() ||
-                participantsDto.isEmpty() ||
-                sessionDto.getEndDate() == null ||
-                sessionDto.getEndDate().isBefore(LocalDateTime.now()) ||
-                sessionDto.getName() == null) {
+        if ((session.getQuestions().size() == 0) || (session.getParticipants().size() == 0) ||
+                (session.getEndDate() == null || session.getEndDate().isBefore(LocalDateTime.now())) ||
+                (session.getName() == null)) {
             return false;
         }
-        sessionDao.save(newSession);
+        sessionDao.save(session);
         return true;
     }
 
-    private Session sessionDtoToSession(SessionDto sessionDto) {
+    public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
         session.setId(sessionDto.getId());
         session.setName(sessionDto.getName());
@@ -62,7 +60,7 @@ public class SessionServiceImpl implements SessionService {
         return session;
     }
 
-    private SessionDto sessionToSessionDto(Session session) {
+    public SessionDto sessionToSessionDto(Session session) {
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(session.getId());
         sessionDto.setName(session.getName());
@@ -71,7 +69,7 @@ public class SessionServiceImpl implements SessionService {
         return sessionDto;
     }
 
-    public List<Participant> participantDtoListTParticipantList(List<ParticipantDto> participantsDto, Session session) {
+    public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
