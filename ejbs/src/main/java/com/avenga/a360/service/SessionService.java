@@ -10,5 +10,5 @@ public interface SessionService {
 
     List<SessionDto> findSessionsEndedInThePastButNotSent();
 
-    boolean createNewSession(SessionDto sessionDto, List<ParticipantDto> participantsDto);
+    boolean createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto);
 }

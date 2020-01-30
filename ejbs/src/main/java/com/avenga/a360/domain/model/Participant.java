@@ -23,6 +23,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "getAllParticipantsListBySessionId",
                 query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
+        @NamedQuery(name="findParticipantById", query="SELECT p FROM Participant p where p.id = :id")
 })
 
 public class Participant {
@@ -38,7 +39,7 @@ public class Participant {
     @JoinColumn(name = "id_session")
     private Session session;
 
-    @OneToMany(mappedBy="participant")
+    @OneToMany(mappedBy="participant") // cascade = CascadeType.ALL, mappedBy = "participant"
     private List<Answer> answers;
 
 }

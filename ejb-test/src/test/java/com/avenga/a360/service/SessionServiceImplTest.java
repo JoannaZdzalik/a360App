@@ -1,13 +1,12 @@
 package com.avenga.a360.service;
 
-import com.avenga.a360.dao.QuestionDao;
-import com.avenga.a360.dao.SessionDao;
+import com.avenga.a360.dao.impl.QuestionDao;
+import com.avenga.a360.dao.impl.SessionDao;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.dto.SessionDto;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.impl.SessionServiceImpl;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -59,7 +58,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertTrue(sessionServiceImpl.createNewSession(newSession, participants));
+        assertTrue(sessionServiceImpl.createSession(newSession, participants));
     }
 
     @Test
@@ -77,7 +76,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createNewSession(newSession, null));
+        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, null));
     }
 
     @Test
@@ -97,7 +96,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createNewSession(newSession, participants));
+        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants));
 
     }
 
@@ -123,7 +122,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createNewSession(newSession, participants));
+        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants));
 
     }
 
@@ -148,7 +147,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createNewSession(newSession, participants), "endDate in a test must be left null!");
+        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants), "endDate in a test must be left null!");
     }
 
     @Test
@@ -172,7 +171,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createNewSession(newSession, participants), "To pass test, session name must be left null!");
+        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants), "To pass test, session name must be left null!");
     }
 
     @Test
@@ -191,7 +190,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertFalse(sessionServiceImpl.createNewSession(newSession, participants));
+        assertFalse(sessionServiceImpl.createSession(newSession, participants));
     }
 
     @Test
@@ -206,7 +205,7 @@ public class SessionServiceImplTest {
         newSession.setSent(false);
         newSession.setEndDate(LocalDateTime.of(2020, 02, 02, 20, 00));
 
-        assertFalse(sessionServiceImpl.createNewSession(newSession, participants));
+        assertFalse(sessionServiceImpl.createSession(newSession, participants));
     }
 
     @Test

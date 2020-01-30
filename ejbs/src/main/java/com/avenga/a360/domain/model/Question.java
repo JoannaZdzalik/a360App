@@ -18,7 +18,8 @@ import java.util.Set;
                         "FROM Question q\n" +
                         "LEFT JOIN q.sessions s\n" +
                         "LEFT JOIN s.participants p\n" +
-                        "WHERE p = :idParticipant")
+                        "WHERE p = :idParticipant"),
+        @NamedQuery(name="findQuestionById", query="SELECT q FROM Question q where q.id = :id")
 })
 
 @Entity
@@ -51,7 +52,7 @@ public class Question {
     @ManyToMany(mappedBy="questions")
     private List<Session> sessions;
 
-    @OneToMany (mappedBy = "question")
+    @OneToMany (mappedBy = "question") // cascade = CascadeType.ALL, mappedBy = "question"
     private List<Answer> answers;
 
 

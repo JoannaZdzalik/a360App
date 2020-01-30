@@ -13,6 +13,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="answers")
+
+@NamedQueries({
+        @NamedQuery(name = "getAllAnswersByParticipantId",
+                query = "SELECT a FROM Answer a WHERE a.participant = :id"),
+})
 public class Answer {
 
     @Id

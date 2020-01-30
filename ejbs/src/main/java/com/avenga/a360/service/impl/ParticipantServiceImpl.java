@@ -1,11 +1,7 @@
 package com.avenga.a360.service.impl;
 
-import com.avenga.a360.dao.ParticipantDao;
-import com.avenga.a360.domain.dto.ParticipantDto;
+import com.avenga.a360.dao.impl.ParticipantDao;
 import com.avenga.a360.service.ParticipantService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ParticipantServiceImpl implements ParticipantService {
 

@@ -1,7 +1,7 @@
 package com.avenga.a360.service.impl;
 
-import com.avenga.a360.dao.QuestionDao;
-import com.avenga.a360.dao.SessionDao;
+import com.avenga.a360.dao.impl.QuestionDao;
+import com.avenga.a360.dao.impl.SessionDao;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.dto.SessionDto;
 import com.avenga.a360.domain.model.Participant;
@@ -35,7 +35,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public boolean createNewSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
+    public boolean createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
         List<Question> questions = questionDao.getAllActiveQuestions();
 
         if (sessionDto == null || questions == null || participantsDto == null) {
@@ -95,9 +95,6 @@ public class SessionServiceImpl implements SessionService {
             throw new IllegalArgumentException("End date must be specified");
         } else if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("End date has to be set as a future date!");
-//        } else if (sessionDto.getParticipants() == null) {
-//            throw new IllegalArgumentException("List of participants cannot be empty");
-//        }
         }
        participantDtoValidator(participantsDto);
 
@@ -108,5 +105,4 @@ public class SessionServiceImpl implements SessionService {
             throw new IllegalArgumentException("List of Participants cannot be empty");
         }
     }
-
 }

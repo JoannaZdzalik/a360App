@@ -14,6 +14,7 @@ import java.util.Set;
         @NamedQuery(name = "findSessionsToSent",
                 query="SELECT s FROM Session s\n" +
                         "WHERE s.endDate < now() AND s.isSent = false\n"),
+        @NamedQuery(name="findSessionById", query="SELECT s FROM Session s where s.id = :id")
 })
 
 @Entity
@@ -39,7 +40,7 @@ public class Session {
     @Column(name = "is_sent", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isSent = false;
 
-    @OneToMany (mappedBy = "session")
+    @OneToMany (mappedBy = "session") // cascade = CascadeType.ALL, mappedBy = "session"
     private List<Participant> participants;
 
     @ManyToMany

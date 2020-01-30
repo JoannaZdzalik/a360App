@@ -2,6 +2,7 @@ package com.avenga.a360.model;
 
 
 import com.avenga.a360.domain.model.Participant;
+import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
 
 import org.junit.Test;
@@ -25,5 +26,13 @@ public class ParticipantTest extends JpaTest {
 
         //assert
         assertTrue(result.size() == 4);
+    }
+
+    @Test
+    public void shouldFindParticipantById(){
+        Query query = em.createNamedQuery("findParticipantById");
+        Participant result = (Participant) query.setParameter("id", 1L).getSingleResult();
+
+        assertEquals("anna@avenga.com", result.getEmail());
     }
 }

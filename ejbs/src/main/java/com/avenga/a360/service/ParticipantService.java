@@ -7,4 +7,6 @@ import java.util.List;
 public interface ParticipantService {
 
   //  List<ParticipantDto> findAllParticipantsBySessionId(Long id);
+
+    //boolean createParticipant(ParticipantDto participantDto);
 }

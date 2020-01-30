@@ -38,5 +38,13 @@ public class QuestionTest extends JpaTest {
 
     }
 
+    @Test
+    public void shouldFindQuestionById(){
+        Query query = em.createNamedQuery("findQuestionById");
+        Question result = (Question) query.setParameter("id", 1L).getSingleResult();
+
+        assertEquals("What do you value him/her for", result.getQuestionText());
+    }
+
 
 }

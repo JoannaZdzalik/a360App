@@ -15,4 +15,14 @@ public class AnswerDto {
     private Long questionId;
     private Long participantId;
     private String answerText;
+
+    @Override
+    public String toString() {
+        return "AnswerDto{" +
+                "id=" + id +
+                ", questionId=" + questionId +
+                ", participantId=" + participantId +
+                ", answerText='" + answerText + '\'' +
+                '}';
+    }
 }

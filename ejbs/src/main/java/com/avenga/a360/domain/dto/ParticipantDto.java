@@ -17,5 +17,5 @@ public class ParticipantDto {
     private Long id;
     private String email;
     private Long idSession;
-    private List<AnswerDto> answers;
+  //  private List<AnswerDto> answers;
 }
