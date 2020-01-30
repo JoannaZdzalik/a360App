@@ -30,26 +30,33 @@ public class SessionServiceImpl implements SessionService {
     public List<SessionDto> findSessionsEndedInThePastButNotSent() {
         List<Session> sessions = sessionDao.getAllSessionsToSend();
         return sessions.stream()
-              .map(u -> new SessionDto(u.getId(), u.getName(), u.getEndDate(), u.isSent()))
+                .map(u -> new SessionDto(u.getId(), u.getName(), u.getEndDate(), u.isSent()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public boolean createNewSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
-        Session session = sessionDtoToSession(sessionDto);
-        session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
-
         List<Question> questions = questionDao.getAllActiveQuestions();
-        session.setQuestions(questions);
 
-        if ((session.getQuestions().size() == 0) || (session.getParticipants().size() == 0) ||
-                (session.getEndDate() == null || session.getEndDate().isBefore(LocalDateTime.now())) ||
-                (session.getName() == null)) {
+        if (sessionDto == null || questions == null || participantsDto == null) {
+            sessionDtoValidator(sessionDto, participantsDto);
             return false;
+        } else {
+            Session session = sessionDtoToSession(sessionDto);
+            session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
+            session.setQuestions(questions);
+
+            if ((session.getQuestions().size() == 0) || (session.getParticipants().size() == 0) ||
+                    (session.getEndDate() == null || session.getEndDate().isBefore(LocalDateTime.now())) ||
+                    (session.getName() == null)) {
+                sessionDtoValidator(sessionDto, participantsDto);
+                return false;
+            }
+            sessionDao.save(session);
         }
-        sessionDao.save(session);
         return true;
     }
+
 
     public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
@@ -81,5 +88,25 @@ public class SessionServiceImpl implements SessionService {
         return participants;
     }
 
+    private void sessionDtoValidator(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
+        if (sessionDto.getName() == null) {
+            throw new IllegalArgumentException("Session name must be specified");
+        } else if (sessionDto.getEndDate() == null) {
+            throw new IllegalArgumentException("End date must be specified");
+        } else if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("End date has to be set as a future date!");
+//        } else if (sessionDto.getParticipants() == null) {
+//            throw new IllegalArgumentException("List of participants cannot be empty");
+//        }
+        }
+       participantDtoValidator(participantsDto);
+
+    }
+
+    private void participantDtoValidator(List<ParticipantDto> participantsDto) {
+        if (participantsDto == null || participantsDto.size() == 0) {
+            throw new IllegalArgumentException("List of Participants cannot be empty");
+        }
+    }
 
 }

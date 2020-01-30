@@ -30,23 +30,21 @@ public class QuestionServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-//    @Test
-//    public void shouldFindListOfActiveQuestions() {
-//
-//        //given
-//        List<QuestionDto> questions = new ArrayList<>();
-//        questions.add(new QuestionDto(1L, "How do you like him?", Question.QuestionType.TEXT, null, true, null, null));
-//        questions.add(new QuestionDto(2L, "How are u?", Question.QuestionType.TEXT, null, true, null, null));
-//        questions.add(new QuestionDto(3L, "Anything to change?", Question.QuestionType.TEXT, null, false, null, null));
-//        questions.add(new QuestionDto(4L, "Your comment please!", Question.QuestionType.TEXT, null, true, null, null));
-//        questions.add(new QuestionDto(5L, "Overall experience", Question.QuestionType.RADIO, null, true, null, null));
-//        questions.add(new QuestionDto(6L, "WRITE IT!!!!!!!", Question.QuestionType.TEXT, null, false, null, null));
-//
-//        //when
-//        when(questionDao.getAll()).thenReturn(questions);
-//
-//        //then
-//        assertTrue(questionServiceImpl.findAllActiveQuestions().size() == 4);
-//    }
+    @Test
+    public void shouldFindListOfActiveQuestions() {
+        //given
+        List<Question> questions = new ArrayList<>();
+        questions.add(new Question(1L, "How do you like him?", Question.QuestionType.TEXT, null, true, null, null));
+        questions.add(new Question(2L, "How are u?", Question.QuestionType.TEXT, null, true, null, null));
+        questions.add(new Question(3L, "Your comment please!", Question.QuestionType.TEXT, null, true, null, null));
+        questions.add(new Question(4L, "Overall experience", Question.QuestionType.RADIO, null, true, null, null));
+
+        //when
+        when(questionDao.getAllActiveQuestions()).thenReturn(questions);
+
+        //then
+        assertEquals(4, questionServiceImpl.findAllActiveQuestions().size());
+
+    }
 
 }

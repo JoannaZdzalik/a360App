@@ -17,6 +17,5 @@ public class SessionTest extends JpaTest {
         List<Session> result = query.getResultList();
 
         assertTrue(result.size() == 1);
-     //   assertTrue(result.get(0).getParticipants().size() == 4);
     }
 }

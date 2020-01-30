@@ -2,6 +2,9 @@ package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.domain.dto.QuestionDto;
+import com.avenga.a360.domain.dto.SessionDto;
+import com.avenga.a360.domain.model.Question;
+import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.QuestionService;
 
 import java.util.List;
@@ -16,20 +19,16 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionDao = questionDao;
     }
 
-//    @Override
-//    public List<QuestionDto> findAllActiveQuestions() {
-//        return questionDao.getAll().stream()
-//                .filter(QuestionDto::getIsActive)
-//                .collect(Collectors.toList());
-//    }
+ //   @Override
+    public List<QuestionDto> findAllActiveQuestions() {
+        List<Question> questions = questionDao.getAllActiveQuestions();
+        return questions.stream()
+                .map(u-> new QuestionDto(u.getId(), u.getQuestionText(), u.getQuestionType(), u.getDefaultAnswers(), u.getIsActive(), null, null))
+                .collect(Collectors.toList());
+    }
 
-//    @Override
-//    public List<QuestionDto> findQuestionsByParticipantId() {
-//        return questionDao.getAll().stream()
-//                .filter(p-> p.)
-//                .collect(Collectors.toList());
-//
-//    }
+
+
 
 }
 
