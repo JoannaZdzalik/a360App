@@ -1,8 +1,7 @@
 package com.avenga.a360.dao.impl;
 
 
-import com.avenga.a360.dao.GenericDao;
-import com.avenga.a360.domain.model.Question;
+import com.avenga.a360.dao.SessionDao;
 import com.avenga.a360.domain.model.Session;
 
 import javax.persistence.EntityManager;
@@ -11,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SessionDao implements GenericDao<Session> {
+public class SessionDaoImpl implements SessionDao {
 
-//    @PersistenceContext(unitName = "a360")
-//    private EntityManager em;
+    @PersistenceContext(unitName = "a360")
+    private EntityManager em;
 
     List<Session> sessions = new ArrayList<>();
     Session session = new Session();

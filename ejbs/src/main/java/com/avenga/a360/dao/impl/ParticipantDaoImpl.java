@@ -1,18 +1,17 @@
 package com.avenga.a360.dao.impl;
 
-import com.avenga.a360.dao.GenericDao;
+import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.domain.model.Participant;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class ParticipantDao implements GenericDao<Participant> {
+public class ParticipantDaoImpl implements ParticipantDao {
 
-//    @PersistenceContext(unitName = "a360")
-//    private EntityManager em;
+    @PersistenceContext(unitName = "a360")
+    private EntityManager em;
 
     //to bedzie do usunięcia jak polacze sie z bazą
     List<Participant> participants = new ArrayList<>();
@@ -24,7 +23,7 @@ public class ParticipantDao implements GenericDao<Participant> {
         participants.add(participant); //a to bedzie do wywalenia
     }
 
-    public List<Participant> getAllBySessionId(Long id) {
+    public List<Participant> getAllParticipantsBySessionId(Long id) {
 //        List<Participant> participants = em.createNamedQuery("getAllParticipantsListBySessionId", Participant.class)
 //                .setParameter("idSession", id)
 //                .getResultList();

@@ -1,7 +1,7 @@
 package com.avenga.a360.service;
 
-import com.avenga.a360.dao.impl.QuestionDao;
-import com.avenga.a360.dao.impl.SessionDao;
+import com.avenga.a360.dao.impl.QuestionDaoImpl;
+import com.avenga.a360.dao.impl.SessionDaoImpl;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.dto.SessionDto;
 import com.avenga.a360.domain.model.Question;
@@ -25,13 +25,13 @@ import static org.mockito.Mockito.when;
 public class SessionServiceImplTest {
 
     @InjectMocks
-    SessionServiceImpl sessionServiceImpl;
+    SessionServiceImpl sessionService;
 
     @Mock
-    private SessionDao sessionDao;
+    private SessionDaoImpl sessionDao;
 
     @Mock
-    private QuestionDao questionDao;
+    private QuestionDaoImpl questionDao;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -55,11 +55,11 @@ public class SessionServiceImplTest {
 
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
-        newSession.setEndDate(LocalDateTime.of(2020, 11, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertTrue(sessionServiceImpl.createSession(newSession, participants));
+        assertTrue(sessionService.createSession(newSession, participants));
     }
 
     @Test
@@ -73,11 +73,11 @@ public class SessionServiceImplTest {
 
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
-        newSession.setEndDate(LocalDateTime.of(2020, 02, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, null));
+        assertThrows(IllegalArgumentException.class, () -> sessionService.createSession(newSession, null));
     }
 
     @Test
@@ -93,11 +93,11 @@ public class SessionServiceImplTest {
 
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
-        newSession.setEndDate(LocalDateTime.of(2020, 02, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants));
+        assertThrows(IllegalArgumentException.class, () -> sessionService.createSession(newSession, participants));
 
     }
 
@@ -124,7 +124,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants));
+        assertThrows(IllegalArgumentException.class, () -> sessionService.createSession(newSession, participants));
 
     }
 
@@ -150,7 +150,7 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants), "endDate in a test must be left null!");
+        assertThrows(IllegalArgumentException.class, () -> sessionService.createSession(newSession, participants), "endDate in a test must be left null!");
     }
 
     @Test
@@ -171,11 +171,11 @@ public class SessionServiceImplTest {
         SessionDto newSession = new SessionDto();
         newSession.setName(null);
         newSession.setSent(false);
-        newSession.setEndDate(LocalDateTime.of(2021, 02, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertThrows(IllegalArgumentException.class, () -> sessionServiceImpl.createSession(newSession, participants), "To pass test, session name must be left null!");
+        assertThrows(IllegalArgumentException.class, () -> sessionService.createSession(newSession, participants), "To pass test, session name must be left null!");
     }
 
     @Test
@@ -188,13 +188,13 @@ public class SessionServiceImplTest {
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
         newSession.setSent(false);
-        newSession.setEndDate(LocalDateTime.of(2020, 11, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         List<Question> questions = new ArrayList<>();
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
-        assertFalse(sessionServiceImpl.createSession(newSession, participants));
+        assertFalse(sessionService.createSession(newSession, participants));
     }
 
     @Test
@@ -207,19 +207,19 @@ public class SessionServiceImplTest {
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
         newSession.setSent(false);
-        newSession.setEndDate(LocalDateTime.of(2020, 10, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
-        assertFalse(sessionServiceImpl.createSession(newSession, participants));
+        assertFalse(sessionService.createSession(newSession, participants));
     }
 
     @Test
     public void shouldFindSessionsEndedInThePastButNotSent() {
         List<Session> allSessions = new ArrayList<>();
-        allSessions.add(new Session(1L, "AvengaFirstEdition", LocalDateTime.of(2019, 10, 10, 12, 00), false, null, null));
+        allSessions.add(new Session(1L, "AvengaFirstEdition", LocalDateTime.now().plusDays(10L), false, null, null));
 
         when(sessionDao.getAllSessionsToSend()).thenReturn(allSessions);
 
-        assertEquals(1, sessionServiceImpl.findSessionsEndedInThePastButNotSent().size());
+        assertEquals(1, sessionService.findSessionsEndedInThePastButNotSent().size());
     }
 
     @Test
@@ -227,9 +227,9 @@ public class SessionServiceImplTest {
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(1L);
         sessionDto.setName("SessionOne");
-        sessionDto.setEndDate(LocalDateTime.of(2020, 02, 15, 20, 00, 00));
+        sessionDto.setEndDate(LocalDateTime.now().plusDays(10L));
 
-        Session session = sessionServiceImpl.mapSessionDtoToSession(sessionDto);
+        Session session = sessionService.mapSessionDtoToSession(sessionDto);
 
         assertEquals(session.getId(), sessionDto.getId());
     }
@@ -239,9 +239,9 @@ public class SessionServiceImplTest {
         Session session = new Session();
         session.setId(1L);
         session.setName("Session First Edition");
-        session.setEndDate(LocalDateTime.of(2020, 03, 15, 20, 00, 00));
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
 
-        SessionDto sessionDto = sessionServiceImpl.mapSessionToSessionDto(session);
+        SessionDto sessionDto = sessionService.mapSessionToSessionDto(session);
 
         assertEquals(session.getId(), sessionDto.getId());
         assertEquals(session.getName(), sessionDto.getName());

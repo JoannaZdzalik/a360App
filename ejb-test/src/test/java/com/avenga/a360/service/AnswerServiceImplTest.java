@@ -1,8 +1,8 @@
 package com.avenga.a360.service;
 
-import com.avenga.a360.dao.impl.AnswerDao;
-import com.avenga.a360.dao.impl.ParticipantDao;
-import com.avenga.a360.dao.impl.QuestionDao;
+import com.avenga.a360.dao.impl.AnswerDaoImpl;
+import com.avenga.a360.dao.impl.ParticipantDaoImpl;
+import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.domain.dto.AnswerDto;
 import com.avenga.a360.domain.model.Answer;
 import com.avenga.a360.domain.model.Participant;
@@ -31,13 +31,13 @@ public class AnswerServiceImplTest {
     AnswerServiceImpl answerService;
 
     @Mock
-    private AnswerDao answerDao;
+    private AnswerDaoImpl answerDao;
 
     @Mock
-    private QuestionDao questionDao;
+    private QuestionDaoImpl questionDao;
 
     @Mock
-    private ParticipantDao participantDao;
+    private ParticipantDaoImpl participantDao;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -59,7 +59,7 @@ public class AnswerServiceImplTest {
 
         Session session = new Session();
         session.setName("Avenga First Edition");
-        session.setEndDate(LocalDateTime.of(2021, 11, 02, 20, 00));
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
         newAnswer.setId(1L);
@@ -88,7 +88,7 @@ public class AnswerServiceImplTest {
 
         Session session = new Session();
         session.setName("Avenga First Edition");
-        session.setEndDate(LocalDateTime.of(2021, 10, 02, 20, 00));
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
         newAnswer.setId(1L);
@@ -111,7 +111,7 @@ public class AnswerServiceImplTest {
 
         Session session = new Session();
         session.setName("Avenga First Edition");
-        session.setEndDate(LocalDateTime.of(2021, 11, 02, 20, 00));
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
         newAnswer.setId(1L);
@@ -133,7 +133,7 @@ public class AnswerServiceImplTest {
 
         Session session = new Session();
         session.setName("Avenga First Edition");
-        session.setEndDate(LocalDateTime.of(2021, 11, 02, 20, 00));
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
         newAnswer.setId(1L);
@@ -191,7 +191,7 @@ public class AnswerServiceImplTest {
         session.setId(1L);
         session.setParticipants(participants);
         session.setName("Avenga first edition");
-        session.setEndDate(LocalDateTime.of(2020, 06, 20, 00, 00, 00, 01));
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setSent(false);
 
         List<Answer> answers = new ArrayList<>();
@@ -206,6 +206,34 @@ public class AnswerServiceImplTest {
                 () ->  assertEquals(answerService.findAllAnswersByParticipantId(1L).get(1).getAnswerText(), answers.get(1).getAnswerText() ),
                 () ->  assertEquals(answerService.findAllAnswersByParticipantId(1L).get(2).getAnswerText(), answers.get(2).getAnswerText() ),
                 () -> Assertions.assertEquals(3, answers.size())
+        );
+    }
+
+    @Test
+    public void shouldMapAnswerToAnswerDto() {
+        Question question1 = new Question();
+        question1.setId(1L);
+        question1.setQuestionText("How do you like him?");
+        question1.setQuestionType(Question.QuestionType.TEXT);
+        question1.setDefaultAnswers(null);
+
+        Participant asia = new Participant();
+        asia.setId(1L);
+        asia.setEmail("asia@yzdz");
+
+        Answer answer = new Answer();
+        answer.setId(1L);
+        answer.setAnswerText("super super");
+        answer.setQuestion(question1);
+        answer.setParticipant(asia);
+
+        AnswerDto answerDto = answerService.mapAnswerToAnswerDto(answer);
+
+        assertAll(
+                () -> assertEquals(answerDto.getAnswerText(), answer.getAnswerText()),
+                () -> assertEquals(answerDto.getQuestionId(), answer.getQuestion().getId()),
+                () -> assertEquals(answerDto.getParticipantId(), answer.getParticipant().getId()),
+                () -> assertEquals(answerDto.getId(), answer.getId())
         );
     }
 }

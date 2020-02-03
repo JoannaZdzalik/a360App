@@ -1,6 +1,6 @@
 package com.avenga.a360.dao.impl;
 
-import com.avenga.a360.dao.GenericDao;
+import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.domain.model.Question;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class QuestionDao implements GenericDao<Question> {
+public class QuestionDaoImpl implements QuestionDao {
 
     @PersistenceContext(unitName = "a360")
     private EntityManager em;

@@ -1,9 +1,10 @@
 package com.avenga.a360.service.impl;
 
-import com.avenga.a360.dao.impl.QuestionDao;
-import com.avenga.a360.dao.impl.SessionDao;
+import com.avenga.a360.dao.impl.QuestionDaoImpl;
+import com.avenga.a360.dao.impl.SessionDaoImpl;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.dto.SessionDto;
+import com.avenga.a360.domain.model.Answer;
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
@@ -17,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class SessionServiceImpl implements SessionService {
 
-    SessionDao sessionDao;
-    QuestionDao questionDao;
+    SessionDaoImpl sessionDao;
+    QuestionDaoImpl questionDao;
 
     @Override
     public List<SessionDto> findSessionsEndedInThePastButNotSent() {
@@ -32,25 +33,19 @@ public class SessionServiceImpl implements SessionService {
     public boolean createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
         List<Question> questions = questionDao.getAllActiveQuestions();
 
-        if (sessionDto == null || questions == null || participantsDto == null) {
-            validateSessionDto(sessionDto, participantsDto);
+        if(!validateSessionDto(sessionDto, participantsDto)){
             return false;
-        } else {
-            Session session = mapSessionDtoToSession(sessionDto);
-            session.setParticipants(mapParticipantDtoListToParticipantList(participantsDto, session));
-            session.setQuestions(questions);
-
-            if ((session.getQuestions().size() == 0) || (session.getParticipants().size() == 0) ||
-                    (session.getEndDate() == null || session.getEndDate().isBefore(LocalDateTime.now())) ||
-                    (session.getName() == null)) {
-                validateSessionDto(sessionDto, participantsDto);
-                return false;
-            }
-            sessionDao.save(session);
         }
+        Session session = mapSessionDtoToSession(sessionDto);
+        session.setParticipants(mapParticipantDtoListToParticipantList(participantsDto, session));
+        session.setQuestions(questions);
+
+        if(!validateSession(session)){
+            return false;
+        }
+        sessionDao.save(session);
         return true;
     }
-
 
     public Session mapSessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
@@ -77,27 +72,29 @@ public class SessionServiceImpl implements SessionService {
             participant.setEmail(participantDto.getEmail());
             participant.setUid(participantDto.getUid());
             participant.setSession(session);
-//            participant.setId(participantDto.getId());
             participants.add(participant);
         }
         return participants;
     }
 
-    private void validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
-        if (sessionDto.getName() == null) {
-            throw new IllegalArgumentException("Session name must be specified");
-        } else if (sessionDto.getEndDate() == null) {
-            throw new IllegalArgumentException("End date must be specified");
-        } else if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("End date has to be set as a future date!");
+    private boolean validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) { // walidacja wszystkich pól na raz a nie kazdego osobno
+        if (sessionDto != null) {
+            if (sessionDto.getName() == null || sessionDto.getEndDate() == null || sessionDto.getEndDate().isBefore(LocalDateTime.now())
+                    || participantsDto == null || participantsDto.size() == 0) {
+                throw new IllegalArgumentException("Invalid input parameters: session name, end date and participants must be specified. End date has to be set as a future date!");
+            }
         }
-       validateParticipantDto(participantsDto);
-
+        return true;
     }
 
-    protected void validateParticipantDto(List<ParticipantDto> participantsDto) {
-        if (participantsDto == null || participantsDto.size() == 0) {
-            throw new IllegalArgumentException("List of Participants cannot be empty");
+    private boolean validateSession(Session session) {
+        if (session != null) {
+            if (session.getQuestions().size() == 0 || session.getQuestions() == null) {
+                System.out.println("Session cannot be created : no active questions available");
+                return false;
+            }
         }
+        return true;
     }
+
 }
