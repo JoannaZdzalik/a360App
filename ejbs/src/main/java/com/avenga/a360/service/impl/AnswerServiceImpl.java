@@ -24,7 +24,7 @@ public class AnswerServiceImpl implements AnswerService {
     public List<AnswerDto> findAllAnswersByParticipantId(Long id) {
        List<Answer> answers = answerDao.getAllAnswersByParticipantId(id);
        return answers.stream()
-               .map(u-> new AnswerDto(u.getId(), u.getParticipant(), u.getQuestion(), u.getAnswerText()))
+               .map(u-> new AnswerDto(u.getId(), u.getParticipant().getId(), u.getQuestion().getId(), u.getAnswerText()))
                .collect(Collectors.toList());
     }
 
@@ -39,7 +39,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     public Answer answerDtoToAnswer(AnswerDto answerDto, Question question, Participant participant) {
         Answer answer = new Answer();
-//        answer.setId(answerDto.getId());
+        answer.setId(answerDto.getId());
         answer.setAnswerText(answerDto.getAnswerText());
         answer.setParticipant(participant);
         answer.setQuestion(question);

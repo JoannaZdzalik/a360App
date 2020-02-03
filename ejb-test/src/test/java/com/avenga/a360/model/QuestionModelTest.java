@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class QuestionTest extends JpaTest {
+public class QuestionModelTest extends JpaTest {
 
     @Test
     public void shouldFindActiveQuestionList() {

@@ -4,11 +4,14 @@ import com.avenga.a360.dao.impl.AnswerDao;
 import com.avenga.a360.dao.impl.ParticipantDao;
 import com.avenga.a360.dao.impl.QuestionDao;
 import com.avenga.a360.domain.dto.AnswerDto;
+import com.avenga.a360.domain.dto.SessionDto;
+import com.avenga.a360.domain.model.Answer;
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.impl.AnswerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -39,6 +43,7 @@ public class AnswerServiceImplTest {
     }
 
     @Test
+    @DisplayName("")
     public void shouldSaveCompleteAnswerWithAllValidParameters() {
         Question question1 = new Question();
         question1.setId(1L);
@@ -72,7 +77,7 @@ public class AnswerServiceImplTest {
     }
 
     @Test
-    public void shouldSaveAnswerWhenAnswerTextIsNull(){
+    public void shouldSaveAnswerWhenAnswerTextIsNull() {
         Question question1 = new Question();
         question1.setId(1L);
         question1.setQuestionText("How do you like him?");
@@ -103,4 +108,29 @@ public class AnswerServiceImplTest {
         assertTrue(answerService.createAnswer(newAnswer));
         System.out.println(newAnswer);
     }
+
+    @Test
+    public void shouldMapAnswerDtoToAnswer() {
+        Question question1 = new Question();
+        question1.setId(1L);
+        question1.setQuestionText("How do you like him?");
+        question1.setQuestionType(Question.QuestionType.TEXT);
+        question1.setDefaultAnswers(null);
+
+        Participant asia = new Participant();
+        asia.setId(1L);
+        asia.setEmail("asia@yzdz");
+
+        AnswerDto answerDto = new AnswerDto();
+        answerDto.setId(1L);
+        answerDto.setAnswerText("He is OK");
+        answerDto.setQuestionId(1L);
+        answerDto.setParticipantId(1L);
+
+        Answer answer = answerService.answerDtoToAnswer(answerDto, question1, asia);
+
+        assertEquals(answer.getAnswerText(), answerDto.getAnswerText());
+
+    }
 }
+

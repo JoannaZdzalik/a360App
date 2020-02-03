@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class AnswerTest extends JpaTest {
+public class AnswerModelTest extends JpaTest {
 
     @Test
     public void shouldFindAnswerListByParticipantId(){
