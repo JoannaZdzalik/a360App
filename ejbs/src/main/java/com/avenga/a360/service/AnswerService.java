@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AnswerService {
 
- //   List<AnswerDto> findAllAnswersByParticipantId(Long id);
+    List<AnswerDto> findAllAnswersByParticipantId(Long id);
 
     boolean createAnswer(AnswerDto answerDto);
 }

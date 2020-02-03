@@ -30,7 +30,10 @@ public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 15)
+    private String uid;
 
     @Column(columnDefinition ="VARCHAR(255) NOT NULL")
     private String email;
@@ -39,7 +42,7 @@ public class Participant {
     @JoinColumn(name = "id_session")
     private Session session;
 
-    @OneToMany(mappedBy="participant") // cascade = CascadeType.ALL, mappedBy = "participant"
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="participant")
     private List<Answer> answers;
 
 }

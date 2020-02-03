@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = "findSessionsToSent",
@@ -40,7 +39,7 @@ public class Session {
     @Column(name = "is_sent", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isSent = false;
 
-    @OneToMany (mappedBy = "session") // cascade = CascadeType.ALL, mappedBy = "session"
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "session")
     private List<Participant> participants;
 
     @ManyToMany

@@ -49,12 +49,13 @@ public class SessionServiceImplTest {
 
         List<ParticipantDto> participants = new ArrayList<>();
         ParticipantDto kasia = new ParticipantDto();
+        kasia.setUid("UIDasdfgh123456");
         kasia.setEmail("kasia@yzdz");
         participants.add(kasia);
 
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
-        newSession.setEndDate(LocalDateTime.of(2020, 02, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.of(2020, 11, 02, 20, 00));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
 
@@ -113,6 +114,7 @@ public class SessionServiceImplTest {
         List<ParticipantDto> participants = new ArrayList<>();
         ParticipantDto asia = new ParticipantDto();
         asia.setEmail("asia@zdz");
+        asia.setUid("123456789012345");
         participants.add(asia);
 
         SessionDto newSession = new SessionDto();
@@ -138,6 +140,7 @@ public class SessionServiceImplTest {
         List<ParticipantDto> participants = new ArrayList<>();
         ParticipantDto asia = new ParticipantDto();
         asia.setEmail("asia@zdz");
+        asia.setUid("123456789012345");
         participants.add(asia);
 
         SessionDto newSession = new SessionDto();
@@ -162,6 +165,7 @@ public class SessionServiceImplTest {
         List<ParticipantDto> participants = new ArrayList<>();
         ParticipantDto asia = new ParticipantDto();
         asia.setEmail("asia@zdz");
+        asia.setUid("123456789012345");
         participants.add(asia);
 
         SessionDto newSession = new SessionDto();
@@ -184,7 +188,7 @@ public class SessionServiceImplTest {
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
         newSession.setSent(false);
-        newSession.setEndDate(LocalDateTime.of(2020, 02, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.of(2020, 11, 02, 20, 00));
 
         List<Question> questions = new ArrayList<>();
 
@@ -203,7 +207,7 @@ public class SessionServiceImplTest {
         SessionDto newSession = new SessionDto();
         newSession.setName("Avenga First Edition");
         newSession.setSent(false);
-        newSession.setEndDate(LocalDateTime.of(2020, 02, 02, 20, 00));
+        newSession.setEndDate(LocalDateTime.of(2020, 10, 02, 20, 00));
 
         assertFalse(sessionServiceImpl.createSession(newSession, participants));
     }
@@ -225,7 +229,7 @@ public class SessionServiceImplTest {
         sessionDto.setName("SessionOne");
         sessionDto.setEndDate(LocalDateTime.of(2020, 02, 15, 20, 00, 00));
 
-        Session session = sessionServiceImpl.sessionDtoToSession(sessionDto);
+        Session session = sessionServiceImpl.mapSessionDtoToSession(sessionDto);
 
         assertEquals(session.getId(), sessionDto.getId());
     }
@@ -237,7 +241,7 @@ public class SessionServiceImplTest {
         session.setName("Session First Edition");
         session.setEndDate(LocalDateTime.of(2020, 03, 15, 20, 00, 00));
 
-        SessionDto sessionDto = sessionServiceImpl.sessionToSessionDto(session);
+        SessionDto sessionDto = sessionServiceImpl.mapSessionToSessionDto(session);
 
         assertEquals(session.getId(), sessionDto.getId());
         assertEquals(session.getName(), sessionDto.getName());

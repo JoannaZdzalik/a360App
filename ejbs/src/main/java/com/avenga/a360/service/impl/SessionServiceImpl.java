@@ -18,13 +18,7 @@ import java.util.stream.Collectors;
 public class SessionServiceImpl implements SessionService {
 
     SessionDao sessionDao;
-
     QuestionDao questionDao;
-
-//    public SessionServiceImpl(SessionDao sessionDao) {
-//        this.sessionDao = sessionDao;
-//    }
-
 
     @Override
     public List<SessionDto> findSessionsEndedInThePastButNotSent() {
@@ -39,17 +33,17 @@ public class SessionServiceImpl implements SessionService {
         List<Question> questions = questionDao.getAllActiveQuestions();
 
         if (sessionDto == null || questions == null || participantsDto == null) {
-            sessionDtoValidator(sessionDto, participantsDto);
+            validateSessionDto(sessionDto, participantsDto);
             return false;
         } else {
-            Session session = sessionDtoToSession(sessionDto);
-            session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
+            Session session = mapSessionDtoToSession(sessionDto);
+            session.setParticipants(mapParticipantDtoListToParticipantList(participantsDto, session));
             session.setQuestions(questions);
 
             if ((session.getQuestions().size() == 0) || (session.getParticipants().size() == 0) ||
                     (session.getEndDate() == null || session.getEndDate().isBefore(LocalDateTime.now())) ||
                     (session.getName() == null)) {
-                sessionDtoValidator(sessionDto, participantsDto);
+                validateSessionDto(sessionDto, participantsDto);
                 return false;
             }
             sessionDao.save(session);
@@ -58,7 +52,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
 
-    public Session sessionDtoToSession(SessionDto sessionDto) {
+    public Session mapSessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
         session.setId(sessionDto.getId());
         session.setName(sessionDto.getName());
@@ -67,7 +61,7 @@ public class SessionServiceImpl implements SessionService {
         return session;
     }
 
-    public SessionDto sessionToSessionDto(Session session) {
+    public SessionDto mapSessionToSessionDto(Session session) {
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(session.getId());
         sessionDto.setName(session.getName());
@@ -76,11 +70,12 @@ public class SessionServiceImpl implements SessionService {
         return sessionDto;
     }
 
-    public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
+    public List<Participant> mapParticipantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
             participant.setEmail(participantDto.getEmail());
+            participant.setUid(participantDto.getUid());
             participant.setSession(session);
 //            participant.setId(participantDto.getId());
             participants.add(participant);
@@ -88,7 +83,7 @@ public class SessionServiceImpl implements SessionService {
         return participants;
     }
 
-    private void sessionDtoValidator(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
+    private void validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
         if (sessionDto.getName() == null) {
             throw new IllegalArgumentException("Session name must be specified");
         } else if (sessionDto.getEndDate() == null) {
@@ -96,11 +91,11 @@ public class SessionServiceImpl implements SessionService {
         } else if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("End date has to be set as a future date!");
         }
-       participantDtoValidator(participantsDto);
+       validateParticipantDto(participantsDto);
 
     }
 
-    private void participantDtoValidator(List<ParticipantDto> participantsDto) {
+    protected void validateParticipantDto(List<ParticipantDto> participantsDto) {
         if (participantsDto == null || participantsDto.size() == 0) {
             throw new IllegalArgumentException("List of Participants cannot be empty");
         }

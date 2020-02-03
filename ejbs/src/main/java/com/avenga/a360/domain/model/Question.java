@@ -34,7 +34,7 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "question_text", columnDefinition ="VARCHAR(255) NOT NULL")
     private String questionText;
@@ -59,5 +59,6 @@ public class Question {
     public enum QuestionType {
         TEXT,
         RADIO,
+        CHECKBOX
     }
 }

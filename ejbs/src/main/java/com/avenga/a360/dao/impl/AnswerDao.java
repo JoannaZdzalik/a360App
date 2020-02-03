@@ -21,10 +21,9 @@ public class AnswerDao implements GenericDao<Answer> {
         answers.add(answer);
     }
 
-    public List<Answer> getAllAnswersByParticipantId(Long id){
-//                List<Answer> answers = em.createNamedQuery("findSessionsToSent", Answer.class)
+    public List<Answer> getAllAnswersByParticipantId(Long id) {
+//                List<Answer> answers = em.createNamedQuery("getAllAnswersByParticipantId", Answer.class)
 //                .getResultList();
         return answers;
     }
-
 }

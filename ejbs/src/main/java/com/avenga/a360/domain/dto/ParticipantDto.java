@@ -15,6 +15,7 @@ import java.util.List;
 public class ParticipantDto {
 
     private Long id;
+    private String uid;
     private String email;
     private Long idSession;
   //  private List<AnswerDto> answers;
