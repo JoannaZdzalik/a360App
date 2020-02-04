@@ -15,6 +15,16 @@ public class SendFeedbackServiceImpl extends SendService {
     AnswerDao answerDao;
     QuestionDaoImpl questionDao = new QuestionDaoImpl();
 
+    public boolean sendFeedback(Session session) { //na razie będzie wyswietlac tylko odpowiedzi tekstowe
+        SendService sendService = new SendService();
+        createEmailSubject(session);
+        for (Participant participant : session.getParticipants()
+        ) {
+            sendService.sendEmail(participant.getEmail(), createEmailSubject(session), createFeedbackEmailBody(participant));
+        }
+        return true;
+    }
+
     public static String createEmailSubject(Session session) {
         return session.getName() + " - check your feedback";
     }
@@ -35,15 +45,5 @@ public class SendFeedbackServiceImpl extends SendService {
             }
         }
         return mailBody.toString();
-    }
-
-    public boolean sendFeedback(Session session) { //na razie będzie wyswietlac tylko odpowiedzi tekstowe
-        SendService sendService = new SendService();
-        createEmailSubject(session);
-        for (Participant participant : session.getParticipants()
-        ) {
-            sendService.sendEmail(participant.getEmail(), createEmailSubject(session), createFeedbackEmailBody(participant));
-        }
-        return true;
     }
 }

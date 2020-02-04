@@ -8,6 +8,7 @@ import org.junit.Test;
 import javax.persistence.Query;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AnswerModelTest extends JpaTest {
@@ -39,7 +40,7 @@ public class AnswerModelTest extends JpaTest {
 
         List<Answer> result = query.getResultList();
 
-        assertTrue(result.size() == 2);
+        assertEquals(2, result.size());
 
     }
 }
