@@ -17,6 +17,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "getAllAnswersByParticipantId",
                 query = "SELECT a FROM Answer a WHERE a.participant = :id"),
+        @NamedQuery(name= "getAnswersByParticipantIdAndQuestionId", query = "SELECT a FROM Answer a WHERE a.participant = :idParticipant AND a.question = :idQuestion")
 })
 public class Answer {
 

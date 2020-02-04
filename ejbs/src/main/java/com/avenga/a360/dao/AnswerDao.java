@@ -8,4 +8,5 @@ public interface AnswerDao {
 
     void save(Answer answer);
     List<Answer> getAllAnswersByParticipantId(Long id);
+    List<Answer> getAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion);
 }

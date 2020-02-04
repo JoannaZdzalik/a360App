@@ -1,16 +1,15 @@
-package com.avenga.a360.service;
+package com.avenga.a360.service.impl;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
 
-public abstract class SendService {
-
+public class SendService {
 
     private static final String HOST = "localhost";
     private static final int PORT = 25;
 
-    public static boolean sendEmail(String recipient, String subject, String mailBody) {
+    public boolean sendEmail(String recipient, String subject, String mailBody) {
         String userName = "username@gmail.com";
         String password = "password";
 

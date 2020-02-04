@@ -26,4 +26,11 @@ public class AnswerDaoImpl implements AnswerDao {
 //                .getResultList();
         return answers;
     }
+
+    @Override
+    public List<Answer> getAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion) {
+        //         List<Answer> answers = em.createNamedQuery("getAnswersByParticipantIdAndQuestionId", Answer.class)
+//                .getResultList();
+        return answers;
+    }
 }

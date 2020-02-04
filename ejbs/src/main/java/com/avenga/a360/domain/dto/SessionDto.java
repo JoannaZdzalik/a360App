@@ -20,6 +20,6 @@ public class SessionDto {
     private boolean isSent;
 
     private List<ParticipantDto> participants;
-    //    private List<QuestionDto> questions;
+    private List<QuestionDto> questions;
 
 }

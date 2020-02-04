@@ -83,7 +83,7 @@ public class SessionServiceImpl implements SessionService {
         //do dodać pętlę która sprawdza czy uid juz istnieje w bazie
     }
 
-    private boolean validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) { // walidacja wszystkich pól na raz a nie kazdego osobno
+    private boolean validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
         if (sessionDto != null) {
             if (sessionDto.getName() == null || sessionDto.getEndDate() == null || sessionDto.getEndDate().isBefore(LocalDateTime.now())
                     || participantsDto == null || participantsDto.size() == 0) {
