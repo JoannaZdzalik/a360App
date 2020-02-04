@@ -23,7 +23,8 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "getAllParticipantsListBySessionId",
                 query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
-        @NamedQuery(name="findParticipantById", query="SELECT p FROM Participant p where p.id = :id")
+        @NamedQuery(name="findParticipantById", query="SELECT p FROM Participant p where p.id = :id"),
+        @NamedQuery (name= "findParticipantByUid", query = "SELECT p FROM Participant p where p.uid = :uid")
 })
 
 public class Participant {

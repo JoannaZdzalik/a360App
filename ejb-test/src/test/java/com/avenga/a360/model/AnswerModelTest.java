@@ -2,7 +2,6 @@ package com.avenga.a360.model;
 
 import com.avenga.a360.domain.model.Answer;
 import com.avenga.a360.domain.model.Participant;
-import com.avenga.a360.domain.model.Session;
 import org.junit.Test;
 
 import javax.persistence.Query;

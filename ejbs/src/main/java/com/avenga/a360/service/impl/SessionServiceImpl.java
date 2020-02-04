@@ -1,5 +1,6 @@
 package com.avenga.a360.service.impl;
 
+import com.avenga.a360.dao.impl.ParticipantDaoImpl;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.dao.impl.SessionDaoImpl;
 import com.avenga.a360.domain.dto.ParticipantDto;
@@ -18,29 +19,31 @@ import java.util.stream.Collectors;
 
 public class SessionServiceImpl implements SessionService {
 
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnoprstuwxyz0123456789";
+
     SessionDaoImpl sessionDao;
     QuestionDaoImpl questionDao;
+    ParticipantDaoImpl participantDao;
+    ParticipantServiceImpl participantService;
 
     @Override
-    public List<SessionDto> findSessionsEndedInThePastButNotSent() {
+    public List<Session> findSessionsEndedInThePastButNotSent() {
         List<Session> sessions = sessionDao.getAllSessionsToSend();
-        return sessions.stream()
-                .map(u -> new SessionDto(u.getId(), u.getName(), u.getEndDate(), u.isSent()))
-                .collect(Collectors.toList());
+                return sessions;
     }
 
     @Override
     public boolean createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
         List<Question> questions = questionDao.getAllActiveQuestions();
 
-        if(!validateSessionDto(sessionDto, participantsDto)){
+        if (!validateSessionDto(sessionDto, participantsDto)) {
             return false;
         }
         Session session = mapSessionDtoToSession(sessionDto);
         session.setParticipants(mapParticipantDtoListToParticipantList(participantsDto, session));
         session.setQuestions(questions);
 
-        if(!validateSession(session)){
+        if (!validateSession(session)) {
             return false;
         }
         sessionDao.save(session);
@@ -67,14 +70,17 @@ public class SessionServiceImpl implements SessionService {
 
     public List<Participant> mapParticipantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
+        String generatedUid = generateUidForParticipant(15);
+
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
             participant.setEmail(participantDto.getEmail());
-            participant.setUid(participantDto.getUid());
+            participant.setUid(generatedUid);
             participant.setSession(session);
             participants.add(participant);
         }
         return participants;
+        //do dodać pętlę która sprawdza czy uid juz istnieje w bazie
     }
 
     private boolean validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) { // walidacja wszystkich pól na raz a nie kazdego osobno
@@ -95,6 +101,15 @@ public class SessionServiceImpl implements SessionService {
             }
         }
         return true;
+    }
+
+    public String generateUidForParticipant(int count) {
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
     }
 
 }

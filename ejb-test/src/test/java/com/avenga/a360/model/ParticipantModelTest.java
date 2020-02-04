@@ -35,4 +35,12 @@ public class ParticipantModelTest extends JpaTest {
 
         assertEquals("anna@avenga.com", result.getEmail());
     }
+
+    @Test
+    public void shouldFindParticipantByUid(){
+        Query query = em.createNamedQuery("findParticipantByUid");
+        Participant result = (Participant) query.setParameter("uid", "123456789012345").getSingleResult();
+
+        assertEquals("anna@avenga.com", result.getEmail());
+    }
 }

@@ -4,10 +4,12 @@ import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.dao.impl.SessionDaoImpl;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.dto.SessionDto;
+import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.impl.SessionServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -129,7 +131,7 @@ public class SessionServiceImplTest {
     }
 
     @Test
-    public void shouldThrowIllegalArgumentExceptionWhenSetEndDateIsNull(){
+    public void shouldThrowIllegalArgumentExceptionWhenSetEndDateIsNull() {
         List<Question> questions = new ArrayList<>();
         Question question1 = new Question();
         question1.setQuestionText("How do you like him?");
@@ -247,4 +249,14 @@ public class SessionServiceImplTest {
         assertEquals(session.getName(), sessionDto.getName());
         assertEquals(session.getEndDate(), sessionDto.getEndDate());
     }
+
+    @Test
+    public void shouldGenerateUid() {
+        String generatedUid = sessionService.generateUidForParticipant(15);
+        assertEquals(generatedUid.length(), 15);
+    }
+
+    @Test
+    @DisplayName("Should regenerate uid if generated String already exists in a database")
+    public void shouldGenerateUidAsLongAsGeneratedStringIsNotUnique(){}
 }
