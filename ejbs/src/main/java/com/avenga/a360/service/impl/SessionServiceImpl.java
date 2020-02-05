@@ -70,24 +70,14 @@ public class SessionServiceImpl implements SessionService {
 
     public List<Participant> mapParticipantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
-     //  String generatedUid = generateUidForParticipant(15);
-
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
             participant.setSession(session);
             participant.setEmail(participantDto.getEmail());
-            while (true) { //jesli wygenerowany uid już istnieje, wygeneruj nowy
-                String generatedUId = generateUidForParticipant(15);
-                if (participantDao.findByUid(generatedUId) == null) {
-                    participant.setUid(generatedUId);
-                    break;
-                }
-            }
-            //     participant.setUid(generatedUid);
+            participant.setUid(generateUniqueUid());
             participants.add(participant);
         }
         return participants;
-        //do dodać pętlę która sprawdza czy uid juz istnieje w bazie
     }
 
     private boolean validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
@@ -110,7 +100,18 @@ public class SessionServiceImpl implements SessionService {
         return true;
     }
 
-    public String generateUidForParticipant(int count) {
+    public String generateUniqueUid() {
+        String generatedUId;
+        while (true) {
+            generatedUId = generateUidFromAlphaNumericString(15);
+            if (participantDao.findByUid(generatedUId) == null) {
+                break;
+            }
+        }
+        return generatedUId;
+    }
+
+    public String generateUidFromAlphaNumericString(int count) {
         StringBuilder builder = new StringBuilder();
         while (count-- != 0) {
             int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());

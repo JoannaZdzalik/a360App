@@ -65,7 +65,7 @@ public class SessionServiceImplTest {
         newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
-        when(participantDao.findByUid(sessionService.generateUidForParticipant(15))).thenReturn(null);
+        when(participantDao.findByUid(sessionService.generateUidFromAlphaNumericString(15))).thenReturn(null);
 
         assertTrue(sessionService.createSession(newSession, participants));
     }
@@ -201,7 +201,7 @@ public class SessionServiceImplTest {
         List<Question> questions = new ArrayList<>();
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
-        when(participantDao.findByUid(sessionService.generateUidForParticipant(15))).thenReturn(null);
+        when(participantDao.findByUid(sessionService.generateUidFromAlphaNumericString(15))).thenReturn(null);
 
         assertFalse(sessionService.createSession(newSession, participants));
     }
@@ -218,7 +218,7 @@ public class SessionServiceImplTest {
         newSession.setSent(false);
         newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
-        when(participantDao.findByUid(sessionService.generateUidForParticipant(15))).thenReturn(null);
+        when(participantDao.findByUid(sessionService.generateUidFromAlphaNumericString(15))).thenReturn(null);
 
         assertFalse(sessionService.createSession(newSession, participants));
     }
@@ -261,7 +261,7 @@ public class SessionServiceImplTest {
 
     @Test
     public void shouldGenerateUid() {
-        String generatedUid = sessionService.generateUidForParticipant(15);
+        String generatedUid = sessionService.generateUidFromAlphaNumericString(15);
         assertEquals(generatedUid.length(), 15);
     }
 
