@@ -16,7 +16,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ear" target="1.5" />
-      <module name="ejb-test" target="8" />
+      <module name="ejb-test" target="9" />
       <module name="ejbs" target="1.8" />
       <module name="logging" target="1.8" />
       <module name="primary-source" target="1.8" />

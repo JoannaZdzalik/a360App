@@ -1,11 +1,12 @@
 package com.avenga.a360.service;
 
-import com.avenga.a360.dao.AnswerDao;
+import com.avenga.a360.domain.model.Email;
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.impl.SendEmailsWithLinksServiceImpl;
+import com.avenga.a360.service.impl.SendService;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,8 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class SendEmailsWithLinksServiceImplTest {
+
+    @Mock
+    SendService sendService;
 
     @InjectMocks
     SendEmailsWithLinksServiceImpl sendEmailsWithLinksService;
@@ -27,25 +35,27 @@ public class SendEmailsWithLinksServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    @Before
+    public void init() throws Exception {
+        sendService = new SendService();
+    }
+
+
+
     @Test
-    public void shouldCreateEmailWithLinksForEveryParticipantThatHasToBeRated() {
+    public void shouldFindParticipantsToBeRatedBySingleParticipant() {
         List<Participant> participants = new ArrayList<>();
+
         Participant kasia = new Participant();
-        kasia.setId(1L);
         kasia.setEmail("kasia@yzdz");
-        kasia.setUid("123456789012345");
         participants.add(kasia);
 
         Participant asia = new Participant();
-        asia.setId(2L);
         asia.setEmail("asia@zdz");
-        asia.setUid("asdfghjklzxcvbn");
         participants.add(asia);
 
         Participant jagna = new Participant();
-        jagna.setId(3L);
         jagna.setEmail("jagienka@dvdv");
-        jagna.setUid("999rrr222hhhAAA");
         participants.add(jagna);
 
         Session session = new Session();
@@ -53,12 +63,20 @@ public class SendEmailsWithLinksServiceImplTest {
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setParticipants(participants);
 
+        List<Participant> participantsToRate = sendEmailsWithLinksService.findParticipantsToBeRatedBySingleParticipant(asia, session);
+
+        assertAll(
+                () -> assertEquals(2, participantsToRate.size()),
+                () -> assertEquals("kasia@yzdz",participantsToRate.get(0).getEmail()),
+                () -> assertEquals("jagienka@dvdv", participantsToRate.get(1).getEmail()),
+                () -> assertFalse( participantsToRate.contains(asia))
+        );
     }
 
     @Test
     public void shouldFormatEndDateToYearMonthDay() {
         Session session = new Session();
-        session.setEndDate(LocalDateTime.of(2020, 10,18,15, 00, 00));
+        session.setEndDate(LocalDateTime.of(2020, 10, 18, 15, 00, 00));
 
         assertEquals("2020-10-18", SendEmailsWithLinksServiceImpl.formatEndDate(session.getEndDate()));
     }
@@ -77,5 +95,31 @@ public class SendEmailsWithLinksServiceImplTest {
         session.setName("Avenga First Edition");
 
         assertEquals("New feedback session Avenga First Edition to be completed", SendEmailsWithLinksServiceImpl.createEmailSubject(session));
+    }
+
+    @Test
+    public void shouldVerifyHowManyEmailsWithLinksHasBeenSent() {
+        List<Participant> participants = new ArrayList<>();
+
+        Participant kasia = new Participant();
+        kasia.setEmail("kasia@yzdz");
+        participants.add(kasia);
+
+        Participant asia = new Participant();
+        asia.setEmail("asia@zdz");
+        participants.add(asia);
+
+        Participant jagna = new Participant();
+        jagna.setEmail("jagienka@dvdv");
+        participants.add(jagna);
+
+        Session session = new Session();
+        session.setName("Avenga First Edition");
+        session.setEndDate(LocalDateTime.now().plusDays(10L));
+        session.setParticipants(participants);
+
+        sendEmailsWithLinksService.sendEmailsWithLinks(session);
+
+        verify(sendService, times(session.getParticipants().size())).sendEmail(any(Email.class));
     }
 }

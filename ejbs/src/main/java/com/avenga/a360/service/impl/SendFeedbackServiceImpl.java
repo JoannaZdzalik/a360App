@@ -1,13 +1,10 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.AnswerDao;
-import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
-import com.avenga.a360.domain.model.Answer;
-import com.avenga.a360.domain.model.Participant;
-import com.avenga.a360.domain.model.Question;
-import com.avenga.a360.domain.model.Session;
+import com.avenga.a360.domain.model.*;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class SendFeedbackServiceImpl extends SendService {
@@ -15,12 +12,13 @@ public class SendFeedbackServiceImpl extends SendService {
     AnswerDao answerDao;
     QuestionDaoImpl questionDao = new QuestionDaoImpl();
 
-    public boolean sendFeedback(Session session) { //na razie będzie wyswietlac tylko odpowiedzi tekstowe
-        SendService sendService = new SendService();
-        createEmailSubject(session);
+    @Inject
+    SendService sendService;
+
+    public boolean sendFeedback(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
-            sendService.sendEmail(participant.getEmail(), createEmailSubject(session), createFeedbackEmailBody(participant));
+            sendService.sendEmail(createFeedbackEmail(participant, session));
         }
         return true;
     }
@@ -29,21 +27,26 @@ public class SendFeedbackServiceImpl extends SendService {
         return session.getName() + " - check your feedback";
     }
 
-    public String createFeedbackEmailBody(Participant participant) {
+    public Email createFeedbackEmail(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
         mailBody.append("Feedback session has come to an end. Please see your feedback below: \n");
 
-        List<Question> questionsByParticipantId = questionDao.getAllQuestionsByParticipantId(participant.getId());
-        Question singleQuestion = new Question();
-        List<Answer> answersByParticipantIdAndQuestionId = answerDao.getAllAnswersByParticipantIdAndQuestionId(participant.getId(), singleQuestion.getId());
-
-        for (Question question : questionsByParticipantId) { //tu dla każdego pytania mam wyświetlić liste odp
-            mailBody.append(question.getQuestionText() + " : ");
-            for (Answer answer : answersByParticipantIdAndQuestionId
-            ) {
-                mailBody.append(answer.getAnswerText());
+        List<Question> questions = findAllQuestionsByParticipantId(participant.getId());
+        for (Question q : questions) { //dla każdego pytania
+            mailBody.append(q.getQuestionText() + " : "); //wyświetl jego treść
+            List<Answer> answers = findAllAnswersByParticipantIdAndQuestionId(participant.getId(), q.getId()); //znajdź liste odpowiedzi
+            for (Answer answer : answers) { //dla każdej odpowiedzi na pytanie
+                mailBody.append(answer.getAnswerText()); // wyświetl jej treść
             }
         }
-        return mailBody.toString();
+        return new Email(participant.getEmail(), createEmailSubject(session), mailBody.toString());
+    }
+
+    public List<Answer> findAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion) {
+        return answerDao.getAllAnswersByParticipantIdAndQuestionId(idParticipant, idQuestion);
+    }
+
+    public List<Question> findAllQuestionsByParticipantId(Long participantId) {
+        return questionDao.getAllQuestionsByParticipantId(participantId);
     }
 }

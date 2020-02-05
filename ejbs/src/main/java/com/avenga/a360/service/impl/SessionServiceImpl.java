@@ -1,5 +1,6 @@
 package com.avenga.a360.service.impl;
 
+import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.dao.impl.ParticipantDaoImpl;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.dao.impl.SessionDaoImpl;
@@ -23,8 +24,7 @@ public class SessionServiceImpl implements SessionService {
 
     SessionDaoImpl sessionDao;
     QuestionDaoImpl questionDao;
-    ParticipantDaoImpl participantDao;
-    ParticipantServiceImpl participantService;
+    ParticipantDao participantDao;
 
     @Override
     public List<Session> findSessionsEndedInThePastButNotSent() {
@@ -70,11 +70,18 @@ public class SessionServiceImpl implements SessionService {
 
     public List<Participant> mapParticipantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
-        String generatedUid = generateUidForParticipant(15);
+       String generatedUid = generateUidForParticipant(15);
 
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
             participant.setEmail(participantDto.getEmail());
+//            while (true) {
+//                String generatedUId = generateUidForParticipant(15);
+//                if (participantDao.findByUid(generatedUId) == null) {
+//                    participant.setUid(generatedUId);
+//                    break;
+//                }
+//            }
             participant.setUid(generatedUid);
             participant.setSession(session);
             participants.add(participant);

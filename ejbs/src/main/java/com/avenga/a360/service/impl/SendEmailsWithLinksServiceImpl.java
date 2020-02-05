@@ -1,27 +1,33 @@
 package com.avenga.a360.service.impl;
 
-import com.avenga.a360.domain.model.Participant;
-import com.avenga.a360.domain.model.Session;
+import com.avenga.a360.domain.model.*;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SendEmailsWithLinksServiceImpl {
 
     private static final String APP_URL = "http://localhost/";
 
-    public boolean sendParticipantsEmailsWithLinks(Session session) {
-        SendService sendService = new SendService();
-        createEmailSubject(session);
+    //sprawdzic czy jagna na pytanie 2gie dostanie 2 odpowiedzi
+    SendService sendService;
+
+    public SendEmailsWithLinksServiceImpl(SendService sendService) {
+        this.sendService = sendService;
+    }
+
+    public boolean sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
-            sendService.sendEmail(participant.getEmail(), createEmailSubject(session), createEmailBodyWithLinks(participant, session));
+            sendService.sendEmail(createEmailWithLink(participant, session));
         }
         return true;
     }
 
-    public String createEmailBodyWithLinks(Participant participant, Session session) {
+    public Email createEmailWithLink(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
         mailBody.append("Welcome to a360 feedback session: ");
         mailBody.append(session.getName() + "\n");
@@ -32,31 +38,26 @@ public class SendEmailsWithLinksServiceImpl {
         mailBody.append(formatEndDate(session.getEndDate()) + "\n");
         mailBody.append(" \n");
 
+        for (Participant participantToRate : findParticipantsToBeRatedBySingleParticipant(participant, session)) {
+            mailBody.append(participantToRate.getEmail());
+            mailBody.append(": ");
+            mailBody.append(APP_URL + formatSessionName(session) + "/" + participantToRate.getUid());
+            mailBody.append(" \n");
+        }
+
+        mailBody.append(" \n");
+        mailBody.append("Thank you! ");
+        return new Email(participant.getEmail(), createEmailSubject(session), mailBody.toString());
+    }
+
+    public List<Participant> findParticipantsToBeRatedBySingleParticipant(Participant participant, Session session) {
+        List<Participant> participantsToRate = new ArrayList<>();
         for (Participant participantToRate : session.getParticipants()
         ) {
             if (!participant.equals(participantToRate)) {
-                mailBody.append(participantToRate.getEmail());
-                mailBody.append(": ");
-                mailBody.append(APP_URL + formatSessionName(session) + "/" + participantToRate.getUid());
-                mailBody.append(" \n");
+                participantsToRate.add(participantToRate);
             }
         }
-        mailBody.append(" \n");
-        mailBody.append("Thank you! ");
-        return mailBody.toString();
-    }
-
-    public List<Participant> findAllParticipantsToRate(Participant participant, Session session){
-//        StringBuilder mailBody = new StringBuilder();
-//        for (Participant participantToRate : session.getParticipants()
-//        ) {
-//            if (!participant.equals(participantToRate)) {
-//                mailBody.append(participantToRate.getEmail());
-//                mailBody.append(": ");
-//                mailBody.append(APP_URL + formatSessionName(session) + "/" + participantToRate.getUid());
-//                mailBody.append(" \n");
-//            }
-//        }
         return participantsToRate;
     }
 
@@ -72,4 +73,6 @@ public class SendEmailsWithLinksServiceImpl {
     public static String formatSessionName(Session session) {
         return session.getName().toLowerCase().replaceAll("\\s", "");
     }
-}
+
+
+    }
