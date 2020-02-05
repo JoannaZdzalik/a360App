@@ -1,5 +1,7 @@
 package com.avenga.a360.service;
 
+import com.avenga.a360.dao.ParticipantDao;
+import com.avenga.a360.dao.impl.ParticipantDaoImpl;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.dao.impl.SessionDaoImpl;
 import com.avenga.a360.domain.dto.ParticipantDto;
@@ -35,6 +37,9 @@ public class SessionServiceImplTest {
     @Mock
     private QuestionDaoImpl questionDao;
 
+    @Mock
+    private ParticipantDaoImpl participantDao;
+
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -60,6 +65,7 @@ public class SessionServiceImplTest {
         newSession.setEndDate(LocalDateTime.now().plusDays(10L));
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
+        when(participantDao.findByUid(sessionService.generateUidForParticipant(15))).thenReturn(null);
 
         assertTrue(sessionService.createSession(newSession, participants));
     }
@@ -195,6 +201,7 @@ public class SessionServiceImplTest {
         List<Question> questions = new ArrayList<>();
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions);
+        when(participantDao.findByUid(sessionService.generateUidForParticipant(15))).thenReturn(null);
 
         assertFalse(sessionService.createSession(newSession, participants));
     }
@@ -210,6 +217,8 @@ public class SessionServiceImplTest {
         newSession.setName("Avenga First Edition");
         newSession.setSent(false);
         newSession.setEndDate(LocalDateTime.now().plusDays(10L));
+
+        when(participantDao.findByUid(sessionService.generateUidForParticipant(15))).thenReturn(null);
 
         assertFalse(sessionService.createSession(newSession, participants));
     }

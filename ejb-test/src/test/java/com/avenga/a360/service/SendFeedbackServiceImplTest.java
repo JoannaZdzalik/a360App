@@ -47,12 +47,6 @@ public class SendFeedbackServiceImplTest {
     }
 
     @Test
-    public void shouldCheckIfParticipantsWillReceiveOnlyTheirAnswers() {
-
-
-    }
-
-    @Test
     public void shouldVerifyHowManyEmailsWithFeedbackHasBeenSent() {
         List<Participant> participants = new ArrayList<>();
 

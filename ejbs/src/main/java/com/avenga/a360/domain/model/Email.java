@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Email {
 
-    public String recipient;
+    private String recipient;
     private String subject;
     private String mailBody;
 }

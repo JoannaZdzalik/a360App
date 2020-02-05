@@ -70,20 +70,20 @@ public class SessionServiceImpl implements SessionService {
 
     public List<Participant> mapParticipantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
-       String generatedUid = generateUidForParticipant(15);
+     //  String generatedUid = generateUidForParticipant(15);
 
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
-            participant.setEmail(participantDto.getEmail());
-//            while (true) {
-//                String generatedUId = generateUidForParticipant(15);
-//                if (participantDao.findByUid(generatedUId) == null) {
-//                    participant.setUid(generatedUId);
-//                    break;
-//                }
-//            }
-            participant.setUid(generatedUid);
             participant.setSession(session);
+            participant.setEmail(participantDto.getEmail());
+            while (true) { //jesli wygenerowany uid już istnieje, wygeneruj nowy
+                String generatedUId = generateUidForParticipant(15);
+                if (participantDao.findByUid(generatedUId) == null) {
+                    participant.setUid(generatedUId);
+                    break;
+                }
+            }
+            //     participant.setUid(generatedUid);
             participants.add(participant);
         }
         return participants;
