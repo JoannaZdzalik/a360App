@@ -57,7 +57,7 @@ public class SessionServiceImpl implements SessionService {
             return false;
         }
         sessionDao.save(session);
-        sendEmailsWithLinksService.sendEmailsWithLinks(session);
+    //    sendEmailsWithLinksService.sendEmailsWithLinks(session);
         return true;
     }
 

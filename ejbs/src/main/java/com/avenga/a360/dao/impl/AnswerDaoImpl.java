@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
+
 public class AnswerDaoImpl implements AnswerDao {
 
     @PersistenceContext(unitName = "a360")
@@ -27,6 +27,7 @@ public class AnswerDaoImpl implements AnswerDao {
 
     public List<Answer> getAllAnswersByParticipantId(Long id) {
                 List<Answer> answers = em.createNamedQuery("getAllAnswersByParticipantId", Answer.class)
+                        .setParameter("idParticipant", id )
                 .getResultList();
         return answers;
     }
@@ -34,6 +35,8 @@ public class AnswerDaoImpl implements AnswerDao {
     @Override
     public List<Answer> getAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion) {
                  List<Answer> answers = em.createNamedQuery("getAnswersByParticipantIdAndQuestionId", Answer.class)
+                         .setParameter("idParticipant", idParticipant)
+                         .setParameter("idQuestion", idQuestion)
                 .getResultList();
         return answers;
     }

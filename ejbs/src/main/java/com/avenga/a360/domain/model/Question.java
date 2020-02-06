@@ -11,32 +11,32 @@ import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = "getActiveQuestionList",
-                query="SELECT q FROM Question q WHERE q.isActive = true"),
-
-        @NamedQuery(name = "findAllQuestionsByParticipantId",
-                query = "SELECT q \n" +
-                        "FROM Question q\n" +
-                        "LEFT JOIN q.sessions s\n" +
-                        "LEFT JOIN s.participants p\n" +
-                        "WHERE p = :idParticipant"),
-        @NamedQuery(name="findQuestionById", query="SELECT q FROM Question q where q.id = :id")
+                query = "SELECT q FROM Question q WHERE q.isActive = true"),
+        @NamedQuery(name = "findQuestionById", query = "SELECT q FROM Question q where q.id = :id")
 })
+
+@NamedNativeQuery(
+        name = "findAllQuestionsByParticipantId",
+        query = "select q.* from participants p left join sessions s on ( p.id_session = s.id )" +
+                "left join sessions_questions sq on (s.id = sq.id_session)" +
+                "left join questions q on (sq.id_question = q.id) where p.id = :id",
+        resultClass = Question.class)
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="questions",
-        indexes = {@Index(name="indexedIsActive", columnList="is_active")}
-        )
+@Table(name = "questions",
+        indexes = {@Index(name = "indexedIsActive", columnList = "is_active")}
+)
 public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "question_text", columnDefinition ="VARCHAR(255) NOT NULL")
+    @Column(name = "question_text", columnDefinition = "VARCHAR(255) NOT NULL")
     private String questionText;
 
     @Enumerated(EnumType.STRING)
@@ -46,13 +46,13 @@ public class Question {
     @Column(name = "default_answers")
     private String defaultAnswers;
 
-    @Column(name = "is_active", columnDefinition ="BOOLEAN DEFAULT TRUE")
+    @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive = true;
 
-    @ManyToMany(mappedBy="questions")
+    @ManyToMany(mappedBy = "questions")
     private List<Session> sessions;
 
-    @OneToMany (mappedBy = "question") // cascade = CascadeType.ALL, mappedBy = "question"
+    @OneToMany(mappedBy = "question") // cascade = CascadeType.ALL, mappedBy = "question"
     private List<Answer> answers;
 
 

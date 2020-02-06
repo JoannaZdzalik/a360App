@@ -31,48 +31,39 @@ public class SessionScheduler {
     @Inject
     SendFeedbackService sendFeedbackService;
 
-    @Inject
-    SendEmailsWithLinksService sendEmailsWithLinksService;
 
-    @Inject
-    SessionDao sessionDao;
-
-    @Schedule(second = "*/5", minute = "*", hour = "*", persistent = false)
+    @Schedule(second = "*/15", minute = "*", hour = "*", persistent = false)
     public void sendFeedbackAtSchedule() throws InterruptedException {
-        List<Session> sessionsToBeSent = sessionDao.getAllSessionsToSend();
-        for (Session s : sessionsToBeSent
-        ) {
-            sendFeedbackService.sendFeedback(s);
-            s.setSent(true);
+        List<Session> sessionsToBeSent = sessionService.findSessionsEndedInThePastButNotSent();
+        System.out.println("found: " + sessionsToBeSent.size());
+        if (!(sessionsToBeSent == null)) {
+            for (Session s : sessionsToBeSent
+            ) {
+                sendFeedbackService.sendFeedback(s);
+                s.setSent(true);
+            }
         }
     }
 
     @PostConstruct
-    public void initialize(){
+    public void initialize() { //this method is only for chceking if created sessionDto will be sent right after saving, method will be removed later
         List<ParticipantDto> participants = new ArrayList<>();
         ParticipantDto asia = new ParticipantDto();
-        asia.setId(1L);
         asia.setEmail("asia@zdz");
-        asia.setUid("asdfghjklzxcvbn");
         participants.add(asia);
 
         ParticipantDto jagna = new ParticipantDto();
-        jagna.setId(2L);
         jagna.setEmail("jagienka@dvdv");
-        jagna.setUid("999rrr222hhhAAA");
         participants.add(jagna);
+
+        ParticipantDto kasia = new ParticipantDto();
+        kasia.setEmail("katria@dvdv");
+        participants.add(kasia);
 
         SessionDto session1 = new SessionDto();
         session1.setName("Second session");
         session1.setEndDate(LocalDateTime.now().plusMinutes(2));
 
         sessionService.createSession(session1, participants);
-
-    }
-
-    @Timeout
-
-    public void programmaticTimeout(Timer timer) {
-        System.out.println("rrrr");
     }
 }

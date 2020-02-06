@@ -31,7 +31,7 @@ public class QuestionModelTest extends JpaTest {
 
         //when
         Query query = em.createNamedQuery("findAllQuestionsByParticipantId");
-        List<Question> result = query.setParameter("idParticipant", participant).getResultList();
+        List<Question> result = query.setParameter("id", participant.getId()).getResultList();
 
         //then
         assertTrue(result.size() == 4);

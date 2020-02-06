@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
+
 public class QuestionDaoImpl implements QuestionDao {
 
     @PersistenceContext(unitName = "a360")

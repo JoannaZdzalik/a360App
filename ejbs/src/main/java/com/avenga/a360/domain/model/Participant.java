@@ -21,11 +21,15 @@ import java.util.Set;
         uniqueConstraints={@UniqueConstraint(columnNames = {"email", "id_session"})}
 )
 @NamedQueries({
-        @NamedQuery(name = "getAllParticipantsListBySessionId",
-                query = "SELECT p FROM Participant p WHERE p.session = :idSession"),
         @NamedQuery(name="findParticipantById", query="SELECT p FROM Participant p where p.id = :id"),
         @NamedQuery (name= "findParticipantByUid", query = "SELECT p FROM Participant p where p.uid = :uid")
 })
+
+@NamedNativeQuery(
+        name = "getAllParticipantsListBySessionId",
+        query = "select * from participants where id_session = :id",
+        resultClass = Participant.class
+)
 
 public class Participant {
 

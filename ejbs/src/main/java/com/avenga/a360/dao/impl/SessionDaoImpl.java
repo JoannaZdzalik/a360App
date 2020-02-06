@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
 public class SessionDaoImpl implements SessionDao {
 
     @PersistenceContext(unitName = "a360")
