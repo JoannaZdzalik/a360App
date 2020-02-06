@@ -1,16 +1,22 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.AnswerDao;
-import com.avenga.a360.dao.impl.QuestionDaoImpl;
+import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.domain.model.*;
+import com.avenga.a360.service.SendService;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
 
-public class SendFeedbackServiceImpl extends SendService {
+@Stateless
+public class SendFeedbackServiceImpl extends SendServiceImpl {
 
+    @Inject
     AnswerDao answerDao;
-    QuestionDaoImpl questionDao = new QuestionDaoImpl();
+
+    @Inject
+    QuestionDao questionDao;
 
     @Inject
     SendService sendService;

@@ -22,4 +22,12 @@ public class SessionDto {
     private List<ParticipantDto> participants;
     private List<QuestionDto> questions;
 
+    @Override
+    public String toString() {
+        return "SessionDto{" +
+                "name='" + name + '\'' +
+                ", endDate=" + endDate +
+                ", isSent=" + isSent +
+                '}';
+    }
 }

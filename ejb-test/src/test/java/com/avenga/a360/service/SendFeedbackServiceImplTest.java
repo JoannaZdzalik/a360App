@@ -4,7 +4,7 @@ import com.avenga.a360.dao.impl.AnswerDaoImpl;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.domain.model.*;
 import com.avenga.a360.service.impl.SendFeedbackServiceImpl;
-import com.avenga.a360.service.impl.SendService;
+import com.avenga.a360.service.impl.SendServiceImpl;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 public class SendFeedbackServiceImplTest {
 
     @Mock
-    SendService sendService;
+    SendServiceImpl sendService;
 
     @Mock
     private AnswerDaoImpl answerDao;
@@ -43,7 +43,7 @@ public class SendFeedbackServiceImplTest {
 
     @Before
     public void init() throws Exception {
-        sendService = new SendService();
+        sendService = new SendServiceImpl();
     }
 
     @Test

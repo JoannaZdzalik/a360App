@@ -1,6 +1,8 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.ParticipantDao;
+import com.avenga.a360.dao.QuestionDao;
+import com.avenga.a360.dao.SessionDao;
 import com.avenga.a360.dao.impl.ParticipantDaoImpl;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.dao.impl.SessionDaoImpl;
@@ -12,18 +14,23 @@ import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.SessionService;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Stateless
 public class SessionServiceImpl implements SessionService {
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnoprstuwxyz0123456789";
 
-    SessionDaoImpl sessionDao;
-    QuestionDaoImpl questionDao;
+    @Inject
+    SessionDao sessionDao;
+    @Inject
+    QuestionDao questionDao;
+    @Inject
     ParticipantDao participantDao;
 
     @Override

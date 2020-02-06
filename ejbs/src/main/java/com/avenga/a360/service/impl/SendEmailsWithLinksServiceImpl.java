@@ -1,23 +1,26 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.domain.model.*;
+import com.avenga.a360.service.SendService;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Stateless
 public class SendEmailsWithLinksServiceImpl {
 
     private static final String APP_URL = "http://localhost/";
 
-    //sprawdzic czy jagna na pytanie 2gie dostanie 2 odpowiedzi
+    @Inject
     SendService sendService;
 
-    public SendEmailsWithLinksServiceImpl(SendService sendService) {
-        this.sendService = sendService;
-    }
+ //   public SendEmailsWithLinksServiceImpl(SendService sendService) {
+  //      this.sendService = sendService;
+  //  }
 
     public boolean sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()

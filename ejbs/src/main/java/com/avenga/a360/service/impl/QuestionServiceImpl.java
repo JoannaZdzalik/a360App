@@ -1,21 +1,25 @@
 package com.avenga.a360.service.impl;
 
+import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
 import com.avenga.a360.domain.dto.QuestionDto;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.service.QuestionService;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Stateless
 public class QuestionServiceImpl implements QuestionService {
 
-    private QuestionDaoImpl questionDao;
+    @Inject
+    QuestionDao questionDao;
 
-    public QuestionServiceImpl(QuestionDaoImpl questionDao) {
-        this.questionDao = questionDao;
-    }
+   // public QuestionServiceImpl(QuestionDaoImpl questionDao) {
+ //       this.questionDao = questionDao;
+  //  }
 
     @Override
     public List<QuestionDto> findAllActiveQuestions() {

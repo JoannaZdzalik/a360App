@@ -1,22 +1,27 @@
 package com.avenga.a360.service.impl;
 
+import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.dao.impl.ParticipantDaoImpl;
 import com.avenga.a360.dao.impl.SessionDaoImpl;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.service.ParticipantService;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Stateless
 public class ParticipantServiceImpl implements ParticipantService {
 
-    private ParticipantDaoImpl participantDao;
-    private SessionDaoImpl sessionDao;
+    @Inject
+    ParticipantDao participantDao;
 
-    public ParticipantServiceImpl(ParticipantDaoImpl participantDao) {
-        this.participantDao = participantDao;
-    }
+
+//    public ParticipantServiceImpl(ParticipantDaoImpl participantDao) {
+//        this.participantDao = participantDao;
+//    }
 
     @Override
     public boolean createParticipant(Participant participant) {

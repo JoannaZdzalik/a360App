@@ -1,5 +1,8 @@
 package com.avenga.a360.service.impl;
 
+import com.avenga.a360.dao.AnswerDao;
+import com.avenga.a360.dao.ParticipantDao;
+import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.impl.AnswerDaoImpl;
 import com.avenga.a360.dao.impl.ParticipantDaoImpl;
 import com.avenga.a360.dao.impl.QuestionDaoImpl;
@@ -9,14 +12,20 @@ import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.service.AnswerService;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Stateless
 public class AnswerServiceImpl implements AnswerService {
 
-    ParticipantDaoImpl participantDao;
-    QuestionDaoImpl questionDao;
-    AnswerDaoImpl answerDao;
+    @Inject
+    ParticipantDao participantDao;
+    @Inject
+    QuestionDao questionDao;
+    @Inject
+    AnswerDao answerDao;
 
     @Override
     public boolean createAnswer(AnswerDto answerDto) {

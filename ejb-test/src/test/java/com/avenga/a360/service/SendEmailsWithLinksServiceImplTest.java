@@ -4,7 +4,7 @@ import com.avenga.a360.domain.model.Email;
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Session;
 import com.avenga.a360.service.impl.SendEmailsWithLinksServiceImpl;
-import com.avenga.a360.service.impl.SendService;
+import com.avenga.a360.service.impl.SendServiceImpl;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 public class SendEmailsWithLinksServiceImplTest {
 
     @Mock
-    SendService sendService;
+    SendServiceImpl sendService;
 
     @InjectMocks
     SendEmailsWithLinksServiceImpl sendEmailsWithLinksService;
@@ -37,7 +37,7 @@ public class SendEmailsWithLinksServiceImplTest {
 
     @Before
     public void init() throws Exception {
-        sendService = new SendService();
+        sendService = new SendServiceImpl();
     }
 
 
