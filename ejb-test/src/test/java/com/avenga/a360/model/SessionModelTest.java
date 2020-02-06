@@ -15,7 +15,7 @@ public class SessionModelTest extends JpaTest {
     public void shouldFindSessionsToSend() {
 
         //act
-        Query query = em.createNamedQuery("findSessionsToSent");
+        Query query = em.createNamedQuery("findSessionsToSend");
         List<Session> result = query.getResultList();
 
         assertTrue(result.size() == 1);

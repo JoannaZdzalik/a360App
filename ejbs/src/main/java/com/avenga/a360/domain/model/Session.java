@@ -10,11 +10,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = "findSessionsToSent",
-                query="SELECT s FROM Session s\n" +
-                        "WHERE s.endDate < now() AND s.isSent = false\n"),
         @NamedQuery(name="findSessionById", query="SELECT s FROM Session s where s.id = :id")
 })
+
+@NamedNativeQuery(
+        name = "findSessionsToSend",
+        query = "select * from sessions where now() > end_date and is_sent = 'false'",
+        resultClass = Session.class
+)
+
 
 @Entity
 @Getter

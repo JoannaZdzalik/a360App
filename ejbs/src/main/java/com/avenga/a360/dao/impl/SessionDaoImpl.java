@@ -25,13 +25,13 @@ public class SessionDaoImpl implements SessionDao {
     }
 
     public List<Session> getAllSessionsToSend() {
-        List<Session> sessions = em.createNamedQuery("findSessionsToSent", Session.class)
+        List<Session> sessions = em.createNamedQuery("findSessionsToSend", Session.class)
                 .getResultList();
         return sessions;
     }
 
-    public Session findById(Long id){
-                Session session = em.createNamedQuery("findSessionById", Session.class)
+    public Session findById(Long id) {
+        Session session = em.createNamedQuery("findSessionById", Session.class)
                 .setParameter("id", id)
                 .getSingleResult();
         return session;

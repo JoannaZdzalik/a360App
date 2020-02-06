@@ -57,7 +57,14 @@ public class SessionServiceImpl implements SessionService {
             return false;
         }
         sessionDao.save(session);
-    //    sendEmailsWithLinksService.sendEmailsWithLinks(session);
+        sendEmailsWithLinksService.sendEmailsWithLinks(session);
+        return true;
+    }
+
+    @Override
+    public boolean updateSession(Session session){
+        session.setSent(true);
+        sessionDao.save(session);
         return true;
     }
 

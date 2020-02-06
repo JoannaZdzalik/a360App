@@ -33,7 +33,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
     public List<Question> getAllQuestionsByParticipantId(Long id) {
         List<Question> questions = em.createNamedQuery("findAllQuestionsByParticipantId", Question.class)
-                .setParameter("idParticipant", id)
+                .setParameter("id", id)
                 .getResultList();
         return questions;
     }

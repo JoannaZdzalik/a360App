@@ -1,22 +1,14 @@
 package com.avenga.a360.scheduler;
 
-import com.avenga.a360.dao.SessionDao;
-import com.avenga.a360.domain.dto.AnswerDto;
 import com.avenga.a360.domain.dto.ParticipantDto;
 import com.avenga.a360.domain.dto.SessionDto;
-import com.avenga.a360.domain.model.Answer;
-import com.avenga.a360.domain.model.Participant;
-import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
-import com.avenga.a360.service.SendEmailsWithLinksService;
 import com.avenga.a360.service.SendFeedbackService;
 import com.avenga.a360.service.SessionService;
-import com.avenga.a360.service.impl.SendFeedbackServiceImpl;
-import com.avenga.a360.service.impl.SessionServiceImpl;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.*;
+import javax.ejb.Schedule;
+import javax.ejb.Singleton;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +23,8 @@ public class SessionScheduler {
     @Inject
     SendFeedbackService sendFeedbackService;
 
+    public SessionScheduler() {
+    }
 
     @Schedule(second = "*/15", minute = "*", hour = "*", persistent = false)
     public void sendFeedbackAtSchedule() throws InterruptedException {
@@ -40,7 +34,7 @@ public class SessionScheduler {
             for (Session s : sessionsToBeSent
             ) {
                 sendFeedbackService.sendFeedback(s);
-                s.setSent(true);
+                sessionService.updateSession(s);
             }
         }
     }
