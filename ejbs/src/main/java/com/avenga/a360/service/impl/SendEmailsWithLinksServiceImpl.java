@@ -1,6 +1,7 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.domain.model.*;
+import com.avenga.a360.service.SendEmailsWithLinksService;
 import com.avenga.a360.service.SendService;
 
 import javax.ejb.Stateless;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class SendEmailsWithLinksServiceImpl {
+public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksService {
 
     private static final String APP_URL = "http://localhost/";
 
@@ -22,6 +23,7 @@ public class SendEmailsWithLinksServiceImpl {
   //      this.sendService = sendService;
   //  }
 
+    @Override
     public boolean sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
@@ -30,6 +32,7 @@ public class SendEmailsWithLinksServiceImpl {
         return true;
     }
 
+    @Override
     public Email createEmailWithLink(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
         mailBody.append("Welcome to a360 feedback session: ");
@@ -53,6 +56,7 @@ public class SendEmailsWithLinksServiceImpl {
         return new Email(participant.getEmail(), createEmailSubject(session), mailBody.toString());
     }
 
+    @Override
     public List<Participant> findParticipantsToBeRatedBySingleParticipant(Participant participant, Session session) {
         List<Participant> participantsToRate = new ArrayList<>();
         for (Participant participantToRate : session.getParticipants()

@@ -12,6 +12,7 @@ import com.avenga.a360.domain.model.Answer;
 import com.avenga.a360.domain.model.Participant;
 import com.avenga.a360.domain.model.Question;
 import com.avenga.a360.domain.model.Session;
+import com.avenga.a360.service.SendEmailsWithLinksService;
 import com.avenga.a360.service.SessionService;
 
 import javax.ejb.Stateless;
@@ -32,6 +33,8 @@ public class SessionServiceImpl implements SessionService {
     QuestionDao questionDao;
     @Inject
     ParticipantDao participantDao;
+    @Inject
+    SendEmailsWithLinksService sendEmailsWithLinksService;
 
     @Override
     public List<Session> findSessionsEndedInThePastButNotSent() {
@@ -54,6 +57,7 @@ public class SessionServiceImpl implements SessionService {
             return false;
         }
         sessionDao.save(session);
+        sendEmailsWithLinksService.sendEmailsWithLinks(session);
         return true;
     }
 

@@ -15,7 +15,6 @@ public class AnswerDaoImpl implements AnswerDao {
     @PersistenceContext(unitName = "a360")
     private EntityManager em;
 
-    //List<Answer> answers = new ArrayList<>();
 
     @Override
     public void save(Answer answer) {

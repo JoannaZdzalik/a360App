@@ -6,8 +6,10 @@ C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a36
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\scheduler\SessionScheduler.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\domain\dto\AnswerDto.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\domain\model\Session.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\service\SendEmailsWithLinksService.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\domain\model\Participant.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\domain\model\Email.java
+C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\service\SendFeedbackService.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\service\impl\SendServiceImpl.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\service\impl\AnswerServiceImpl.java
 C:\Users\JoannaZdzalik\IdeaProjects\team-delta\ejbs\src\main\java\com\avenga\a360\dao\AnswerDao.java

@@ -2,6 +2,7 @@ com\avenga\a360\domain\model\Question$QuestionType.class
 com\avenga\a360\service\impl\SessionServiceImpl.class
 com\avenga\a360\dao\impl\ParticipantDaoImpl.class
 com\avenga\a360\domain\model\Email.class
+com\avenga\a360\service\SendEmailsWithLinksService.class
 com\avenga\a360\domain\dto\QuestionDto.class
 com\avenga\a360\dao\ParticipantDao.class
 com\avenga\a360\domain\model\Answer.class
@@ -25,6 +26,7 @@ com\avenga\a360\service\impl\AnswerServiceImpl.class
 com\avenga\a360\dao\AnswerDao.class
 com\avenga\a360\service\impl\SendFeedbackServiceImpl.class
 com\avenga\a360\domain\dto\SessionDto.class
+com\avenga\a360\service\SendFeedbackService.class
 com\avenga\a360\service\QuestionService.class
 com\avenga\a360\service\SendService.class
 com\avenga\a360\domain\dto\AnswerDto.class

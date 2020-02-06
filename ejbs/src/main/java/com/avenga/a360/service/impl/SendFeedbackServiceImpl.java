@@ -3,6 +3,7 @@ package com.avenga.a360.service.impl;
 import com.avenga.a360.dao.AnswerDao;
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.domain.model.*;
+import com.avenga.a360.service.SendFeedbackService;
 import com.avenga.a360.service.SendService;
 
 import javax.ejb.Stateless;
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Stateless
-public class SendFeedbackServiceImpl extends SendServiceImpl {
+public class SendFeedbackServiceImpl implements SendFeedbackService {
 
     @Inject
     AnswerDao answerDao;
@@ -21,6 +22,7 @@ public class SendFeedbackServiceImpl extends SendServiceImpl {
     @Inject
     SendService sendService;
 
+    @Override
     public boolean sendFeedback(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
@@ -29,10 +31,12 @@ public class SendFeedbackServiceImpl extends SendServiceImpl {
         return true;
     }
 
+
     public static String createEmailSubject(Session session) {
         return session.getName() + " - check your feedback";
     }
 
+    @Override
     public Email createFeedbackEmail(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
         mailBody.append("Feedback session has come to an end. Please see your feedback below: \n");
@@ -47,6 +51,7 @@ public class SendFeedbackServiceImpl extends SendServiceImpl {
         }
         return new Email(participant.getEmail(), createEmailSubject(session), mailBody.toString());
     }
+
 
     public List<Answer> findAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion) {
         return answerDao.getAllAnswersByParticipantIdAndQuestionId(idParticipant, idQuestion);
