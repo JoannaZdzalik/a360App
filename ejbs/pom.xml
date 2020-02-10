@@ -28,15 +28,7 @@
       <version>5.4.10.Final</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.avenga.a360</groupId>
-      <artifactId>primary-source</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.avenga.a360</groupId>
-      <artifactId>logging</artifactId>
-    </dependency>
-    <dependency>
+      <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.8</version>
