@@ -39,11 +39,11 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
     public Email createFeedbackEmail(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
         mailBody.append("Feedback session has come to an end. Please see your feedback below: \n");
-        mailBody.append(" \n");
 
         List<Question> questions = findAllQuestionsByParticipantId(participant.getId());
 
         for (Question q : questions) { //dla każdego pytania
+            mailBody.append(" \n");
             mailBody.append(q.getQuestionText() + " : \n"); //wyświetl jego treść
             List<Answer> answers = findAllAnswersByParticipantIdAndQuestionId(participant.getId(), q.getId()); //znajdź liste odpowiedzi
             if (!answers.isEmpty()) {
@@ -52,7 +52,6 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
                 }
             } else {
                 mailBody.append("No answers for this question. \n");
-                mailBody.append(" \n");
             }
         }
 

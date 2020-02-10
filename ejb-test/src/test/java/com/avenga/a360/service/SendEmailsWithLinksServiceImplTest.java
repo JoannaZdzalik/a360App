@@ -40,7 +40,7 @@ public class SendEmailsWithLinksServiceImplTest {
         sendService = new SendServiceImpl();
     }
 
-
+    SendEmailsWithLinksServiceImpl s = new SendEmailsWithLinksServiceImpl();
 
     @Test
     public void shouldFindParticipantsToBeRatedBySingleParticipant() {
@@ -67,9 +67,9 @@ public class SendEmailsWithLinksServiceImplTest {
 
         assertAll(
                 () -> assertEquals(2, participantsToRate.size()),
-                () -> assertEquals("kasia@yzdz",participantsToRate.get(0).getEmail()),
+                () -> assertEquals("kasia@yzdz", participantsToRate.get(0).getEmail()),
                 () -> assertEquals("jagienka@dvdv", participantsToRate.get(1).getEmail()),
-                () -> assertFalse( participantsToRate.contains(asia))
+                () -> assertFalse(participantsToRate.contains(asia))
         );
     }
 
@@ -78,7 +78,7 @@ public class SendEmailsWithLinksServiceImplTest {
         Session session = new Session();
         session.setEndDate(LocalDateTime.of(2020, 10, 18, 15, 00, 00));
 
-        assertEquals("2020-10-18", SendEmailsWithLinksServiceImpl.formatEndDate(session.getEndDate()));
+        assertEquals("2020-10-18", s.formatEndDate(session.getEndDate()));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class SendEmailsWithLinksServiceImplTest {
         Session session = new Session();
         session.setName("Avenga First Edition");
 
-        assertEquals("avengafirstedition", SendEmailsWithLinksServiceImpl.formatSessionName(session));
+        assertEquals("avengafirstedition", s.formatSessionName(session));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class SendEmailsWithLinksServiceImplTest {
         Session session = new Session();
         session.setName("Avenga First Edition");
 
-        assertEquals("New feedback session Avenga First Edition to be completed", SendEmailsWithLinksServiceImpl.createEmailSubject(session));
+        assertEquals("New feedback session Avenga First Edition to be completed", s.createEmailSubject(session));
     }
 
     @Test

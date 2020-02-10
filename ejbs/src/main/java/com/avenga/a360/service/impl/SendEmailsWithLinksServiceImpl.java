@@ -19,9 +19,9 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     @Inject
     SendService sendService;
 
- //   public SendEmailsWithLinksServiceImpl(SendService sendService) {
-  //      this.sendService = sendService;
-  //  }
+    //   public SendEmailsWithLinksServiceImpl(SendService sendService) {
+    //      this.sendService = sendService;
+    //  }
 
     @Override
     public boolean sendEmailsWithLinks(Session session) {
@@ -68,18 +68,16 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
         return participantsToRate;
     }
 
-    public static String createEmailSubject(Session session) { //zmienic na nie static
+    public String createEmailSubject(Session session) { //zmienic na nie static
         return "New feedback session " + session.getName() + " to be completed";
     }
 
-    public static String formatEndDate(LocalDateTime endDate) {
+    public String formatEndDate(LocalDateTime endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return endDate.format(formatter);
     }
 
-    public static String formatSessionName(Session session) {
+    public String formatSessionName(Session session) {
         return session.getName().toLowerCase().replaceAll("\\s", "");
     }
-
-
-    }
+}
