@@ -7,13 +7,14 @@ import com.avenga.a360.service.SendFeedbackService;
 import com.avenga.a360.service.SessionService;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Schedule;
-import javax.ejb.Singleton;
+import javax.annotation.Resource;
+import javax.ejb.*;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Startup
 @Singleton
 public class SessionScheduler {
 
@@ -28,9 +29,10 @@ public class SessionScheduler {
 
     @Schedule(second = "*/15", minute = "*", hour = "*", persistent = false)
     public void sendFeedbackAtSchedule() throws InterruptedException {
+        System.out.println("test aaaa test test");
         List<Session> sessionsToBeSent = sessionService.findSessionsEndedInThePastButNotSent();
-        System.out.println("found: " + sessionsToBeSent.size());
-        if (!(sessionsToBeSent == null)) {
+        System.out.println("found: " + sessionsToBeSent.size() + "sessions to send");
+        if (!(sessionsToBeSent == null || sessionsToBeSent.isEmpty())) {
             for (Session s : sessionsToBeSent
             ) {
                 sendFeedbackService.sendFeedback(s);
@@ -60,4 +62,5 @@ public class SessionScheduler {
 
         sessionService.createSession(session1, participants);
     }
+
 }

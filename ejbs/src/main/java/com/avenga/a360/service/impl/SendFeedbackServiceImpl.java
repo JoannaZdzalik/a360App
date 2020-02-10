@@ -31,8 +31,7 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
         return true;
     }
 
-
-    public static String createEmailSubject(Session session) {
+    public String createEmailSubject(Session session) {
         return session.getName() + " - check your feedback";
     }
 
@@ -40,24 +39,35 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
     public Email createFeedbackEmail(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
         mailBody.append("Feedback session has come to an end. Please see your feedback below: \n");
+        mailBody.append(" \n");
 
         List<Question> questions = findAllQuestionsByParticipantId(participant.getId());
+
         for (Question q : questions) { //dla każdego pytania
-            mailBody.append(q.getQuestionText() + " : "); //wyświetl jego treść
+            mailBody.append(q.getQuestionText() + " : \n"); //wyświetl jego treść
             List<Answer> answers = findAllAnswersByParticipantIdAndQuestionId(participant.getId(), q.getId()); //znajdź liste odpowiedzi
-            for (Answer answer : answers) { //dla każdej odpowiedzi na pytanie
-                mailBody.append(answer.getAnswerText()); // wyświetl jej treść
+            if (!answers.isEmpty()) {
+                for (Answer answer : answers) { //dla każdej odpowiedzi na pytanie
+                    mailBody.append(answer.getAnswerText() + " \n"); // wyświetl jej treść
+                }
+            } else {
+                mailBody.append("No answers for this question. \n");
+                mailBody.append(" \n");
             }
         }
+
         return new Email(participant.getEmail(), createEmailSubject(session), mailBody.toString());
     }
 
-
+    @Override
     public List<Answer> findAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion) {
         return answerDao.getAllAnswersByParticipantIdAndQuestionId(idParticipant, idQuestion);
     }
 
+    @Override
     public List<Question> findAllQuestionsByParticipantId(Long participantId) {
         return questionDao.getAllQuestionsByParticipantId(participantId);
     }
+
+
 }

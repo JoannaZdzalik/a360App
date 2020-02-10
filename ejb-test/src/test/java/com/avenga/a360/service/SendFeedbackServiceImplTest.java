@@ -77,7 +77,9 @@ public class SendFeedbackServiceImplTest {
         Session session = new Session();
         session.setName("Avenga First Edition");
 
-        assertEquals("Avenga First Edition - check your feedback", SendFeedbackServiceImpl.createEmailSubject(session));
+        SendFeedbackServiceImpl s = new SendFeedbackServiceImpl();
+
+        assertEquals("Avenga First Edition - check your feedback", s.createEmailSubject(session));
     }
 
     @Test

@@ -23,14 +23,6 @@ public class ParticipantServiceImpl implements ParticipantService {
 //        this.participantDao = participantDao;
 //    }
 
-    @Override
-    public boolean createParticipant(Participant participant) {
-        if (participant == null) {
-            return false;
-        }
-        participantDao.save(participant);
-        return true;
-    }
 
     @Override
     public List<ParticipantDto> findAllParticipantsBySessionId(Long id) {

@@ -41,7 +41,7 @@ public class SendServiceImpl implements SendService {
             System.out.println("sending...");
             Transport.send(message);
 
-            System.out.println("Email sent successfully....");
+            System.out.println("Email sent successfully");
         } catch (MessagingException e) {
             e.printStackTrace();
             return false;

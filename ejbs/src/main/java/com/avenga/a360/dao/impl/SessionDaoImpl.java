@@ -30,11 +30,5 @@ public class SessionDaoImpl implements SessionDao {
         return sessions;
     }
 
-    public Session findById(Long id) {
-        Session session = em.createNamedQuery("findSessionById", Session.class)
-                .setParameter("id", id)
-                .getSingleResult();
-        return session;
-    }
 
 }

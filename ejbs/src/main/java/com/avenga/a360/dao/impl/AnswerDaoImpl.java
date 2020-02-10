@@ -25,6 +25,7 @@ public class AnswerDaoImpl implements AnswerDao {
         }
     }
 
+    @Override
     public List<Answer> getAllAnswersByParticipantId(Long id) {
                 List<Answer> answers = em.createNamedQuery("getAllAnswersByParticipantId", Answer.class)
                         .setParameter("idParticipant", id )

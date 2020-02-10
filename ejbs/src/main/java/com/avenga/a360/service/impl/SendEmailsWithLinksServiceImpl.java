@@ -68,7 +68,7 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
         return participantsToRate;
     }
 
-    public static String createEmailSubject(Session session) {
+    public static String createEmailSubject(Session session) { //zmienic na nie static
         return "New feedback session " + session.getName() + " to be completed";
     }
 

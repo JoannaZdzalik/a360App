@@ -8,6 +8,4 @@ public interface SessionDao {
 
     void save(Session session);
     List<Session> getAllSessionsToSend();
-    Session findById(Long id);
-
 }

@@ -27,7 +27,7 @@ import javax.persistence.*;
         name = "getAnswersByParticipantIdAndQuestionId",
         query = "select * from answers a left join participants p on ( a.id_participant = p.id )" +
                 "left join questions q on (a.id_question = q.id) where p.id = :idParticipant and q.id= :idQuestion",
-        resultClass = Question.class)
+        resultClass = Answer.class)
 
 public class Answer {
 
