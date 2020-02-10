@@ -5,7 +5,7 @@ import com.avenga.a360.domain.model.*;
 import java.util.List;
 
 public interface SendFeedbackService {
-    boolean sendFeedback(Session session);
+    void sendFeedback(Session session);
 
     Email createFeedbackEmail(Participant participant, Session session);
 

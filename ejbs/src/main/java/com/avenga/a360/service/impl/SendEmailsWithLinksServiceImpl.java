@@ -4,6 +4,7 @@ import com.avenga.a360.domain.model.*;
 import com.avenga.a360.service.SendEmailsWithLinksService;
 import com.avenga.a360.service.SendService;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
@@ -20,12 +21,14 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     SendService sendService;
 
     @Override
-    public boolean sendEmailsWithLinks(Session session) {
+    @Asynchronous
+    public void sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
             sendService.sendEmail(createEmailWithLink(participant, session));
+            System.out.println(" watek do linkow  " + Thread.currentThread().getName());
         }
-        return true;
+
     }
 
     @Override

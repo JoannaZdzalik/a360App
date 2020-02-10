@@ -76,7 +76,6 @@ public class SessionServiceImplTest {
 
         when(questionDao.getAllActiveQuestions()).thenReturn(questions); //mocki do serwisów, daosów itp. z których korzystam w sprawdzanej metodzie
         when(participantDao.findByUid(sessionService.generateUidFromAlphaNumericString(15))).thenReturn(null);
-        when(sendEmailsWithLinksService.sendEmailsWithLinks(Mockito.any())).thenReturn(true);
 
         assertTrue(sessionService.createSession(newSession, participants)); //injectMocks do tego serwisu który sprawdzam
    }

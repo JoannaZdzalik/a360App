@@ -38,8 +38,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public List<Session> findSessionsEndedInThePastButNotSent() {
-        List<Session> sessions = sessionDao.getAllSessionsToSend();
-                return sessions;
+        return sessionDao.getAllSessionsToSend();
     }
 
     @Override

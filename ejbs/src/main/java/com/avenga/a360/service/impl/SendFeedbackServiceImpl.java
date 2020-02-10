@@ -8,6 +8,7 @@ import com.avenga.a360.service.QuestionService;
 import com.avenga.a360.service.SendFeedbackService;
 import com.avenga.a360.service.SendService;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
@@ -28,12 +29,13 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
     QuestionService questionService;
 
     @Override
-    public boolean sendFeedback(Session session) {
+    @Asynchronous
+    public void sendFeedback(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
             sendService.sendEmail(createFeedbackEmail(participant, session));
+            System.out.println(" Watek do feedbacku:  " + Thread.currentThread().getName());
         }
-        return true;
     }
 
     public String createEmailSubject(Session session) {
@@ -49,7 +51,7 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
 
         for (Question q : questions) {
             mailBody.append(" \n");
-            mailBody.append(q.getQuestionText());
+            mailBody.append(q.getQuestionText() + "\n");
             List<Answer> answers = findAllAnswersByParticipantIdAndQuestionId(participant.getId(), q.getId());
             if (!answers.isEmpty()) {
                 for (Answer answer : answers) {
