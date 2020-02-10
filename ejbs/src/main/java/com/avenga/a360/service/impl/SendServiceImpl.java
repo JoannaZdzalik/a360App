@@ -38,7 +38,6 @@ public class SendServiceImpl implements SendService {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getRecipient()));
             message.setSubject(email.getSubject());
             message.setText(email.getMailBody());
-            System.out.println("sending...");
             Transport.send(message);
 
             System.out.println("Email sent successfully");

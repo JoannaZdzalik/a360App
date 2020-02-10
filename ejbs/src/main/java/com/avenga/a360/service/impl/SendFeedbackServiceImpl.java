@@ -2,7 +2,9 @@ package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.AnswerDao;
 import com.avenga.a360.dao.QuestionDao;
+import com.avenga.a360.domain.dto.QuestionDto;
 import com.avenga.a360.domain.model.*;
+import com.avenga.a360.service.QuestionService;
 import com.avenga.a360.service.SendFeedbackService;
 import com.avenga.a360.service.SendService;
 
@@ -21,6 +23,9 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
 
     @Inject
     SendService sendService;
+
+    @Inject
+    QuestionService questionService;
 
     @Override
     public boolean sendFeedback(Session session) {
@@ -42,13 +47,13 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
 
         List<Question> questions = findAllQuestionsByParticipantId(participant.getId());
 
-        for (Question q : questions) { //dla każdego pytania
+        for (Question q : questions) {
             mailBody.append(" \n");
-            mailBody.append(q.getQuestionText() + " : \n"); //wyświetl jego treść
-            List<Answer> answers = findAllAnswersByParticipantIdAndQuestionId(participant.getId(), q.getId()); //znajdź liste odpowiedzi
+            mailBody.append(q.getQuestionText());
+            List<Answer> answers = findAllAnswersByParticipantIdAndQuestionId(participant.getId(), q.getId());
             if (!answers.isEmpty()) {
-                for (Answer answer : answers) { //dla każdej odpowiedzi na pytanie
-                    mailBody.append(answer.getAnswerText() + " \n"); // wyświetl jej treść
+                for (Answer answer : answers) {
+                    mailBody.append(answer.getAnswerText() + " \n");
                 }
             } else {
                 mailBody.append("No answers for this question. \n");

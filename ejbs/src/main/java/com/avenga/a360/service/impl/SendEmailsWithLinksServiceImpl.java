@@ -19,10 +19,6 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     @Inject
     SendService sendService;
 
-    //   public SendEmailsWithLinksServiceImpl(SendService sendService) {
-    //      this.sendService = sendService;
-    //  }
-
     @Override
     public boolean sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()
@@ -35,13 +31,12 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     @Override
     public Email createEmailWithLink(Participant participant, Session session) {
         StringBuilder mailBody = new StringBuilder();
-        mailBody.append("Welcome to a360 feedback session: ");
+        mailBody.append(participant.getEmail() + ", welcome to a new a360 feedback session ");
         mailBody.append(session.getName() + "\n");
         mailBody.append(" \n");
         mailBody.append("You have been selected to complete a360 feedback session. By clicking the below links, you will be able to fill in feedback form for your colleagues.\n");
         mailBody.append(" \n");
-        mailBody.append("Please make sure to complete this task before end of day ");
-        mailBody.append(formatEndDate(session.getEndDate()) + "\n");
+        mailBody.append("Please make sure to complete this task before end of day " + formatEndDate(session.getEndDate()) + ".");
         mailBody.append(" \n");
 
         for (Participant participantToRate : findParticipantsToBeRatedBySingleParticipant(participant, session)) {

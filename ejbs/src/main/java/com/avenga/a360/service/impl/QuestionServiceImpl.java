@@ -17,10 +17,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Inject
     QuestionDao questionDao;
 
-   // public QuestionServiceImpl(QuestionDaoImpl questionDao) {
- //       this.questionDao = questionDao;
-  //  }
-
     @Override
     public List<QuestionDto> findAllActiveQuestions() {
         List<Question> questions = questionDao.getAllActiveQuestions();

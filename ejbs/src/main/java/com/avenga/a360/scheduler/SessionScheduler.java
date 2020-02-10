@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Startup
 @Singleton
 public class SessionScheduler {
 
@@ -27,12 +26,11 @@ public class SessionScheduler {
     public SessionScheduler() {
     }
 
-    @Schedule(second = "*/15", minute = "*", hour = "*", persistent = false)
+    @Schedule(second = "*", minute = "*/5", hour = "*", persistent = false)
     public void sendFeedbackAtSchedule() throws InterruptedException {
-        System.out.println("test aaaa test test");
         List<Session> sessionsToBeSent = sessionService.findSessionsEndedInThePastButNotSent();
-        System.out.println("found: " + sessionsToBeSent.size() + "sessions to send");
-        if (!(sessionsToBeSent == null || sessionsToBeSent.isEmpty())) {
+        System.out.println("found: " + sessionsToBeSent.size() + " sessions to send");
+        if (!sessionsToBeSent.isEmpty()) {
             for (Session s : sessionsToBeSent
             ) {
                 sendFeedbackService.sendFeedback(s);
@@ -42,7 +40,7 @@ public class SessionScheduler {
     }
 
     @PostConstruct
-    public void initialize() { //this method is only for chceking if created sessionDto will be sent right after saving, method will be removed later
+    public void initialize() { //this method is only for chceking if created sessionDto will be sent to participants right after saving, method will be removed later
         List<ParticipantDto> participants = new ArrayList<>();
         ParticipantDto asia = new ParticipantDto();
         asia.setEmail("asia@zdz");

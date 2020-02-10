@@ -16,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,9 @@ public class SessionServiceImplTest {
     SessionServiceImpl sessionService;
 
     @Mock
+    SendEmailsWithLinksServiceImpl sendEmailsWithLinksService;
+
+    @Mock
     private SessionDaoImpl sessionDao;
 
     @Mock
@@ -41,36 +45,41 @@ public class SessionServiceImplTest {
     @Mock
     private ParticipantDaoImpl participantDao;
 
+
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
 
-//    @Test
-//    public void shouldSaveCompleteSessionWithCorrectParameters() {
-//        List<Question> questions = new ArrayList<>();
-//        Question question1 = new Question();
-//        question1.setQuestionText("How do you like him?");
-//        question1.setQuestionType(Question.QuestionType.TEXT);
-//        question1.setDefaultAnswers(null);
-//        questions.add(question1);
-//
-//        List<ParticipantDto> participants = new ArrayList<>();
-//        ParticipantDto kasia = new ParticipantDto();
-//        kasia.setUid("UIDasdfgh123456");
-//        kasia.setEmail("kasia@yzdz");
-//        participants.add(kasia);
-//
-//        SessionDto newSession = new SessionDto();
-//        newSession.setName("Avenga First Edition");
-//        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
-//
-//
-//        when(questionDao.getAllActiveQuestions()).thenReturn(questions);
-//        when(participantDao.findByUid(sessionService.generateUidFromAlphaNumericString(15))).thenReturn(null);
-//
-//        assertTrue(sessionService.createSession(newSession, participants));
- //  }
+    @Test
+    public void shouldSaveCompleteSessionWithCorrectParameters() {
+        List<Question> questions = new ArrayList<>();
+        Question question1 = new Question();
+        question1.setQuestionText("How do you like him?");
+        question1.setQuestionType(Question.QuestionType.TEXT);
+        question1.setDefaultAnswers(null);
+        questions.add(question1);
+
+        List<ParticipantDto> participants = new ArrayList<>();
+        ParticipantDto kasia = new ParticipantDto();
+        kasia.setUid("UIDasdfgh123456");
+        kasia.setEmail("kasia@yzdz");
+        participants.add(kasia);
+
+        SessionDto newSession = new SessionDto();
+        newSession.setName("Avenga First Edition");
+        newSession.setEndDate(LocalDateTime.now().plusDays(10L));
+
+     //   Session s = new Session();
+        Session s = sessionService.mapSessionDtoToSession(newSession);
+
+
+        when(questionDao.getAllActiveQuestions()).thenReturn(questions); //mocki do serwisów, daosów itp. z których korzystam w sprawdzanej metodzie
+        when(participantDao.findByUid(sessionService.generateUidFromAlphaNumericString(15))).thenReturn(null);
+        when(sendEmailsWithLinksService.sendEmailsWithLinks(Mockito.any())).thenReturn(true);
+
+        assertTrue(sessionService.createSession(newSession, participants)); //injectMocks do tego serwisu który sprawdzam
+   }
 
     @Test
     public void shouldThrowIllegalArgumentExceptionWhenListOfParticipantsIsNull() {
