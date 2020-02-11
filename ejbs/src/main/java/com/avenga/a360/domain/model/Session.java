@@ -34,8 +34,8 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL UNIQUE")
-    private String name;
+    @Column(name = "session_name", unique = true)
+    private String sessionName;
 
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
@@ -46,12 +46,13 @@ public class Session {
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "session")
     private List<Participant> participants;
 
-    @ManyToMany
-    @JoinTable(
-        name = "sessions_questions",
-        joinColumns = @JoinColumn(name = "id_session"),
-        inverseJoinColumns = @JoinColumn(name = "id_question"))
-    private List<Question> questions;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "sessions_questions", joinColumns = {
+            @JoinColumn(name = "id_session", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id_question", referencedColumnName = "id")},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"id_session", "id_question"})
+            }
+    )
 
     public boolean isSent() {
         return isSent;
