@@ -55,8 +55,9 @@ public class SessionServiceImpl implements SessionService {
         if (!validateSession(session)) {
             return false;
         }
-        sessionDao.save(session);
+
         sendEmailsWithLinksService.sendEmailsWithLinks(session);
+        sessionDao.save(session);
         return true;
     }
 

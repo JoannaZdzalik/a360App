@@ -34,8 +34,9 @@ public class SessionScheduler {
             System.out.println("Found: " + sessionsToBeSent.size() + " sessions to send");
             for (Session s : sessionsToBeSent
             ) {
-                sendFeedbackService.sendFeedback(s);
                 sessionService.updateSession(s);
+                sendFeedbackService.sendFeedback(s);
+
             }
         }
     }
