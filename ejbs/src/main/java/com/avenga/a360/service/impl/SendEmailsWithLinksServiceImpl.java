@@ -20,6 +20,7 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     @Inject
     SendService sendService;
 
+    @Asynchronous
     @Override
     public void sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()
@@ -41,7 +42,6 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
         mailBody.append(" \n");
         mailBody.append("Please make sure to complete this task before end of day " + formatEndDate(session.getEndDate()) + ".");
         mailBody.append(" \n");
-        String subject = session.getSessionName();
 
         for (Participant participantToRate : findParticipantsToBeRatedBySingleParticipant(participant, session)) {
             mailBody.append(participantToRate.getEmail());

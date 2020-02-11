@@ -53,6 +53,10 @@
       <artifactId>mail</artifactId>
       <version>1.4</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jaxrs -->
+
+
   </dependencies>
 
   <build>

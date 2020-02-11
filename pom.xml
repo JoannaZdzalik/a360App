@@ -15,6 +15,7 @@
         <module>ejbs</module>
         <module>ear</module>
         <module>ejb-test</module>
+        <module>servlet</module>
     </modules>
 
     <distributionManagement>

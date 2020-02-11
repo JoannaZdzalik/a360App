@@ -246,7 +246,6 @@ public class SessionServiceImplTest {
     @Test
     public void shouldMapSessionDtoToSession() {
         SessionDto sessionDto = new SessionDto();
-        sessionDto.setId(1L);
         sessionDto.setName("SessionOne");
         sessionDto.setEndDate(LocalDateTime.now().plusDays(10L));
 
