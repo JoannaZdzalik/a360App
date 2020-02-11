@@ -21,6 +21,11 @@
       <artifactId>wildfly-jpa</artifactId>
       <scope>provided</scope>
     </dependency>
+<!--    <dependency>
+      <groupId>com.avenga.a360</groupId>
+      <artifactId>servlet</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>-->
     <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
     <dependency>
       <groupId>org.hibernate</groupId>
