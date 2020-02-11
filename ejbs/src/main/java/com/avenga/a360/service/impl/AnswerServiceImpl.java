@@ -62,7 +62,6 @@ public class AnswerServiceImpl implements AnswerService {
 
     public Answer mapAnswerDtoToAnswer(AnswerDto answerDto, Question question, Participant participant) {
         Answer answer = new Answer();
-        answer.setId(answerDto.getId());
         answer.setAnswerText(answerDto.getAnswerText());
         answer.setParticipant(participant);
         answer.setQuestion(question);

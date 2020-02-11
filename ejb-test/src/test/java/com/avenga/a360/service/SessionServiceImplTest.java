@@ -259,13 +259,13 @@ public class SessionServiceImplTest {
     public void shouldMapSessionToSessionDto() {
         Session session = new Session();
         session.setId(1L);
-        session.setName("Session First Edition");
+        session.setSessionName("Session First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         SessionDto sessionDto = sessionService.mapSessionToSessionDto(session);
 
         assertEquals(session.getId(), sessionDto.getId());
-        assertEquals(session.getName(), sessionDto.getName());
+        assertEquals(session.getSessionName(), sessionDto.getName());
         assertEquals(session.getEndDate(), sessionDto.getEndDate());
     }
 

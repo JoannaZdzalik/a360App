@@ -69,8 +69,8 @@ public class SessionServiceImpl implements SessionService {
 
     public Session mapSessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
-        session.setId(sessionDto.getId());
-        session.setName(sessionDto.getName());
+        /*session.setId(sessionDto.getId());*/
+        session.setSessionName(sessionDto.getName());
         session.setSent(sessionDto.isSent());
         session.setEndDate(sessionDto.getEndDate());
         return session;
@@ -79,7 +79,7 @@ public class SessionServiceImpl implements SessionService {
     public SessionDto mapSessionToSessionDto(Session session) {
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(session.getId());
-        sessionDto.setName(session.getName());
+        sessionDto.setName(session.getSessionName());
         sessionDto.setEndDate(session.getEndDate());
         sessionDto.setSent(session.isSent());
         return sessionDto;

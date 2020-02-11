@@ -58,7 +58,7 @@ public class AnswerServiceImplTest {
         asia.setEmail("asia@yzdz");
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
@@ -87,7 +87,7 @@ public class AnswerServiceImplTest {
         asia.setEmail("asia@yzdz");
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
@@ -110,7 +110,7 @@ public class AnswerServiceImplTest {
         asia.setUid("123456789012345");
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
@@ -132,7 +132,7 @@ public class AnswerServiceImplTest {
         question1.setDefaultAnswers(null);
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
 
         AnswerDto newAnswer = new AnswerDto();
@@ -190,7 +190,7 @@ public class AnswerServiceImplTest {
         Session session = new Session();
         session.setId(1L);
         session.setParticipants(participants);
-        session.setName("Avenga first edition");
+        session.setSessionName("Avenga first edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setSent(false);
 

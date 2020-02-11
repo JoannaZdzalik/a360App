@@ -63,7 +63,7 @@ public class SendFeedbackServiceImplTest {
         participants.add(jagna);
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setParticipants(participants);
 
@@ -75,7 +75,7 @@ public class SendFeedbackServiceImplTest {
     @Test
     public void shouldCreateSessionSubjectUsingGivenSessionName() {
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
 
         SendFeedbackServiceImpl s = new SendFeedbackServiceImpl();
 
@@ -131,7 +131,7 @@ public class SendFeedbackServiceImplTest {
         participants.add(jagna);
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setParticipants(participants);
 

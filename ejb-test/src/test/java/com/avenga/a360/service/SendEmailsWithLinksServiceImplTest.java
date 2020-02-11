@@ -59,7 +59,7 @@ public class SendEmailsWithLinksServiceImplTest {
         participants.add(jagna);
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setParticipants(participants);
 
@@ -84,7 +84,7 @@ public class SendEmailsWithLinksServiceImplTest {
     @Test
     public void shouldFormatSessionNameToLowerCaseWithoutWhitespace() {
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
 
         assertEquals("avengafirstedition", s.formatSessionName(session));
     }
@@ -92,7 +92,7 @@ public class SendEmailsWithLinksServiceImplTest {
     @Test
     public void shouldCreateEmailSubjectUsingGivenSessionName() {
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
 
         assertEquals("New feedback session Avenga First Edition to be completed", s.createEmailSubject(session));
     }
@@ -114,7 +114,7 @@ public class SendEmailsWithLinksServiceImplTest {
         participants.add(jagna);
 
         Session session = new Session();
-        session.setName("Avenga First Edition");
+        session.setSessionName("Avenga First Edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setParticipants(participants);
 

@@ -67,7 +67,7 @@ public class QuestionServiceImplTest {
         Session session = new Session();
         session.setId(1L);
         session.setParticipants(participants);
-        session.setName("Avenga first edition");
+        session.setSessionName("Avenga first edition");
         session.setEndDate(LocalDateTime.now().plusDays(10L));
         session.setSent(false);
 

@@ -29,7 +29,6 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
     QuestionService questionService;
 
     @Override
-    @Asynchronous
     public void sendFeedback(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
@@ -39,7 +38,7 @@ public class SendFeedbackServiceImpl implements SendFeedbackService {
     }
 
     public String createEmailSubject(Session session) {
-        return session.getName() + " - check your feedback";
+        return session.getSessionName() + " - check your feedback";
     }
 
     @Override

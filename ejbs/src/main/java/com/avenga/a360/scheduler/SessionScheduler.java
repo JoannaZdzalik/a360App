@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Startup
+
 @Singleton
 public class SessionScheduler {
 
@@ -27,7 +27,7 @@ public class SessionScheduler {
     public SessionScheduler() {
     }
 
-    @Schedule(second = "*", minute = "*/5", hour = "*", persistent = false)
+    @Schedule(hour = "*", minute = "*/2", persistent = false)
     public void sendFeedbackAtSchedule() throws InterruptedException {
         List<Session> sessionsToBeSent = sessionService.findSessionsEndedInThePastButNotSent();
         if (!sessionsToBeSent.isEmpty()) {
@@ -39,27 +39,9 @@ public class SessionScheduler {
             }
         }
     }
+    @Timeout
+    public void programaticTimeout(Timer timer){
 
-    @PostConstruct
-    public void initialize() { //this method is only for checking if created sessionDto will be sent to participants right after saving, method will be removed later
-        List<ParticipantDto> participants = new ArrayList<>();
-        ParticipantDto asia = new ParticipantDto();
-        asia.setEmail("asia@zdz");
-        participants.add(asia);
-
-        ParticipantDto jagna = new ParticipantDto();
-        jagna.setEmail("jagienka@dvdv");
-        participants.add(jagna);
-
-        ParticipantDto kasia = new ParticipantDto();
-        kasia.setEmail("katria@dvdv");
-        participants.add(kasia);
-
-        SessionDto session1 = new SessionDto();
-        session1.setName("Second session");
-        session1.setEndDate(LocalDateTime.now().plusMinutes(1L));
-
-        sessionService.createSession(session1, participants);
     }
 
 }

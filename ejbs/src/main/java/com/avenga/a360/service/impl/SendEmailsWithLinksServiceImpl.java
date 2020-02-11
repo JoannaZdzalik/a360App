@@ -21,7 +21,6 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     SendService sendService;
 
     @Override
-    @Asynchronous
     public void sendEmailsWithLinks(Session session) {
         for (Participant participant : session.getParticipants()
         ) {
@@ -33,14 +32,16 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
 
     @Override
     public Email createEmailWithLink(Participant participant, Session session) {
+
         StringBuilder mailBody = new StringBuilder();
         mailBody.append(participant.getEmail() + ", welcome to a new a360 feedback session ");
-        mailBody.append(session.getName() + "\n");
+        mailBody.append(session.getSessionName() + "\n");
         mailBody.append(" \n");
         mailBody.append("You have been selected to complete a360 feedback session. By clicking the below links, you will be able to fill in feedback form for your colleagues.\n");
         mailBody.append(" \n");
         mailBody.append("Please make sure to complete this task before end of day " + formatEndDate(session.getEndDate()) + ".");
         mailBody.append(" \n");
+        String subject = session.getSessionName();
 
         for (Participant participantToRate : findParticipantsToBeRatedBySingleParticipant(participant, session)) {
             mailBody.append(participantToRate.getEmail());
@@ -67,7 +68,7 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     }
 
     public String createEmailSubject(Session session) { //zmienic na nie static
-        return "New feedback session " + session.getName() + " to be completed";
+        return "New feedback session " + session.getSessionName() + " to be completed";
     }
 
     public String formatEndDate(LocalDateTime endDate) {
@@ -76,6 +77,6 @@ public class SendEmailsWithLinksServiceImpl implements SendEmailsWithLinksServic
     }
 
     public String formatSessionName(Session session) {
-        return session.getName().toLowerCase().replaceAll("\\s", "");
+        return session.getSessionName().toLowerCase().replaceAll("\\s", "");
     }
 }

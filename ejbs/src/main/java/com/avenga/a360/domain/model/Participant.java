@@ -47,8 +47,10 @@ public class Participant {
     @JoinColumn(name = "id_session")
     private Session session;
 
+/*
     @OneToMany(cascade = CascadeType.ALL, mappedBy="participant")
     private List<Answer> answers;
+*/
 
 }
 

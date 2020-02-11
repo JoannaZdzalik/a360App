@@ -34,7 +34,6 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     public ParticipantDto mapParticipantToParticipantDto(Participant participant) {
         ParticipantDto participantDto = new ParticipantDto();
-        participantDto.setId(participant.getId());
         participantDto.setUid(participant.getUid());
         participantDto.setEmail(participant.getEmail());
         return participantDto;

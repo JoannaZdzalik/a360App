@@ -35,7 +35,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     public QuestionDto mapQuestionToQuestionDto(Question question){
         QuestionDto questionDto = new QuestionDto();
-        questionDto.setId(question.getId());
         questionDto.setQuestionText(question.getQuestionText());
         questionDto.setQuestionType(question.getQuestionType());
         questionDto.setDefaultAnswers(question.getDefaultAnswers());

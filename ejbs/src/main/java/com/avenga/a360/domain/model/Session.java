@@ -53,6 +53,7 @@ public class Session {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"id_session", "id_question"})
             }
     )
+    private List<Question> questions;
 
     public boolean isSent() {
         return isSent;
