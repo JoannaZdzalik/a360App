@@ -1,0 +1,14 @@
+insert into sessions (session_name, end_date) values ('session 1', '2020-01-08 14:30:00');
+insert into sessions (session_name, end_date) values ('session 2', '2020-02-01 14:30:00');
+insert into questions (question_text, question_type, default_answers) values ('What do you value him for ?', 'TEXT', null);
+insert into questions (question_text, question_type, default_answers) values ('What''s he or she doing wrong ?', 'TEXT', null);
+insert into questions (question_text, question_type, default_answers) values ('What can change to make working with him or her better ?', 'TEXT', null);
+insert into questions (question_text, question_type, default_answers) values ('How his person affects the atmosphere in team ?', 'RADIO', 'Positive;Neutral;Negative');
+insert into sessions_questions (id_session, id_question) values (1, 1);
+insert into sessions_questions (id_session, id_question) values (1, 2);
+insert into sessions_questions (id_session, id_question) values (2, 1);
+insert into sessions_questions (id_session, id_question) values (2, 2);
+insert into participants (email, id_session, uid) values ('a@a.com', 1, '12345');
+insert into participants (email, id_session, uid) values ('b@a.com', 2, '123456');
+insert into answers (answer_text, id_participant, id_question) values ('answer 1', 1, 1);
+insert into answers (answer_text, id_participant, id_question) values ('answer 2', 2, 2);
