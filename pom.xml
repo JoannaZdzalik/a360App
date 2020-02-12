@@ -17,10 +17,10 @@
     <name>team-delta</name>
 
     <modules>
-        <module>servlets</module>
+<!--        <module>servlets</module>-->
         <module>ejbs</module>
-        <module>ear</module>
-        <module>test</module>
+  <!--      <module>ear</module>-->
+  <!--      <module>test</module>-->
     </modules>
 
     <distributionManagement>

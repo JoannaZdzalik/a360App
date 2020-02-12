@@ -22,6 +22,6 @@ public class Test {
     @Produces(MediaType.TEXT_PLAIN)
     public String getAuthor(){
 
-        return "test";
+        return "test11111";
     }
 }
