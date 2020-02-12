@@ -3,7 +3,6 @@ package com.avenga.a360.dao.impl;
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.model.Question;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -45,8 +44,16 @@ public class QuestionDaoImpl implements QuestionDao {
             question = em.createNamedQuery("Question.findById", Question.class)
                     .setParameter("id", id)
                     .getSingleResult();
-        }catch (Exception e){
+        } catch (Exception e) {
         }
         return question;
+    }
+
+    @Override
+    public List<Question> getAllQuestionBySessionId(Long id) {
+        List<Question> questions = em.createNamedQuery("Question.findAllQuestionsBySessionId", Question.class)
+                .setParameter("id", id)
+                .getResultList();
+        return questions;
     }
 }

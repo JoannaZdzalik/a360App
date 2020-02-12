@@ -5,7 +5,10 @@ import com.avenga.a360.model.Participant;
 import com.avenga.a360.service.ParticipantService;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("/participants")
@@ -16,7 +19,7 @@ public class ParticipantController {
     @Path("/{uid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public ParticipantDto getParticipant(@PathParam("uid") String uid){
+    public ParticipantDto getParticipant(@PathParam("uid") String uid) {
         Participant participant = participantService.findByUId(uid);
         ParticipantDto participantDto = participantService.ParticipantToParticipantDto(participant);
 

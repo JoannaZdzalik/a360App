@@ -13,4 +13,6 @@ public interface QuestionDao {
     boolean createQuestion(Question question);
 
     Question findById(Long id);
+
+    List<Question> getAllQuestionBySessionId(Long id);
 }

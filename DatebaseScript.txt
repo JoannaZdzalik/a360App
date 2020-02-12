@@ -1,0 +1,82 @@
+
+/////////////////////////////////////////Database//////////////////////////////////////////////
+
+
+CREATE TABLE sessions(
+   id bigserial PRIMARY key,
+   session_name VARCHAR (50) UNIQUE NOT NULL,
+   end_date timestamp NOT NULL,
+   is_sent boolean default 'f',
+   unique (id, name)
+);
+CREATE TABLE questions(
+   id bigserial PRIMARY key,
+   question_text VARCHAR (255) NOT NULL,
+   question_type VARCHAR (20) NOT NULL,
+   default_answers VARCHAR (255)
+);
+CREATE TABLE sessions_questions(
+   id_session bigint,
+   id_question bigint,
+   foreign key (id_session) references sessions (id),
+   foreign key (id_question) references questions (id),
+   unique (id_session, id_question)
+
+);
+CREATE TABLE participants(
+   id bigserial PRIMARY key,
+   email VARCHAR (255) NOT NULL,
+   id_session bigint,
+   foreign key (id_session) references sessions (id),
+   unique (email, id_session)
+);
+CREATE TABLE answers(
+   id bigserial PRIMARY key,
+   answer_text VARCHAR (255) NOT NULL,
+   id_session bigint,
+   id_question bigint,
+   foreign key (id_session) references sessions (id),
+   foreign key (id_question) references questions (id)
+   
+);
+///////////////////////////////////////////////Add information to database////////////////////////////////////////////
+
+insert into questions (question_text, question_type, default_answers) values ('Czy dobrze pracujesz','text','f');
+insert into questions (question_text, question_type, default_answers) values ('Jak dobrze pracujesz','text','f');
+insert into questions (question_text, question_type, default_answers) values ('Ile masz lat','text','f');
+insert into questions (question_text, question_type, default_answers) values ('Czy lubisz lody','text','f');
+
+select * from questions;
+
+insert into sessions(session_name, end_date) values ('Fajna sesja2','2020-01-23 19:00:01');
+insert into sessions(session_name, end_date) values ('Bardzo dobra2','2020-01-24 19:00:01');
+insert into sessions(session_name, end_date) values ('Najlepsza2','2020-01-25 19:00:01');
+insert into sessions(session_name, end_date) values ('Superowa2','2020-01-26 19:00:01');
+
+select * from sessions;
+
+insert into participants(email,id_session) values('a@email.com',1);
+insert into participants(email,id_session) values('b@email.com',1);
+insert into participants(email,id_session) values('c@email.com',2);
+insert into participants(email,id_session) values('d@email.com',2);
+
+select * from participants;
+
+insert into answers (answer_text,id_participant,id_question) values ('Nie',2,1);
+insert into answers (answer_text,id_participant,id_question) values ('Moze',1,2);
+insert into answers (answer_text,id_participant,id_question) values ('Lub',2,1);
+insert into answers (answer_text,id_participant,id_question) values ('Chyba',2,3);
+select * from answers;
+
+select * from sessions_questions;
+
+
+///////////////////////////////////////////////Examples////////////////////////////////////////////////////////
+select s.session_name, p.email, q.question_text, a.answer_text from answers a left join participants p on ( a.id_participant = p.id)
+left join sessions s on (p.id_session = s.id) left join questions q on (a.id_question = q.id) where s.id = 1;
+
+
+
+
+
+
