@@ -37,7 +37,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
     public Participant findByUId(String uId) {
         Participant participant = null;
         try {
-            participant = em.createNamedQuery("Participant.findById", Participant.class)
+            participant = em.createNamedQuery("Participant.findByUId", Participant.class)
                     .setParameter("uid", uId)
                     .getSingleResult();
         }catch (Exception e){

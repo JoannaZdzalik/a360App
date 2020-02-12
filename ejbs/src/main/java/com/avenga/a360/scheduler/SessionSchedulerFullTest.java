@@ -18,15 +18,15 @@ import java.util.List;
 
 @Singleton
 public class SessionSchedulerFullTest {
-    public int counter = 0;
+  /*  public int counter = 0;
     @Inject
     SessionService sessionService;
 
     @Inject
     EmailService emailService;
-
-    @Schedule(hour = "*", minute = "*/1", persistent = false)
-    public void sessionScheulder() throws InterruptedException {
+*/
+    //@Schedule(hour = "*", minute = "*/1", persistent = false)
+   /* public void sessionScheulder() throws InterruptedException {
         List<ParticipantDto> participantsDto = new ArrayList<>();
         ParticipantDto participantDto1 = new ParticipantDto();
         participantDto1.setEmail("lukasz.stepien@avenga.com");
@@ -35,7 +35,6 @@ public class SessionSchedulerFullTest {
         ParticipantDto participantDto2 = new ParticipantDto();
         participantDto2.setEmail("lukasz.dela@avenga.com");
         participantsDto.add(participantDto2);
-
         ParticipantDto participantDto3 = new ParticipantDto();
         participantDto3.setEmail("maziak01@gmial.com");
         participantsDto.add(participantDto3);
@@ -53,5 +52,5 @@ public class SessionSchedulerFullTest {
 
     @Timeout
     public void programmaticTimeout(Timer timer) {
-    }
+    }*/
 }
