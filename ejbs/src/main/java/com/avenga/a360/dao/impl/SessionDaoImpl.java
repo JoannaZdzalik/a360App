@@ -1,13 +1,10 @@
 package com.avenga.a360.dao.impl;
 
-
 import com.avenga.a360.dao.SessionDao;
-import com.avenga.a360.domain.model.Session;
+import com.avenga.a360.model.Session;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SessionDaoImpl implements SessionDao {
@@ -16,19 +13,20 @@ public class SessionDaoImpl implements SessionDao {
     private EntityManager em;
 
     @Override
-    public void save(Session session) {
-        try {
-            em.persist(session);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    public List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow() {
 
-    public List<Session> getAllSessionsToSend() {
-        List<Session> sessions = em.createNamedQuery("findSessionsToSend", Session.class)
+        List<Session> sessions = em.createNamedQuery("Session.findAllSessionsIsSentFalseAndEndDateIsAfterNow", Session.class)
                 .getResultList();
         return sessions;
     }
 
-
+    @Override
+    public boolean createSession(Session session) {
+        try {
+            em.persist(session);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

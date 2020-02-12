@@ -1,13 +1,13 @@
 package com.avenga.a360.service;
 
-import com.avenga.a360.domain.dto.AnswerDto;
-import com.avenga.a360.domain.model.Answer;
+import com.avenga.a360.dto.AnswerDto;
+import com.avenga.a360.model.Answer;
+import com.avenga.a360.model.response.Status;
 
 import java.util.List;
 
 public interface AnswerService {
+    List<Answer> findAllAnswersByParticipantId(Long id);
 
-    List<AnswerDto> findAllAnswersByParticipantId(Long id);
-
-    boolean createAnswer(AnswerDto answerDto);
+    Status createAnswer(AnswerDto answerDto);
 }

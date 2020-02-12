@@ -1,14 +1,12 @@
 package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.ParticipantDao;
-import com.avenga.a360.domain.model.Participant;
+import com.avenga.a360.model.Participant;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
-
 
 public class ParticipantDaoImpl implements ParticipantDao {
 
@@ -16,44 +14,45 @@ public class ParticipantDaoImpl implements ParticipantDao {
     private EntityManager em;
 
     @Override
-    public void save(Participant participant) {
-        try {
-            em.persist(participant);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<Participant> getAllParticipantsBySessionId(Long id) {
-        List<Participant> participants = em.createNamedQuery("getAllParticipantsListBySessionId", Participant.class)
-                .setParameter("idSession", id)
+    public List<Participant> findBySessionId(Long id) {
+        List<Participant> participants = em.createNamedQuery("Participant.findAllBySessionId", Participant.class)
+                .setParameter("id", id)
                 .getResultList();
         return participants;
     }
 
+    @Override
     public Participant findById(Long id) {
         Participant participant = null;
-        try {
-            participant = em.createNamedQuery("findParticipantById", Participant.class)
+        try{
+            participant = em.createNamedQuery("Participant.findById", Participant.class)
                     .setParameter("id", id)
                     .getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
         }
         return participant;
     }
 
-    public Participant findByUid(String uid) {
+    @Override
+    public Participant findByUId(String uId) {
         Participant participant = null;
         try {
-            participant = em.createNamedQuery("findParticipantByUid", Participant.class)
-                    .setParameter("uid", uid)
+            participant = em.createNamedQuery("Participant.findById", Participant.class)
+                    .setParameter("uid", uId)
                     .getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
         }
         return participant;
     }
 
+    @Override
+    public boolean createParticipant(Participant participant) {
+        try {
+            em.persist(participant);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
 }

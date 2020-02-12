@@ -1,12 +1,11 @@
 package com.avenga.a360.dao;
 
-import com.avenga.a360.domain.model.Answer;
+import com.avenga.a360.model.Answer;
 
 import java.util.List;
 
 public interface AnswerDao {
+    List<Answer> findAllAnswersByParticipantId(Long id);
 
-    void save(Answer answer);
-    List<Answer> getAllAnswersByParticipantId(Long id);
-    List<Answer> getAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion);
+    boolean createAnswer(Answer answer);
 }

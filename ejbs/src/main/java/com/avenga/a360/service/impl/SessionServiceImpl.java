@@ -3,16 +3,15 @@ package com.avenga.a360.service.impl;
 import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.SessionDao;
-import com.avenga.a360.dao.impl.ParticipantDaoImpl;
-import com.avenga.a360.dao.impl.QuestionDaoImpl;
-import com.avenga.a360.dao.impl.SessionDaoImpl;
-import com.avenga.a360.domain.dto.ParticipantDto;
-import com.avenga.a360.domain.dto.SessionDto;
-import com.avenga.a360.domain.model.Answer;
-import com.avenga.a360.domain.model.Participant;
-import com.avenga.a360.domain.model.Question;
-import com.avenga.a360.domain.model.Session;
-import com.avenga.a360.service.SendEmailsWithLinksService;
+import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.SessionDto;
+import com.avenga.a360.model.Participant;
+import com.avenga.a360.model.Question;
+import com.avenga.a360.model.Session;
+import com.avenga.a360.model.response.Status;
+import com.avenga.a360.model.response.StatusMessage;
+import com.avenga.a360.service.EmailService;
+import com.avenga.a360.service.SendService;
 import com.avenga.a360.service.SessionService;
 
 import javax.ejb.Stateless;
@@ -20,116 +19,136 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Stateless
 public class SessionServiceImpl implements SessionService {
 
-    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnoprstuwxyz0123456789";
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     @Inject
     SessionDao sessionDao;
+
     @Inject
     QuestionDao questionDao;
+
     @Inject
     ParticipantDao participantDao;
+
     @Inject
-    SendEmailsWithLinksService sendEmailsWithLinksService;
+    SendService sendService;
+
+    @Inject
+    EmailService emailService;
+
 
     @Override
-    public List<Session> findSessionsEndedInThePastButNotSent() {
-        return sessionDao.getAllSessionsToSend();
+    public Status createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
+        Status status = new Status();
+        List<StatusMessage> statusMessages = new ArrayList<>();
+
+        if (sendService.checkSmtpServer()) {
+            List<Question> questions = questionDao.findAllActiveQuestions();
+
+            validateIsNotNull(status, sessionDto, statusMessages, "Session object is null");
+            validateIsNotNull(status, participantsDto, statusMessages, "Participant object is null");
+            validateIsNotNull(status, questions, statusMessages, "Question object is null.");
+
+
+            if (validateIsNotNull(sessionDto) && validateIsNotNull(participantsDto) && validateIsNotNull(questions)) {
+                validateIsNotNull(status, (Integer) participantsDto.size(), statusMessages, "Participant list is empty");
+
+
+                if (sessionDto.getSessionName() != null && sessionDto.getEndDate() != null &&
+                        !(sessionDto.getEndDate().isBefore(LocalDateTime.now())) &&
+                        questions.size() != 0 && participantsDto.size() != 0) {
+                    Session session = sessionDtoToSession(sessionDto);
+                    session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
+                    session.setQuestions(questions);
+
+                    sessionDao.createSession(session);
+                    sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithLinks(session.getParticipants(), session.getSessionName()));
+                    status.setStatus("success");
+                    statusMessages.add(new StatusMessage("session object created"));
+
+                } else {
+                    if (sessionDto.getEndDate() == null) {
+                        statusMessages.add(new StatusMessage("end date is empty"));
+                    } else {
+                        if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
+                            statusMessages.add(new StatusMessage("end date is before now"));
+                        }
+                    }
+                    if (sessionDto.getSessionName() == null) {
+                        statusMessages.add(new StatusMessage("session name is empty"));
+                    }
+                    status.setStatus("fail");
+                }
+            }
+        } else {
+            status.setStatus("fail");
+            statusMessages.add(new StatusMessage("cannot connect to smtp server"));
+        }
+        status.setStatusMessageList(statusMessages);
+        return status;
     }
 
-    @Override
-    public boolean createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
-        List<Question> questions = questionDao.getAllActiveQuestions();
-
-        if (!validateSessionDto(sessionDto, participantsDto)) {
+    private boolean validateIsNotNull(Status status, Object o, List<StatusMessage> statusMessageList, String message) {
+        if (o == null) {
+            statusMessageList.add((new StatusMessage(message)));
+            status.setStatus("fail");
             return false;
         }
-        Session session = mapSessionDtoToSession(sessionDto);
-        session.setParticipants(mapParticipantDtoListToParticipantList(participantsDto, session));
-        session.setQuestions(questions);
-
-        if (!validateSession(session)) {
+        if (o.equals(0)) {
+            statusMessageList.add((new StatusMessage(message)));
+            status.setStatus("fail");
             return false;
         }
-
-        sendEmailsWithLinksService.sendEmailsWithLinks(session);
-        sessionDao.save(session);
         return true;
     }
 
-    @Override
-    public boolean updateSession(Session session){
-        session.setSent(true);
-        sessionDao.save(session);
+    private boolean validateIsNotNull(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o.equals(0)) {
+            return false;
+        }
         return true;
     }
 
-    public Session mapSessionDtoToSession(SessionDto sessionDto) {
+
+    @Override
+    public List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow() {
+        return sessionDao.findAllSessionsIsSentFalseAndEndDateIsAfterNow();
+    }
+
+    public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
-        /*session.setId(sessionDto.getId());*/
-        session.setSessionName(sessionDto.getName());
-        session.setSent(sessionDto.isSent());
+        session.setSessionName(sessionDto.getSessionName());
         session.setEndDate(sessionDto.getEndDate());
+        session.setIsSent(false);
         return session;
     }
 
-    public SessionDto mapSessionToSessionDto(Session session) {
-        SessionDto sessionDto = new SessionDto();
-        sessionDto.setId(session.getId());
-        sessionDto.setName(session.getSessionName());
-        sessionDto.setEndDate(session.getEndDate());
-        sessionDto.setSent(session.isSent());
-        return sessionDto;
-    }
-
-    public List<Participant> mapParticipantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
+    public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();
-            participant.setSession(session);
             participant.setEmail(participantDto.getEmail());
-            participant.setUid(generateUniqueUid());
+            participant.setSession(session);
+            while (true) {
+                String generatedUId = generateUIdForParticipant(15);
+                if (participantDao.findByUId(generatedUId) == null) {
+                    participant.setUId(generatedUId);
+                    break;
+                }
+            }
             participants.add(participant);
         }
         return participants;
     }
 
-    private boolean validateSessionDto(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
-        if (sessionDto != null) {
-            if (sessionDto.getName() == null || sessionDto.getEndDate() == null || sessionDto.getEndDate().isBefore(LocalDateTime.now())
-                    || participantsDto == null || participantsDto.size() == 0) {
-                throw new IllegalArgumentException("Invalid input parameters: session name, end date and participants must be specified. End date has to be set as a future date!");
-            }
-        }
-        return true;
-    }
-
-    private boolean validateSession(Session session) {
-        if (session != null) {
-            if (session.getQuestions().size() == 0 || session.getQuestions() == null) {
-                System.out.println("Session cannot be created : no active questions available");
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public String generateUniqueUid() {
-        String generatedUId;
-        while (true) {
-            generatedUId = generateUidFromAlphaNumericString(15);
-            if (participantDao.findByUid(generatedUId) == null) {
-                break;
-            }
-        }
-        return generatedUId;
-    }
-
-    public String generateUidFromAlphaNumericString(int count) {
+    public String generateUIdForParticipant(int count) {
         StringBuilder builder = new StringBuilder();
         while (count-- != 0) {
             int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
@@ -137,4 +156,6 @@ public class SessionServiceImpl implements SessionService {
         }
         return builder.toString();
     }
+
+
 }

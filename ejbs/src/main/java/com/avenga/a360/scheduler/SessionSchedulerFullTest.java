@@ -1,9 +1,10 @@
 package com.avenga.a360.scheduler;
 
-import com.avenga.a360.domain.dto.ParticipantDto;
-import com.avenga.a360.domain.dto.SessionDto;
-
-import com.avenga.a360.service.SendEmailsWithLinksService;
+import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.SessionDto;
+import com.avenga.a360.model.Session;
+import com.avenga.a360.model.response.Status;
+import com.avenga.a360.service.EmailService;
 import com.avenga.a360.service.SessionService;
 
 import javax.ejb.Schedule;
@@ -22,7 +23,7 @@ public class SessionSchedulerFullTest {
     SessionService sessionService;
 
     @Inject
-    SendEmailsWithLinksService sendEmailsWithLinksService;
+    EmailService emailService;
 
     @Schedule(hour = "*", minute = "*/1", persistent = false)
     public void sessionScheulder() throws InterruptedException {
@@ -40,13 +41,13 @@ public class SessionSchedulerFullTest {
         participantsDto.add(participantDto3);
 
         SessionDto sessionDto = new SessionDto();
-        sessionDto.setName("Session name" + counter);
+        sessionDto.setSessionName("Session name" + counter);
         sessionDto.setEndDate(LocalDateTime.of(2020, 03, 20, 00, 00, 00, 01));
 
+
+        Status status = sessionService.createSession(sessionDto, participantsDto);
+        System.out.println(status.getStatus());
         counter++;
-
-    sessionService.createSession(sessionDto,participantsDto);
-
     }
 
 

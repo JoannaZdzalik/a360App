@@ -1,15 +1,12 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.QuestionDao;
-import com.avenga.a360.dao.impl.QuestionDaoImpl;
-import com.avenga.a360.domain.dto.QuestionDto;
-import com.avenga.a360.domain.model.Question;
+import com.avenga.a360.model.Question;
 import com.avenga.a360.service.QuestionService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Stateless
 public class QuestionServiceImpl implements QuestionService {
@@ -18,30 +15,34 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionDao questionDao;
 
     @Override
-    public List<QuestionDto> findAllActiveQuestions() {
-        List<Question> questions = questionDao.getAllActiveQuestions();
-        return questions.stream()
-                .map(u-> mapQuestionToQuestionDto(u))
-                .collect(Collectors.toList());
+    public List<Question> findAllActiveQuestions() {
+        return questionDao.findAllActiveQuestions();
+
     }
 
     @Override
-    public List<QuestionDto> findQuestionsByParticipantId(Long id) {
-        List<Question> questions = questionDao.getAllQuestionsByParticipantId(id);
-        return questions.stream()
-                .map(u-> mapQuestionToQuestionDto(u))
-                .collect(Collectors.toList());
+    public Question findQuestionsById(Long id) {
+        return questionDao.findById(id);
+
     }
 
-    public QuestionDto mapQuestionToQuestionDto(Question question){
-        QuestionDto questionDto = new QuestionDto();
-        questionDto.setQuestionText(question.getQuestionText());
-        questionDto.setQuestionType(question.getQuestionType());
-        questionDto.setDefaultAnswers(question.getDefaultAnswers());
-        questionDto.setIsActive(question.getIsActive());
-        return questionDto;
+    @Override
+    public List<Question> findAllQuestionsTextAndIdByParticipantId(Long id) {
+        return questionDao.findAllQuestionsTextAndIdByParticipantId(id);
     }
 
+    @Override
+    public boolean createQuestion(Question question) {
+        if (question == null) {
+            return false;
+        } else {
+            if (question.getDefaultAnswers() == null || question.getQuestionText() == null ||
+                    question.getQuestionType() == null) {
+                return false;
+            }
+        }
+        questionDao.createQuestion(question);
+        return true;
+    }
 
 }
-

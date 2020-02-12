@@ -1,8 +1,16 @@
 package com.avenga.a360.service;
 
-import com.avenga.a360.domain.model.Email;
+import com.avenga.a360.model.Email;
+
+import javax.ejb.Asynchronous;
+import java.util.List;
 
 public interface SendService {
 
-    void sendEmail(Email email);
+    boolean sendEmail(Email email);
+
+    @Asynchronous
+    void sendEmailsToAllParticipants(List<Email> emailList);
+
+    boolean checkSmtpServer();
 }
