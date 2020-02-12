@@ -40,7 +40,7 @@ public class AnswerServiceImpl implements AnswerService {
 
         if (answerDto != null) {
             Question question = questionDao.findById(answerDto.getQuestionId());
-            Participant participant = participantDao.findById(answerDto.getParticipantId());
+            Participant participant = participantDao.findByUId(answerDto.getParticipantUId());
 
             validateIsNull(status, question, statusMessages, "Question list is null.");
 
