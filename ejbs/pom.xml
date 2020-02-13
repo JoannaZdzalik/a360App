@@ -10,11 +10,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>ejbs</artifactId>
-    <packaging>war</packaging>
+    <packaging>ejb</packaging>
 
     <name>enterprise java beans</name>
 
     <dependencies>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
