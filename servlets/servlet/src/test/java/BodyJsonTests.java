@@ -14,7 +14,7 @@ public class BodyJsonTests {
     @Test
     public void aCarObjectGoesIntoTheGarage() {
         Map<String, Object> jsonAsMap = new HashMap<>();
-        jsonAsMap.put("answerText", "odpowiedz");
+        jsonAsMap.put("answerText", "odpowied");
         jsonAsMap.put("questionId", "1");
         jsonAsMap.put("participantUId", "12345");
 
