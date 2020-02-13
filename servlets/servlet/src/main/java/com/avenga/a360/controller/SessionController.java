@@ -23,10 +23,10 @@ public class SessionController {
     @Produces(MediaType.TEXT_PLAIN)
     public Response createSession(final SessionDto sessionDto) {
 
-            Status get = sessionService.createSession(sessionDto, sessionDto.getParticipantList());
-           String status = get.getStatus();
-     return  Application.validator(status,"success",sessionService.createSession(sessionDto, sessionDto.getParticipantList()),
-             "Couldn't create session." );
+        Status get = sessionService.createSession(sessionDto, sessionDto.getParticipantList());
+        String status = get.getStatus();
+        return Application.validator(status, "success", sessionService.createSession(sessionDto, sessionDto.getParticipantList()),
+                "Couldn't create session.");
 
     }
 
