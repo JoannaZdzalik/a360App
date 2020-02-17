@@ -1,6 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/simpleCss/cssSession.css">
+</head>
+<body>
+
 <div>
-    <h1>{{title}}</h1>
+    <center><h1>{{title}}</h1></center>
 </div>
 <div>
-    
+    <div class="row">
+        <center><h1>Details</h1></center>
+    </div>
+    <form>
+        <div class="row">
+            <div class="col-md-1 offset-md-1"></div>
+            <div class="col-md-2 offset-md-2"><h4>Feedback session name:</h4></div>
+            <div class="col-md-2"><input type="text" class="form-control" id="session_name" placeholder="name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 offset-md-1"></div>
+            <div class="col-md-2 offset-md-2"><h4>Feedback end date:</h4></div>
+            <div class="input-append date form_datetime">
+                <input size="16" type="text" value="" readonly>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+
+            <script type="text/javascript">
+                $(".form_datetime").datetimepicker({
+                    format: "dd MM yyyy - hh:ii",
+                    autoclose: true,
+                    todayBtn: true,
+                    pickerPosition: "bottom-left"
+                });
+            </script>
+        </div>
+    </form>
+    <div class="my" style="border: black">
+        <div class="row">
+            <center><h1>Participants</h1></center>
+        </div>
+        <form>
+            <div class="row">
+                <div class="col-md-1 offset-md-1"></div>
+                <div class="col-md-2 offset-md-2"><h4>Feedback session name:</h4></div>
+                <div class="col-md-2"><input type="text" class="form-control" id="email" placeholder="name..."></div>
+                <div class="col-md-3 offset-md-3">
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div>
+        <div class=row>
+            <center>
+                <button type="button" class="btn btn-primary btn-lg">Send</button>
+            </center>
+        </div>
+
+    </div>
+
+
 </div>
+
+</body>
+</html>
+
