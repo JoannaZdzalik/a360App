@@ -4,7 +4,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Response;
 
 
-@ApplicationPath("/A360")
+@ApplicationPath("/a360")
 public class Application extends javax.ws.rs.core.Application {
 
     public static Response validator(Object o, Object b, String message) {

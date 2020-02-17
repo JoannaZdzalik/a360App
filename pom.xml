@@ -20,7 +20,7 @@
         <module>servlets</module>
         <module>ejbs</module>
         <module>ear</module>
-  <!--      <module>test</module>-->
+        <module>test</module>
     </modules>
 
     <distributionManagement>
@@ -34,8 +34,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
 
     <dependencyManagement>
