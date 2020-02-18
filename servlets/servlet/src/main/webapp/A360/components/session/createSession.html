@@ -15,26 +15,23 @@
     <form>
         <div class="row">
             <div class="col-md-1 offset-md-1"></div>
-            <div class="col-md-2 offset-md-2"><h4>Feedback session name:</h4></div>
+            <div class="col-md-3 offset-md-2"><h4>Feedback session name:</h4></div>
             <div class="col-md-2"><input type="text" class="form-control" id="session_name" placeholder="name">
             </div>
         </div>
         <div class="row">
             <div class="col-md-1 offset-md-1"></div>
-            <div class="col-md-2 offset-md-2"><h4>Feedback end date:</h4></div>
-            <div class="input-append date form_datetime">
-                <input size="16" type="text" value="" readonly>
-                <span class="add-on"><i class="icon-th"></i></span>
+            <div class="col-md-3 offset-md-2"><h4>Feedback end date:</h4></div>
+            <div class="col-md-2 offset-md-2">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened"
+                           datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+                    <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2()"><i
+                    class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+                </p>
             </div>
-
-            <script type="text/javascript">
-                $(".form_datetime").datetimepicker({
-                    format: "dd MM yyyy - hh:ii",
-                    autoclose: true,
-                    todayBtn: true,
-                    pickerPosition: "bottom-left"
-                });
-            </script>
         </div>
     </form>
     <div class="my" style="border: black">
@@ -44,13 +41,44 @@
         <form>
             <div class="row">
                 <div class="col-md-1 offset-md-1"></div>
-                <div class="col-md-2 offset-md-2"><h4>Feedback session name:</h4></div>
-                <div class="col-md-2"><input type="text" class="form-control" id="email" placeholder="name..."></div>
-                <div class="col-md-3 offset-md-3">
-                    <button type="button" class="btn btn-primary">Add</button>
+
+                <div class="input-group col-md-5">
+                    <span class="input-group-addon">Participant email:</span>
+                    <input type="email" class="form-control" placeholder="name..." aria-describedby="session_name"
+                           ng-model="newParticipant"/>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
+                </span>
+
                 </div>
 
             </div>
+            <div class="row">
+                <div class="col-md-1 offset-md-1"></div>
+                <div class="input-group col-md-5">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Lp</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="part in participants">
+                            <td class="col-md-2">{{$index+1}}</td>
+                            <td class="col-md-8">{{part}}</td>
+                            <td class="col-md-2" align="right">
+                                <button type="button" class="btn btn-primary" ng-click="remove($index)"><i
+                                        class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
         </form>
     </div>
     <div>
@@ -64,6 +92,7 @@
 
 
 </div>
+
 
 </body>
 </html>
