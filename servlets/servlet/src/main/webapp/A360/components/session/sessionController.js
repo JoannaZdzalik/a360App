@@ -15,6 +15,7 @@
             $scope.sessionForm = "";
             $scope.sessionName = "";
             $scope.inputEmail = "";
+            $scope.showAlert = false;
             $scope.endDate = new Date();
             $scope.emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -55,6 +56,11 @@
         $scope.canSendSession = function () {
             return $scope.participants.length === 0 || $scope.sessionForm.sessionName.$invalid || $scope.sessionForm.endDate.$invalid
         }
+        $scope.cleanFields = function(){
+            $scope.sessionName ="";
+            $scope.endDate = new Date();
+            $scope.participants = []
+        }
 
 
 
@@ -78,9 +84,11 @@
         };
         $scope.createSession = function() {
             SessionService.send( $scope.sessionName, $scope.dateParser(), $scope.participants).then(function(data) {
+                $scope.cleanFields();
+                $scope.showAlert = true;
                 console.log('success ' + data);
             }, function(response) {
-                alert('error');
+                alert(response);
             });
         };
 

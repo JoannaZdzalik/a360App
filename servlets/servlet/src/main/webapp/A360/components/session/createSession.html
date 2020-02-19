@@ -90,9 +90,15 @@
         <br>
         <div class=row>
             <center>
-                <button type="button" class="btn btn-primary btn-lg" ng-disabled="canSendSession()" ng-click="createSession()">Send
+                <button type="button" class="btn btn-primary btn-lg" ng-disabled="canSendSession()" ng-click="createSession()" name="sendButton">Send
                 </button>
             </center>
+        </div>
+        <div class="alert alert-success" ng-if="showAlert == true" >
+           <center> <strong>Success!</strong></center>
+        </div>
+        <div class="alert alert-danger" ng-if="response.status == 400" >
+            <center> <strong>Error!</strong></center>
         </div>
 
     </div>
