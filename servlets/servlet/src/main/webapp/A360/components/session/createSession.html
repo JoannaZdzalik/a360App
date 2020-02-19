@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="css/simpleCss/cssSession.css">
-</head>
-<body>
-<div data-ng-form="session">
+
+<div data-ng-form="sessionForm" ng-init="init()">
     <div>
         <center><h1>{{title}}</h1></center>
     </div>
@@ -16,7 +11,8 @@
         <div class="row">
             <div class="col-md-1 offset-md-1"></div>
             <div class="col-md-3 offset-md-2"><h4>Feedback session name:</h4></div>
-            <div class="col-md-2"><input type="text" class="form-control" name="inputName" placeholder="name..." ng-required="true" ng-model="inputName" >
+            <div class="col-md-2"><input type="text" class="form-control" name="sessionName" placeholder="name..."
+                                         ng-required="true" ng-model="sessionName">
             </div>
         </div>
         <div class="row">
@@ -24,10 +20,14 @@
             <div class="col-md-3 offset-md-2"><h4>Feedback end date:</h4></div>
             <div class="col-md-2 offset-md-2">
                 <p class="input-group">
-                    <input type="text" name = "inputEndDate"  class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened"
-                           datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+                    <input type="text" name="endDate" class="form-control" uib-datepicker-popup ng-model="endDate"
+
+                           is-open="endDatePopup.opened"
+                           datepicker-options="endDateOptions"
+                           data-ng-required="true"
+                           close-text="Close"/>
                     <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open2()"><i
+            <button type="button" class="btn btn-default" ng-click="openEndDatePopup()"><i
                     class="glyphicon glyphicon-calendar"></i></button>
           </span>
                 </p>
@@ -39,60 +39,68 @@
             </div>
             <div class="row">
                 <div class="col-md-1 offset-md-1"></div>
-
-                <div class="input-group col-md-5">
-                    <span class="input-group-addon">Participant email:</span>
-                    <input type="email" name="inputEmail" class="form-control" placeholder="name..."
-                           ng-required="true"
-                           aria-describedby="session_name"
-                           ng-model="inputEmail"/>
-                    <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" ng-click="add()"
-                            ng-disabled="session.inputEmail.$invalid">Add</button>
+                <div class="col-md-3 offset-md-2"><h4>Participant email:</h4></div>
+                <div class ="col-md-2 offset-md-2">
+                <input type="email" name="inputEmail" class="form-control" placeholder="name..."
+                       data-ng-required data-ng-pattern="emailPattern"
+                       aria-describedby="session_name"
+                       data-ng-model="inputEmail"/>
+                </div>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="addParticipant()"
+                            ng-disabled="sessionForm.inputEmail.$invalid">Add</button>
                 </span>
 
                 <br/>
             </div>
-                <div ng-if=" session.inputEmail.$invalid "
-                     class="alert alert-danger"><center>Invalid email</center>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-1 offset-md-1"></div>
-                <div class="input-group col-md-5">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Lp</th>
-                            <th>Email</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="part in participants">
-                            <td class="col-md-2">{{$index+1}}</td>
-                            <td class="col-md-8">{{part}}</td>
-                            <td class="col-md-2" align="right">
-                                <button type="button" class="btn btn-primary" ng-click="remove($index)"><i
-                                        class="glyphicon glyphicon-remove"></i></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class=row>
-                <center>
-                    <button type="button" class="btn btn-primary btn-lg" ng-disabled="checkIfInputComplete()">Send</button>
-                </center>
-            </div>
 
         </div>
+        <div ng-if=" sessionForm.inputEmail.$invalid "
+             class="alert alert-danger">
+            <center>Invalid email</center>
+        </div>
+        <div class="row">
+            <div class="col-md-1 offset-md-1"></div>
+            <div class="input-group col-md-5">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Lp</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="part in participants">
+                        <td class="col-md-2">{{$index+1}}</td>
+                        <td class="col-md-8">{{part.email}}</td>
+                        <td class="col-md-2" align="right">
+                            <button type="button" class="btn btn-primary" ng-click="removeParticipant($index)"><i
+                                    class="glyphicon glyphicon-remove"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <br>
+        <br>
+        <br>
+        <div class=row>
+            <center>
+                <button type="button" class="btn btn-primary btn-lg" ng-disabled="canSendSession()" ng-click="createSession()">Send
+                </button>
+            </center>
+        </div>
+
     </div>
 </div>
 
-</body>
-</html>
+</div>
+
+
+
+
 

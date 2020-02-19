@@ -2,48 +2,87 @@
     "use strict";
     angular.module('a360').controller('SessionController', SessionController);
 
-    SessionController.$inject = ['$scope'];
+    SessionController.$inject = ['$scope','SessionService'];
 
 
-    function SessionController($scope) {
-        $scope.title = "Create - Avenga 360 feedback session";
-        $scope.participants = [];
-        $scope.session = "";
-        $scope.sessionName = "";
-        $scope.inputEmail = null;
-        $scope.endDate = new Date();
-        $scope.minlength = 4;
-        $scope.today = function() {
+    function SessionController($scope, SessionService) {
+
+
+        $scope.init = function(){
+            $scope.title = "Create - Avenga 360 feedback session";
+            $scope.participants = [];
+            $scope.participantEmail = "";
+            $scope.sessionForm = "";
+            $scope.sessionName = "";
+            $scope.inputEmail = "";
             $scope.endDate = new Date();
-        };
-        $scope.today();
-        $scope.setDate = function(year, month, day) {
+            $scope.emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-            $scope.endDate = new Date(year, month, day);
-        };
-        $scope.inlineOptions = {
+        }
+
+        $scope.endDateOptions = {
+            dateDisabled: function(data, mode) {
+                var date = data.date;
+                var mode = data.mode;
+                return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+            },
+            formatYear: 'yy',
+            maxDate: new Date(2090, 5, 22),
             minDate: new Date(),
-            startingDay: 1,
-            showWeeks: true
+            startingDay: 1
         };
-
-        $scope.open2 = function() {
-            $scope.popup2.opened = true;
-        };
-        $scope.popup2 = {
+        $scope.endDatePopup = {
             opened: false
         };
+        $scope.openEndDatePopup = function() {
+            $scope.endDatePopup.opened = true;
+        };
 
-        $scope.add = function() {
-            $scope.participants.push($scope.inputEmail);
-            $scope.inputEmail = '';
+        $scope.addParticipant = function() {
+            if($scope.inputEmail==0 || $scope.participants.includes($scope.inputEmail)){
+                $scope.inputEmail = '';
+            }else{
+                $scope.participants.push({"email":$scope.inputEmail});
+                $scope.inputEmail = '';
+            }
+
+
+
         }
-        $scope.remove = function($index) {
+        $scope.removeParticipant = function($index) {
             $scope.participants.splice($index,1);
         }
-        $scope.checkIfInputComplete = function () {
-            return $scope.participants.length === 0 || $scope.session.inputName.$invalid || $scope.session.inputEndDate.$invalid
+        $scope.canSendSession = function () {
+            return $scope.participants.length === 0 || $scope.sessionForm.sessionName.$invalid || $scope.sessionForm.endDate.$invalid
         }
+
+
+
+
+        $scope.dateParser = function () {
+            let year = $scope.endDate.getFullYear();
+            let month = $scope.endDate.getMonth()+1;
+            let day = $scope.endDate.getDate();
+            let hour = $scope.endDate.getHours();
+            let min = $scope.endDate.getMinutes();
+            if ($scope.endDate.getMonth()<10) {
+                month = `0${$scope.endDate.getMonth()+1}`
+            }
+            if ($scope.endDate.getDate()<10) {
+                day = `0${$scope.endDate.getDate()}`
+            }
+            if ($scope.endDate.getMinutes()<10) {
+                min = `0${$scope.endDate.getMinutes()}`
+            }
+            return `${year}-${month}-${day} ${hour}:${min}`
+        };
+        $scope.createSession = function() {
+            SessionService.send( $scope.sessionName, $scope.dateParser(), $scope.participants).then(function(data) {
+                console.log('success ' + data);
+            }, function(response) {
+                alert('error');
+            });
+        };
 
 
 
