@@ -1,18 +1,13 @@
 <style>
     .strike {
-        .alert.alert-success
-    }
-    .bold {
-        font-weight: bold;
-    }
-    .red {
-        color: red;
-    }
-    .water {
-        color: blue;
+        color:#3c763d;
+        background-color:#dff0d8;
+        border-color:#d6e9c6
     }
     .has-error {
-        .alert.alert-danger
+        color:#a94442;
+        background-color:#f2dede;
+        border-color:#ebccd1
 
     }
 </style>
@@ -113,18 +108,11 @@
             </center>
         </div>
         <br>
-        <br>
-        <div ng-class="{strike: showAlert == 'Success!', 'has-error': showAlert == 'Error!'}" >
+        <div ng-class="{strike: showAlert == 'Success!',  'has-error': showAlert == 'Error!'}" >
             <center><h4><p>{{showAlert}}</p></h4></center>
-
         </div>
-
-<!--        <div class="alert alert-success" ng-if="showAlertPositive == true" >-->
-<!--            <center> <strong>Success!</strong></center>-->
-<!--        </div>-->
-<!--        <div class="alert alert-danger" ng-if="showAlertError == true" >-->
-<!--            <center> <strong>Error!</strong></center>-->
-<!--        </div>-->
+        <br>
+        <br>
 
 
     </div>
