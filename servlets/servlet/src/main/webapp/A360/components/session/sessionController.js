@@ -19,9 +19,10 @@
             $scope.endDate = "";
             $scope.showAlert = "";
             $scope.cleanFields();
+            $scope.showSendSessionLoader = false;
 
 
-        }
+        };
         $scope.emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         $scope.endDateOptions = {
@@ -38,7 +39,7 @@
 
         function addDaysToDate(date, days) {
             var newDate = new Date(date);
-            newDate.setDate(newDate.getDate() + days)
+            newDate.setDate(newDate.getDate() + days);
             return newDate
 
         }
@@ -59,19 +60,19 @@
             }
 
 
-        }
+        };
         $scope.removeParticipant = function ($index) {
             $scope.participants.splice($index, 1);
-        }
+        };
         $scope.canSendSession = function () {
             return $scope.participants.length === 0 || $scope.sessionForm.sessionName.$invalid || $scope.sessionForm.endDate.$invalid
-        }
+        };
         $scope.cleanFields = function () {
             $scope.sessionName = "";
             $scope.endDate = "";
-            $scope.participants = []
+            $scope.participants = [];
             $scope.inputEmail = "";
-        }
+        };
 
 
         $scope.formatDate = function () {
@@ -79,13 +80,19 @@
             return convertedEndDate
         };
         $scope.createSession = function () {
+            $scope.showSendSessionLoader = true;
             SessionService.send($scope.sessionName, $scope.formatDate(), $scope.participants).then(function (data) {
-                $scope.cleanFields();
-                $scope.showAlert = "Success!";
-            },
+                    console.log(data);
+                    $scope.cleanFields();
+                    $scope.showAlert = "Success!";
+                    $scope.showSendSessionLoader = false;
+
+                },
                 function (response) {
-                $scope.showAlert = 'Error!';
-            });
+                    console.log(response);
+                    $scope.showAlert = 'Error!';
+                    $scope.showSendSessionLoader = false;
+                });
         };
 
 

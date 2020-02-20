@@ -101,10 +101,12 @@
         <br>
         <br>
         <br>
-        <div class=row>
+        <div class=row >
             <center>
-                <button type="button" class="btn btn-primary btn-lg" ng-disabled="canSendSession()" ng-click="createSession()" name="sendButton">Send
+            <div data-a360-loading="" data-show="showSendSessionLoader"  >
+                <button type="button" class="btn btn-primary btn-lg" ng-disabled="canSendSession()" ng-click="createSession()" name="sendButton" >Send
                 </button>
+            </div>
             </center>
         </div>
         <br>
