@@ -1,4 +1,21 @@
+<style>
+    .strike {
+        .alert.alert-success
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .red {
+        color: red;
+    }
+    .water {
+        color: blue;
+    }
+    .has-error {
+        .alert.alert-danger
 
+    }
+</style>
 <div data-ng-form="sessionForm" ng-init="init()">
     <div>
         <center><h1>{{title}}</h1></center>
@@ -7,7 +24,7 @@
         <div class="row">
             <center><h1>Details</h1></center>
         </div>
-
+        <br>
         <div class="row">
             <div class="col-md-1 offset-md-1"></div>
             <div class="col-md-3 offset-md-2"><h4>Feedback session name:</h4></div>
@@ -37,6 +54,7 @@
             <div class="row">
                 <center><h1>Participants</h1></center>
             </div>
+            <br>
             <div class="row">
                 <div class="col-md-1 offset-md-1"></div>
                 <div class="col-md-3 offset-md-2"><h4>Participant email:</h4></div>
@@ -94,12 +112,20 @@
                 </button>
             </center>
         </div>
-        <div class="alert alert-success" ng-if="showAlert == true" >
-           <center> <strong>Success!</strong></center>
+        <br>
+        <br>
+        <div ng-class="{strike: showAlert == 'Success!', 'has-error': showAlert == 'Error!'}" >
+            <center><h4><p>{{showAlert}}</p></h4></center>
+
         </div>
-        <div class="alert alert-danger" ng-if="response.status == 400" >
-            <center> <strong>Error!</strong></center>
-        </div>
+
+<!--        <div class="alert alert-success" ng-if="showAlertPositive == true" >-->
+<!--            <center> <strong>Success!</strong></center>-->
+<!--        </div>-->
+<!--        <div class="alert alert-danger" ng-if="showAlertError == true" >-->
+<!--            <center> <strong>Error!</strong></center>-->
+<!--        </div>-->
+
 
     </div>
 </div>
