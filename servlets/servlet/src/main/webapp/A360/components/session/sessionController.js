@@ -1,7 +1,6 @@
 (function () {
     "use strict";
     angular.module('a360').controller('SessionController', SessionController);
-
     SessionController.$inject = ['$scope', 'SessionService', '$filter'];
 
 
