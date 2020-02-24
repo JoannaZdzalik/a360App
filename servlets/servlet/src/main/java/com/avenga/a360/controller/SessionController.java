@@ -25,8 +25,7 @@ public class SessionController {
 
         Status get = sessionService.createSession(sessionDto, sessionDto.getParticipantList());
         String status = get.getStatus();
-        return Application.validator(status, "success", sessionService.createSession(sessionDto, sessionDto.getParticipantList()),
-                "Couldn't create session.");
+        return Response.status(Response.Status.OK).entity(status).build();
 
     }
 

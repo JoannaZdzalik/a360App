@@ -82,5 +82,15 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return true;
     }
+    @Override
+    public List<Status> createAnswersDto(List<AnswerDto> lists){
+        List<Status> statusList = new ArrayList<>();
+
+        for(AnswerDto answerDto : lists){
+            statusList.add(createAnswer(answerDto));
+
+        }
+        return statusList;
+    }
 
 }

@@ -10,4 +10,6 @@ public interface AnswerService {
     List<Answer> findAllAnswersByParticipantId(Long id);
 
     Status createAnswer(AnswerDto answerDto);
+
+    List<Status> createAnswersDto(List<AnswerDto> lists);
 }

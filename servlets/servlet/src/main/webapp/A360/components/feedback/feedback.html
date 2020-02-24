@@ -1,5 +1,39 @@
-<div class="container text-center" data-ng-form="feedbackForm" ng-init="init()" >
-    <h1>{{title}} {{participantMail}} </h1>
+<div class="container text-center" data-ng-controller="FeedbackController" data-ng-init=(init()) >
+    <div><h1><b>{{title}}</b> {{participantMail}} </h1></div>
+    <div data-ng-repeat="question in questions">
+        <div ng-if='question.questionType == "TEXT"' class="row">
+            <br>
+            <div class="col-md-5 ">
+            {{question.questionText}}
+            </div>
+            <div class="col-md-5">
+                <textarea id="textarea" class="form-control" rows="5" placeholder="...input text"data-ng-model="question.answer" ></textarea>
+            </div>
+            <br>
+        </div>
+        <div ng-if='question.questionType == "RADIO"' class="row">
+            <div class="col-md-5 ">
+                {{question.questionText}}
+            </div>
+
+
+            <div class="col-md-5 " data-ng-repeat="answerValue in question.defaultAnswers">
+                <input type="radio" value="{{answerValue.value}}" id="{{answerValue.value}}"
+                       data-ng-model="question.answer">
+                <label for="{{answerValue.value}}">{{answerValue.value}}</label>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <br>
+    <div class="row mt-20" align="center" >
+        <div class="input-group">
+            <button type="submit" class="btn btn-primary btn-lg" data-ng-click="sendFeedback()">Send</button>
+        </div>
+    </div>
 
 
 </div>

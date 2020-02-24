@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/answers")
 public class AnswerController {
@@ -21,9 +22,10 @@ public class AnswerController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createAnswer(final AnswerDto answerDto) {
-        Status status = answerService.createAnswer(answerDto);
-        return Application.validator(status.getStatus(), "success", answerService.createAnswer(answerDto), "Couldn't add answer.");
+    public Response createAnswer(final List<AnswerDto> answersDto) {
+
+       List<Status> statusList =answerService.createAnswersDto(answersDto);
+       return Response.status(Response.Status.OK).entity(statusList).build()  ;
 
     }
 }

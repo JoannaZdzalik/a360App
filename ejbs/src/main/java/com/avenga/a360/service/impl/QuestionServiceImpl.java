@@ -60,6 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
             questionDto.setQuestion_id(q.getId());
             questionDto.setQuestion_text(q.getQuestionText());
             questionDto.setQuestion_type(q.getQuestionType());
+            questionDto.setDefault_answers(q.getDefaultAnswers());
             questionDtos.add(questionDto);
         }
         return questionDtos;
