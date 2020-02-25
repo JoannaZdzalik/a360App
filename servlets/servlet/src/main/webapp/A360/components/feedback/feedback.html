@@ -1,45 +1,51 @@
 <div class="container text-center" data-ng-controller="FeedbackController" data-ng-init=(init())>
-    <div><h1><b>{{title}}</b> {{participantMail}} </h1></div>
-    <div data-ng-repeat="question in questions">
-        <div ng-if='question.questionType == "TEXT"' class="row">
-            <br>
-            <div class="col-md-5 ">
-                {{question.questionText}}
-            </div>
-            <div class="col-md-5">
+    <div style="border: #999999 solid;background-color:#cccccc"><h1><b>{{title}}</b> {{participantMail}} </h1></div>
+    <div style="border: #999999 solid">
+        <div data-ng-repeat="question in questions">
+            <div ng-if='question.questionType == "TEXT"' class="row">
+                <br>
+                <div class="col-md-5 ">
+                    {{question.questionText}}
+                </div>
+                <div class="col-md-5">
                 <textarea id="textarea" class="form-control" rows="5" placeholder="...input text"
                           data-ng-model="question.answer"></textarea>
+                </div>
+                <br>
             </div>
-            <br>
-        </div>
 
-        <div ng-if='question.questionType == "RADIO"'>
-            <div class="col-md-5 ">
-                {{question.questionText}}
-            </div>
-            <br>
-            <div style="display: table;margin-left: 50%">
-                <div data-ng-repeat="answerValue in question.defaultAnswers">
-                    <div style="display: table-row;">
-                        <div style="display: table-cell;">
-                            <input type="radio" value="{{answerValue.value}}" id="{{answerValue.value}}"
-                                   data-ng-model="question.answer">
-                        </div>
-                        <div style="display: table-cell;">
-                            <label for="{{answerValue.value}}"> {{ answerValue.value}}</label>
+            <div ng-if='question.questionType == "RADIO"'>
+                <div class="col-md-5 ">
+                    {{question.questionText}}
+                </div>
+                <br>
+                <div style="display: table;margin-left: 45%">
+                    <div data-ng-repeat="answerValue in question.defaultAnswers">
+                        <div style="display: table-row;">
+                            <div style="display: table-cell;">
+                                <input class="form-check-input" type="radio" value="{{answerValue.value}}"
+                                       id="{{answerValue.value}}"
+                                       data-ng-model="question.answer">
+                            </div>
+                            <div style="display: table-cell;">
+                                <label class="form-check-label" for="{{answerValue.value}}"> {{
+                                    answerValue.value}}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-    <div align="center">
-        <div class="input-group">
-            <button type="submit" class="btn btn-primary btn-lg" data-ng-click="sendFeedback(); afterSendFeedback()">Send</button>
+        <br>
+        <div align="center">
+            <div class="input-group">
+                <button type="submit" class="btn btn-primary btn-lg"
+                        data-ng-click="sendFeedback(); afterSendFeedback()">Send
+                </button>
+            </div>
+            <br>
         </div>
     </div>
-
 
 </div>
 
