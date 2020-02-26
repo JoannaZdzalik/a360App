@@ -1,3 +1,28 @@
 <div class="container text-center" data-ng-controller="ActiveSessionController" data-ng-init=(init())>
-    <h1>{{title}}</h1> sssss
+    <h1>{{title}}</h1>
+
+    <div>
+
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col"  class="text-center">Session Name</th>
+            <th scope="col"  class="text-center">End date</th>
+            <th scope="col"  class="text-center">Amount of participants</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="session in allActiveSessions">
+            <th scope="row">{{session.number}}</th>
+            <td>{{session.sessionName}}</td>
+            <td>{{session.endDate}}</td>
+            <td>{{session.amountParticipants}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    </div>
+
+
 </div>

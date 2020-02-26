@@ -135,8 +135,8 @@ public class SessionServiceImpl implements SessionService {
         session.setIsSent(false);
         return session;
     }
-    @Override
-    public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList){
+
+    private List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList){
         List<SessionDto> sessionDtoList = new ArrayList<>();
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
         for(Session session:sessionList ){

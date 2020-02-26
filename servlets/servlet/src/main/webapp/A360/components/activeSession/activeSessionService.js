@@ -7,14 +7,14 @@
         activeSessionService.getAllSessions = function () {
             var url = '/servlet/a360/sessions/get' ;
             var activeSessionsResource = $resource(url);
-
             var deferred = $q.defer();
-            activeSessionsResource.get().$promise.then(
+            activeSessionsResource.query().$promise.then(
                 function (data) {
                     deferred.resolve(data);
-                }, function (response) {
-                    deferred.reject(response);
+                }, function (data) {
+                    deferred.reject(data);
                 });
+
             return deferred.promise;
         };
         return activeSessionService;

@@ -9,6 +9,7 @@
             $scope.title = " All active sessions";
             $scope.allActiveSessions = [];
             $scope.getAllSession();
+            $scope.i=1;
 
 
         };
@@ -16,16 +17,17 @@
 
         $scope.getAllSession = function () {
             ActiveSessionService.getAllSessions().then(function (data) {
-
                 data.forEach(function (el) {
                     var session = {
-                        sessionName1: el.sessionName,
-                        isSent1: el.isSent,
-                        endDate1: el.endDate
-
-
+                        number:$scope.i++,
+                        sessionName: el.sessionName,
+                        isSent: el.isSent,
+                        endDate: $scope.formatDate(el.endDate),
+                        amountParticipants: el.participantList.length
                     };
+
                     $scope.allActiveSessions.push(session);
+                    console.log($scope.allActiveSessions);
 
                 })
 
@@ -35,7 +37,10 @@
 
         };
 
-
+        $scope.formatDate = function (date) {
+            var convertedEndDate = $filter('date')(new Date(date), 'hh:mm dd MM yyyy ');
+            return convertedEndDate
+        };
     }
 
 
