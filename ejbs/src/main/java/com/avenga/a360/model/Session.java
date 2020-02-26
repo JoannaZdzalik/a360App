@@ -15,10 +15,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sessions")
-@NamedNativeQuery(
-        name = "Session.findAllSessionsIsSentFalseAndEndDateIsAfterNow",
-        query = "select * from sessions where now() > end_date and is_sent = false",
-        resultClass = Session.class
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Session.findAllSessionsIsSentFalseAndEndDateIsAfterNow",
+                query = "select * from sessions where now() > end_date and is_sent = false",
+                resultClass = Session.class
+        ),
+        @NamedNativeQuery(
+                name = "Session.findAllSessionsWhereIsSentFalse",
+                query = "select * from sessions where is_sent = false",
+                resultClass = Session.class
+        )}
 )
 public class Session implements Serializable {
 

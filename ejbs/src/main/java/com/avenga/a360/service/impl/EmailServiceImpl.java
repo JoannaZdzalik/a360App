@@ -18,7 +18,7 @@ import java.util.List;
 @Stateless
 public class EmailServiceImpl implements EmailService {
 
-    private static final String APP_URL = "http://localhost:81/servlet/A360/#!/feedback/";
+    private static final String APP_URL = "http://localhost/";
 
     @Inject
     AnswerDao answerDao;

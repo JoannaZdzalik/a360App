@@ -12,4 +12,6 @@ public interface SessionService {
     Status createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto);
 
     List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow();
+    List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList);
+    List<SessionDto> findAllSessionsWhereIsSentFalse();
 }

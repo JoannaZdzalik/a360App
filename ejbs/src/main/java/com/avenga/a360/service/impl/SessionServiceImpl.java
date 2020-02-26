@@ -121,6 +121,12 @@ public class SessionServiceImpl implements SessionService {
     public List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow() {
         return sessionDao.findAllSessionsIsSentFalseAndEndDateIsAfterNow();
     }
+    @Override
+    public List<SessionDto> findAllSessionsWhereIsSentFalse() {
+        List<SessionDto> sessionDtoList =  sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
+        return sessionDtoList ;
+    }
+
 
     public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
@@ -129,6 +135,32 @@ public class SessionServiceImpl implements SessionService {
         session.setIsSent(false);
         return session;
     }
+    @Override
+    public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList){
+        List<SessionDto> sessionDtoList = new ArrayList<>();
+        ParticipantServiceImpl participantService = new ParticipantServiceImpl();
+        for(Session session:sessionList ){
+            SessionDto sessionDto = new SessionDto();
+            sessionDto.setSessionName(session.getSessionName());
+            sessionDto.setIsSent(session.getIsSent());
+            sessionDto.setEndDate(session.getEndDate());
+            List<ParticipantDto> participantDtoList = new ArrayList<>();
+            for(Participant participant : session.getParticipants()){
+                ParticipantDto participantDto = participantService.ParticipantToParticipantDto(participant);
+                participantDtoList.add(participantDto);
+
+            }
+            sessionDto.setParticipantList(participantDtoList);
+            sessionDtoList.add(sessionDto);
+
+        }
+
+
+        return sessionDtoList;
+
+
+    }
+
 
     public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();
