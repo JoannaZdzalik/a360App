@@ -7,5 +7,7 @@ import java.util.List;
 public interface AnswerDao {
     List<Answer> findAllAnswersByParticipantId(Long id);
 
+    List<Answer> findAllAnswersForOneSession(String name);
+
     boolean createAnswer(Answer answer);
 }

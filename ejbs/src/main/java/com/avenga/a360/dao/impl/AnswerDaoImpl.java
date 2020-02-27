@@ -21,7 +21,13 @@ public class AnswerDaoImpl implements AnswerDao {
                 .getResultList();
         return answers;
     }
-
+    @Override
+    public List<Answer> findAllAnswersForOneSession(String name) {
+        List<Answer> answers = em.createNamedQuery("Answer.shouldFindAllAnswersForOneSession", Answer.class)
+                .setParameter("name",name)
+                .getResultList();
+        return answers;
+    }
     @Override
     public boolean createAnswer(Answer answer){
         try {

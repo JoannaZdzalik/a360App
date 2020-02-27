@@ -57,6 +57,7 @@ public class AnswerServiceImplTest {
         Participant participant = new Participant();
         participant.setEmail("a@a.com");
         participant.setSession(session);
+        participant.setUId("12addadwadd");
 
         AnswerDto answerDto = new AnswerDto();
         answerDto.setAnswerText("Answer");
@@ -65,7 +66,8 @@ public class AnswerServiceImplTest {
 
 
         Mockito.when(questionDao.findById(answerDto.getQuestionId())).thenReturn(question);
-        Mockito.when(participantDao.findById(answerDto.getParticipantId())).thenReturn(participant);
+        Mockito.when(participantDao.findByUId(answerDto.getParticipantUId())).thenReturn(participant);
+
 
 
         Assert.assertEquals(answerService.createAnswer(answerDto).getStatus(), "success");

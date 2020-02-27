@@ -15,9 +15,23 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "answers")
-@NamedNativeQuery(name = "Answer.shouldFindAllAnswersByParticipantId",
-        query = "SELECT a.* FROM participants p left join answers a on p.id = a.id_participant where p.id = :id",
-        resultClass = Answer.class)
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Answer.shouldFindAllAnswersByParticipantId",
+                query = "SELECT a.* FROM participants p left join answers a on p.id = a.id_participant where p.id = :id",
+                resultClass = Answer.class),
+        @NamedNativeQuery(name = "Answer.shouldReturnAnswersInSessions",
+                query = "SELECT a.id_participant,a.id_question FROM answers a \n" +
+                        " join participants p on p.id = a.id_participant \n" +
+                        " join sessions s on s.id = p.id_session ",
+
+                resultClass = Answer.class),
+        @NamedNativeQuery(name = "Answer.shouldFindAllAnswersForOneSession",
+                query = "SELECT answers.* from participants left join sessions  on sessions.id = participants.id_session" +
+                        " right join answers on answers.id_participant = participants.id where sessions.session_name=:name " ,
+                resultClass = Answer.class)
+                }
+
+)
 public class Answer implements Serializable {
 
 

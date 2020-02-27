@@ -136,7 +136,7 @@ public class SessionServiceImpl implements SessionService {
         return session;
     }
 
-    private List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList){
+    public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList){
         List<SessionDto> sessionDtoList = new ArrayList<>();
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
         for(Session session:sessionList ){

@@ -103,6 +103,7 @@ public class SessionServiceImplTest {
         List<ParticipantDto> participantsDto = new ArrayList<>();
         ParticipantDto participantDto = new ParticipantDto();
         participantDto.setEmail("a@a.com");
+        participantDto.setUId("addd123ad");
         participantsDto.add(participantDto);
 
         Mockito.when(questionDao.findAllActiveQuestions()).thenReturn(questions);
@@ -111,7 +112,7 @@ public class SessionServiceImplTest {
 
         SessionDto sessionDto = new SessionDto();
         sessionDto.setSessionName("Session name");
-        sessionDto.setEndDate(LocalDateTime.of(2020, 02, 20, 00, 00, 00, 01));
+        sessionDto.setEndDate(LocalDateTime.of(2030, 02, 20, 00, 00, 00, 01));
 
 
         Assert.assertEquals(sessionService.createSession(sessionDto, participantsDto).getStatus(), "success");

@@ -17,6 +17,19 @@
 
             return deferred.promise;
         };
+        activeSessionService.getAmountQuestions = function () {
+            var url = '/servlet/a360/servlet/a360/answers/getActive' ;
+            var activeSessionsResource = $resource(url);
+            var deferred = $q.defer();
+            activeSessionsResource.query().$promise.then(
+                function (data) {
+                    deferred.resolve(data);
+                }, function (data) {
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        };
         return activeSessionService;
     }
 })();
