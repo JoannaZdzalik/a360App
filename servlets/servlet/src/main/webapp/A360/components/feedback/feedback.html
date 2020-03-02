@@ -1,5 +1,6 @@
+<br>
 <div class="container text-center" data-ng-controller="FeedbackController" data-ng-init=(init())>
-    <div style="border: #999999 solid;background-color:#cccccc"><h1><b>{{title}}</b> {{participantMail}} </h1></div>
+    <div style="border: #999999 solid;background-color:#cccccc"><h1>{{title}} {{participantMail}} </h1></div>
     <div style="border: #999999 solid">
         <div data-ng-repeat="question in questions">
             <div ng-if='question.questionType == "TEXT"' class="row">

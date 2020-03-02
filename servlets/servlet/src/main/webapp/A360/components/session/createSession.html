@@ -11,11 +11,12 @@
 
     }
 </style>
-<div data-ng-form="sessionForm" ng-init="init()">
+<br>
+<div data-ng-form="sessionForm" ng-init="init()" class="container text-center">
     <div>
-        <center><h1>{{title}}</h1></center>
+        <center style="border: #999999 solid;background-color:#cccccc"><h1>{{title}}</h1></center>
     </div>
-    <div>
+    <div style="border: #999999 solid">
         <div class="row">
             <center><h1>Details</h1></center>
         </div>
@@ -51,16 +52,16 @@
             </div>
             <br>
             <div class="row">
-                <div class="col-md-1 offset-md-1"></div>
-                <div class="col-md-3 offset-md-2"><h4>Participant email:</h4></div>
-                <div class ="col-md-2 offset-md-2">
+                <div class="col-md-1 "></div>
+                <div class="col-md-3 "><h4>Participant email:</h4></div>
+                <div class ="col-md-2 ">
                 <input type="email" name="inputEmail" class="form-control" placeholder="name..."
                        data-ng-required data-ng-pattern="emailPattern"
                        aria-describedby="session_name"
                        data-ng-model="inputEmail"/>
                 </div>
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" ng-click="addParticipant()"
+                    <button style="display: inline-block ;float: left" type="button" class="btn btn-primary" ng-click="addParticipant()"
                             ng-disabled="sessionForm.inputEmail.$invalid">Add</button>
                 </span>
 
@@ -96,8 +97,7 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div>
+
         <br>
         <br>
         <br>

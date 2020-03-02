@@ -8,7 +8,7 @@
 
 
         $scope.init = function () {
-            $scope.title = "Create - Avenga 360 feedback session";
+            $scope.title = "Create - Avenga 360 Feedback Session";
             $scope.participants = [];
             $scope.sessionForm = "";
             $scope.sessionName = "";

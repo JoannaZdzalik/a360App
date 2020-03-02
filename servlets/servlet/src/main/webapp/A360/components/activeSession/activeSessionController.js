@@ -10,29 +10,50 @@
             $scope.allActiveSessions = [];
             $scope.getAllSession();
             $scope.i = 1;
+            $scope.temp = null;
+
+
+
 
 
         };
+
+        $scope.answersForActiveSessions = function (sessionName)
+        // function jakas(sessionName)
+        {
+            ActiveSessionService.getAmountAnswers().then(function (data) {
+                data.forEach(function (element) {
+
+                    if (element.sessionName == sessionName )
+                        $scope.temp =element.amountOfAnswers;
+                    console.log(element.amountOfAnswers);
+                    // return answers
+
+
+                })
+
+
+            })
+
+        }
 
 
         $scope.getAllSession = function () {
             ActiveSessionService.getAllSessions().then(function (data) {
                 data.forEach(function (el) {
+                    $scope.answersForActiveSessions(el.sessionName);
 
-                    var answers = $scope.answersForActiveSessions(el.sessionName);
                     var session = {
                         number: $scope.i++,
                         sessionName: el.sessionName,
                         isSent: el.isSent,
                         endDate: $scope.formatDate(el.endDate),
                         amountParticipants: el.participantList.length,
-                        amountOfAnswers: answers
-
+                        amountOfAnswers: $scope.temp
 
                     };
+                    console.log(session);
 
-
-                    console.log(session)
                     $scope.allActiveSessions.push(session);
 
 
@@ -49,21 +70,9 @@
             var convertedEndDate = $filter('date')(new Date(date), 'hh:mm dd MM yyyy ');
             return convertedEndDate
         };
-        $scope.answersForActiveSessions = function (sessionName) {
-            ActiveSessionService.getAmountQuestions().then(function (data) {
-                data.forEach(function (element) {
 
-                    if (element.sessionName == sessionName )
-                        return element.amountOfAnswers
-
-
-                })
-
-
-            })
-
-        }
     }
+
 
 
 })();
