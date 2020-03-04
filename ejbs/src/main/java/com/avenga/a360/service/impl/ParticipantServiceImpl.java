@@ -15,9 +15,6 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Inject
     ParticipantDao participantDao;
 
-  /*  @Inject
-    ParticipantDto participantDto;*/
-
     @Override
     public List<Participant> findBySessionId(Long id) {
         return participantDao.findBySessionId(id);

@@ -15,10 +15,9 @@ public class ParticipantDaoImpl implements ParticipantDao {
 
     @Override
     public List<Participant> findBySessionId(Long id) {
-        List<Participant> participants = em.createNamedQuery("Participant.findAllBySessionId", Participant.class)
+        return em.createNamedQuery("Participant.findAllBySessionId", Participant.class)
                 .setParameter("id", id)
                 .getResultList();
-        return participants;
     }
 
     @Override
@@ -29,6 +28,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
                     .setParameter("id", id)
                     .getSingleResult();
         }catch (Exception e){
+            e.printStackTrace();
         }
         return participant;
     }
@@ -41,6 +41,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
                     .setParameter("uid", uId)
                     .getSingleResult();
         }catch (Exception e){
+            e.printStackTrace();
         }
         return participant;
     }
