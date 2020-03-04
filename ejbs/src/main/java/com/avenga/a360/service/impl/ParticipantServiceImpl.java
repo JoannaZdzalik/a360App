@@ -42,8 +42,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Participant findByUId(String uId) {
         return participantDao.findByUId(uId);
     }
+
     @Override
-    public ParticipantDto ParticipantToParticipantDto(Participant participant){
+    public ParticipantDto participantToParticipantDto(Participant participant){
         ParticipantDto participantDto = new ParticipantDto();
         participantDto.setEmail(participant.getEmail());
         participantDto.setUId(participant.getUId());

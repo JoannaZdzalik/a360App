@@ -14,5 +14,5 @@ public interface ParticipantService {
 
     Participant findByUId(String uId);
 
-    ParticipantDto ParticipantToParticipantDto(Participant participant);
+    ParticipantDto participantToParticipantDto(Participant participant);
 }

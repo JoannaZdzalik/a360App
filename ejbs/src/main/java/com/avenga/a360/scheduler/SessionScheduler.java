@@ -37,6 +37,19 @@ public class SessionScheduler {
 
     }
 
+//    @Schedule(hour = "*", minute = "*/1", persistent = false)
+//    public void checkSessionsWhereLinksSentFalse() throws InterruptedException {
+//        if (sendService.checkSmtpServer()) {
+//            List<Session> sessionList = sessionService.findAllSessionsLinksSentFalse();
+//            if (!(sessionList == null)) {
+//                for (Session session : sessionList) {
+//                    sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithLinks(session.getParticipants(), session));
+//                    session.setLinksSent(true);
+//                }
+//            }
+//        }
+//    }
+
     @Timeout
     public void programmaticTimeout(Timer timer) {
     }

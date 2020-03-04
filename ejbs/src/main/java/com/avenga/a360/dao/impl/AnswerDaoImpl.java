@@ -21,6 +21,16 @@ public class AnswerDaoImpl implements AnswerDao {
                 .getResultList();
         return answers;
     }
+
+    @Override
+    public List<Answer> findAllAnswersByParticipantIdAndQuestionId(Long idParticipant, Long idQuestion) {
+        List<Answer> answers = em.createNamedQuery("findAnswersByParticipantIdAndQuestionId", Answer.class)
+                .setParameter("idParticipant", idParticipant)
+                .setParameter("idQuestion", idQuestion)
+                .getResultList();
+        return answers;
+    }
+
     @Override
     public List<Answer> findAllAnswersForOneSession(String name) {
         List<Answer> answers = em.createNamedQuery("Answer.shouldFindAllAnswersForOneSession", Answer.class)

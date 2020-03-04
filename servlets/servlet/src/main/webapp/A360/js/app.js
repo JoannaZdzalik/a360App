@@ -7,6 +7,7 @@ angular.module('a360', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.
     when('/statistics', {templateUrl: 'components/statistics/statistics.html', controller: 'StatisticsController'}).
     when('/welcome', {templateUrl: 'components/welcome/welcome.html', controller: 'WelcomeController'}).
     when('/questions', {templateUrl: 'components/questions/questions.html', controller: 'QuestionsController'}).
+    when('/invalidLink', {templateUrl: 'components/feedback/invalidLink.html', controller: 'FeedbackController'}).
     otherwise({ redirectTo: '/welcome' });
 });
 

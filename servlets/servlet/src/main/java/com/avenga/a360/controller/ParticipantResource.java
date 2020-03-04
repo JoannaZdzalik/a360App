@@ -16,27 +16,26 @@ import javax.ws.rs.core.Response;
 public class ParticipantResource {
     @Inject
     ParticipantService participantService;
-    @Inject
-    ParticipantDto participantDto;
 
+//    @Inject
+//    ParticipantDto participantDto;
 
     @Path("{uid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrderItemByItemId(@PathParam("uid") String uid) {
+    public Response getParticipantDto(@PathParam("uid") String uid) {
         Participant participant = participantService.findByUId(uid);
-      //  ParticipantDto participantDto = participantService.ParticipantToParticipantDto(participant);
-        if(participant !=null ) {
-            ParticipantDto participantDto = participantService.ParticipantToParticipantDto(participant);
+        if (participant != null) {
+            ParticipantDto participantDto = participantService.participantToParticipantDto(participant);
             return Response.status(Response.Status.OK)
                     .entity(participantDto)
                     .build();
-        }else{
+        } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Participant dosen't exist")
                     .build();
         }
-      //  return Application.validator(participant, participantDto,"Participant dosen't exist" );
+        //  return Application.validator(participant, participantDto,"Participant dosen't exist" );
     }
 
 

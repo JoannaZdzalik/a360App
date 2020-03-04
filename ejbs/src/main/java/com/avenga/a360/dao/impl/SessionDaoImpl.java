@@ -1,6 +1,7 @@
 package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.SessionDao;
+import com.avenga.a360.model.Participant;
 import com.avenga.a360.model.Session;
 
 import javax.persistence.EntityManager;
@@ -22,7 +23,6 @@ public class SessionDaoImpl implements SessionDao {
     }
     @Override
     public List<Session> findAllSessionsWhereIsSentFalse() {
-
         List<Session> sessions = em.createNamedQuery("Session.findAllSessionsWhereIsSentFalse", Session.class)
                 .getResultList();
         return sessions;
@@ -47,5 +47,18 @@ public class SessionDaoImpl implements SessionDao {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Session findSessionByParticipantUid(String uId){
+        Session session = null;
+        try {
+            session = em.createNamedQuery("findSessionByParticipantUid", Session.class)
+                    .setParameter("uid", uId)
+                    .getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return session;
     }
 }

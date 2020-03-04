@@ -1,7 +1,7 @@
 (function () {
     "use strict";
     angular.module('a360').controller('FeedbackController', FeedbackController);
-    FeedbackController.$inject = ['$scope', '$routeParams', 'FeedbackService','$location'];
+    FeedbackController.$inject = ['$scope', '$routeParams', 'FeedbackService', '$location'];
 
     function FeedbackController($scope, $routeParams, FeedbackService, $location) {
 
@@ -13,6 +13,7 @@
             $scope.questions = [];
             $scope.participantUId = $routeParams.uId;
             $scope.feedback = [];
+            checkIfSessionIsActive();
             getParticipantByUid();
         };
 
@@ -27,9 +28,9 @@
                 alert('error');
             });
         }
+
         $scope.getAllQue = function (sessionId) {
             FeedbackService.getQuestions(sessionId).then(function (data) {
-
                 data.forEach(function (el) {
                     var question = {
                         questionId: el.question_id,
@@ -38,7 +39,7 @@
                         defaultAnswers: [],
                         answer: null
                     };
-                    if(el.default_answers != null) {
+                    if (el.default_answers != null) {
                         el.default_answers.split(';').forEach(function (el) {
                             var answerValue = {
                                 value: el
@@ -46,7 +47,7 @@
                             question.defaultAnswers.push(answerValue);
 
                         });
-                        question.answer= question.defaultAnswers[0].value;
+                        question.answer = question.defaultAnswers[0].value;
                     }
                     $scope.questions.push(question);
                 });
@@ -63,7 +64,7 @@
                     questionId: element.questionId,
                     participantUId: $scope.participantUId
                 };
-                if(element.answer !=null) {
+                if (element.answer != null) {
                     $scope.feedback.push(feedback);
                 }
             });
@@ -76,5 +77,20 @@
         $scope.afterSendFeedback = function () {
             $location.path('feedbackCreated');
         };
+
+        function checkIfSessionIsActive() {
+            FeedbackService.getSessionByParticipantUid($routeParams.uId).then(function (data) {
+                console.log("session by uid is ok");
+                if (data.isSent === true) {
+                    //   $window.location.href = "http://localhost:81/servlet/A360/#!/invalidLink"
+                    $location.path('invalidLink')
+                }
+            }, function (response) {
+                console.log("Something wrong with get Session By participant UID" + response)
+            });
+
+        }
+
+
     }
 })();

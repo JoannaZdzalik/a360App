@@ -21,6 +21,6 @@ insert into participants (email, id_session, uid) values ('c@a.com', 2, '145633'
 insert into answers (answer_text, id_participant, id_question) values ('Good', 1, 1);
 insert into answers (answer_text, id_participant, id_question) values ('Bad', 2, 2);
 insert into answers (answer_text, id_participant, id_question) values ('The best', 2, 3);
-insert into answers (answer_text, id_participant, id_question) values ('Bad', 5, 1);
-insert into answers (answer_text, id_participant, id_question) values ('answer 2', 6, 2);
-insert into answers (answer_text, id_participant, id_question) values ('answer 3', 6, 3);
+insert into answers (answer_text, id_participant, id_question) values ('Bad', 1, 1);
+insert into answers (answer_text, id_participant, id_question) values ('answer 2', 1, 2);
+insert into answers (answer_text, id_participant, id_question) values ('answer 3', 1, 3);

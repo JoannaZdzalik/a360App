@@ -10,6 +10,6 @@ public interface EmailService {
 
     List<Email> createEmailsToParticipantsWithFeedback(Session session);
 
-    List<Email> createEmailsToParticipantsWithLinks(List<Participant> participantList, String sessionName);
+    List<Email> createEmailsToParticipantsWithLinks(List<Participant> participantList, Session session);
 
 }

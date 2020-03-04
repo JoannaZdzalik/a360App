@@ -22,6 +22,11 @@ import java.util.List;
                 resultClass = Session.class
         ),
         @NamedNativeQuery(
+                name = "findSessionByParticipantUid",
+                query = "select s.* from sessions s left join participants p on p.id_session = s.id where p.uid = :uid",
+                resultClass = Session.class
+        ),
+        @NamedNativeQuery(
                 name = "Session.findAllSessionsWhereIsSentFalse",
                 query = "select * from sessions where is_sent = false",
                 resultClass = Session.class

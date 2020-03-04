@@ -11,4 +11,5 @@ public interface SessionDao {
     boolean createSession(Session session);
     boolean findSessionByName(String name);
 
+    Session findSessionByParticipantUid(String uId);
 }

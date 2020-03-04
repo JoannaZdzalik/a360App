@@ -27,9 +27,14 @@ import java.io.Serializable;
                 resultClass = Answer.class),
         @NamedNativeQuery(name = "Answer.shouldFindAllAnswersForOneSession",
                 query = "SELECT answers.* from participants left join sessions  on sessions.id = participants.id_session" +
-                        " right join answers on answers.id_participant = participants.id where sessions.session_name=:name " ,
+                        " right join answers on answers.id_participant = participants.id where sessions.session_name=:name ",
+                resultClass = Answer.class),
+        @NamedNativeQuery(
+                name = "findAnswersByParticipantIdAndQuestionId",
+                query = "select * from answers a left join participants p on ( a.id_participant = p.id )" +
+                        "left join questions q on (a.id_question = q.id) where p.id = :idParticipant and q.id= :idQuestion",
                 resultClass = Answer.class)
-                }
+}
 
 )
 public class Answer implements Serializable {

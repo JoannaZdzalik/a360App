@@ -59,7 +59,6 @@ public class SessionServiceImpl implements SessionService {
         if (validateIsNotNull(sessionDto) && validateIsNotNull(participantsDto) && validateIsNotNull(questions)) {
             validateIsNotNull(status, (Integer) participantsDto.size(), statusMessages, "Participant list is empty");
 
-
             if (sessionDto.getSessionName() != null && sessionDto.getEndDate() != null &&
                     !(sessionDto.getEndDate().isBefore(LocalDateTime.now())) &&
                     questions.size() != 0 && participantsDto.size() != 0) {
@@ -70,6 +69,7 @@ public class SessionServiceImpl implements SessionService {
                     sessionDao.createSession(session);
                     status.setStatus("success");
                     statusMessages.add(new StatusMessage("Session object created"));
+                    sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithLinks(session.getParticipants(), session));
                     LOGGER.info("Session with name: " + session.getSessionName() + " created");
                 } else {
                     status.setStatus("fail");
@@ -128,12 +128,32 @@ public class SessionServiceImpl implements SessionService {
         return sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
     }
 
+    @Override
+    public SessionDto findSessionByParticipantUid(String uid) {
+        return convertSessionToSessionDto(sessionDao.findSessionByParticipantUid(uid));
+    }
+
     public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
         session.setSessionName(sessionDto.getSessionName());
         session.setEndDate(sessionDto.getEndDate());
         session.setIsSent(false);
         return session;
+    }
+
+    public SessionDto convertSessionToSessionDto(Session session) {
+        ParticipantServiceImpl participantService = new ParticipantServiceImpl();
+        SessionDto sessionDto = new SessionDto();
+        sessionDto.setSessionName(session.getSessionName());
+        sessionDto.setEndDate(session.getEndDate());
+        sessionDto.setIsSent(session.getIsSent());
+        List<ParticipantDto> participantsDto = new ArrayList<>();
+        for (Participant participant : session.getParticipants()) {
+            ParticipantDto participantDto = participantService.participantToParticipantDto(participant);
+            participantsDto.add(participantDto);
+        }
+        sessionDto.setParticipantList(participantsDto);
+        return sessionDto;
     }
 
     public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList) {
@@ -146,7 +166,7 @@ public class SessionServiceImpl implements SessionService {
             sessionDto.setEndDate(session.getEndDate());
             List<ParticipantDto> participantDtoList = new ArrayList<>();
             for (Participant participant : session.getParticipants()) {
-                ParticipantDto participantDto = participantService.ParticipantToParticipantDto(participant);
+                ParticipantDto participantDto = participantService.participantToParticipantDto(participant);
                 participantDtoList.add(participantDto);
 
             }
