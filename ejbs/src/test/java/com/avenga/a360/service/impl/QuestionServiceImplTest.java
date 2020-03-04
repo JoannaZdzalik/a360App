@@ -37,7 +37,7 @@ public class QuestionServiceImplTest {
 
         Mockito.when(questionDao.findAllActiveQuestions()).thenReturn(questions);
 
-        Assert.assertEquals(questionService.findAllActiveQuestions().get(0).getQuestionText(), questions.get(0).getQuestionText());
+        Assert.assertEquals(questionService.findAllActiveQuestions().get(0).getQuestion_text(), questions.get(0).getQuestionText());
     }
 
     @Test

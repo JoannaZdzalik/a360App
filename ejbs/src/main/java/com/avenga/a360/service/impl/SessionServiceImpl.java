@@ -13,6 +13,7 @@ import com.avenga.a360.model.response.StatusMessage;
 import com.avenga.a360.service.EmailService;
 import com.avenga.a360.service.SendService;
 import com.avenga.a360.service.SessionService;
+import org.jboss.resteasy.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,6 +23,8 @@ import java.util.List;
 
 @Stateless
 public class SessionServiceImpl implements SessionService {
+
+    private final static Logger LOGGER = Logger.getLogger(SessionServiceImpl.class);
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -46,47 +49,49 @@ public class SessionServiceImpl implements SessionService {
         Status status = new Status();
         List<StatusMessage> statusMessages = new ArrayList<>();
 
-        if (sendService.checkSmtpServer()) {
-            List<Question> questions = questionDao.findAllActiveQuestions();
+        List<Question> questions = questionDao.findAllActiveQuestions();
 
-            validateIsNotNull(status, sessionDto, statusMessages, "Session object is null");
-            validateIsNotNull(status, participantsDto, statusMessages, "Participant object is null");
-            validateIsNotNull(status, questions, statusMessages, "Question object is null.");
-
-
-            if (validateIsNotNull(sessionDto) && validateIsNotNull(participantsDto) && validateIsNotNull(questions)) {
-                validateIsNotNull(status, (Integer) participantsDto.size(), statusMessages, "Participant list is empty");
+        validateIsNotNull(status, sessionDto, statusMessages, "Session object is null");
+        validateIsNotNull(status, participantsDto, statusMessages, "Participant object is null");
+        validateIsNotNull(status, questions, statusMessages, "Question object is null.");
 
 
-                if (sessionDto.getSessionName() != null && sessionDto.getEndDate() != null &&
-                        !(sessionDto.getEndDate().isBefore(LocalDateTime.now())) &&
-                        questions.size() != 0 && participantsDto.size() != 0) {
-                    Session session = sessionDtoToSession(sessionDto);
-                    session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
-                    session.setQuestions(questions);
+        if (validateIsNotNull(sessionDto) && validateIsNotNull(participantsDto) && validateIsNotNull(questions)) {
+            validateIsNotNull(status, (Integer) participantsDto.size(), statusMessages, "Participant list is empty");
 
+
+            if (sessionDto.getSessionName() != null && sessionDto.getEndDate() != null &&
+                    !(sessionDto.getEndDate().isBefore(LocalDateTime.now())) &&
+                    questions.size() != 0 && participantsDto.size() != 0) {
+                Session session = sessionDtoToSession(sessionDto);
+                session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
+                session.setQuestions(questions);
+                if (!sessionDao.findSessionByName(session.getSessionName())) {
                     sessionDao.createSession(session);
-                    sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithLinks(session.getParticipants(), session.getSessionName()));
                     status.setStatus("success");
-                    statusMessages.add(new StatusMessage("session object created"));
-
+                    statusMessages.add(new StatusMessage("Session object created"));
+                    LOGGER.info("Session with name: " + session.getSessionName() + " created");
                 } else {
-                    if (sessionDto.getEndDate() == null) {
-                        statusMessages.add(new StatusMessage("end date is empty"));
-                    } else {
-                        if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
-                            statusMessages.add(new StatusMessage("end date is before now"));
-                        }
-                    }
-                    if (sessionDto.getSessionName() == null) {
-                        statusMessages.add(new StatusMessage("session name is empty"));
-                    }
                     status.setStatus("fail");
+                    statusMessages.add(new StatusMessage("Session name exists in database"));
+                    LOGGER.warn("Session with name: " + session.getSessionName() + " could not be created - name exists in database");
                 }
+            } else {
+                if (sessionDto.getEndDate() == null) {
+                    statusMessages.add(new StatusMessage("End date is empty"));
+                    LOGGER.warn("Session could not be created - end date is null");
+                } else {
+                    if (sessionDto.getEndDate().isBefore(LocalDateTime.now())) {
+                        statusMessages.add(new StatusMessage("End date is before now"));
+                        LOGGER.warn("Session could not be created - end date is before now");
+                    }
+                }
+                if (sessionDto.getSessionName() == null) {
+                    statusMessages.add(new StatusMessage("session name is empty"));
+                    LOGGER.warn("Session could not be created - session is null");
+                }
+                status.setStatus("fail");
             }
-        } else {
-            status.setStatus("fail");
-            statusMessages.add(new StatusMessage("cannot connect to smtp server"));
         }
         status.setStatusMessageList(statusMessages);
         return status;
@@ -110,23 +115,18 @@ public class SessionServiceImpl implements SessionService {
         if (o == null) {
             return false;
         }
-        if (o.equals(0)) {
-            return false;
-        }
-        return true;
+        return !o.equals(0);
     }
-
 
     @Override
     public List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow() {
         return sessionDao.findAllSessionsIsSentFalseAndEndDateIsAfterNow();
     }
+
     @Override
     public List<SessionDto> findAllSessionsWhereIsSentFalse() {
-        List<SessionDto> sessionDtoList =  sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
-        return sessionDtoList ;
+        return sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
     }
-
 
     public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
@@ -136,16 +136,16 @@ public class SessionServiceImpl implements SessionService {
         return session;
     }
 
-    public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList){
+    public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList) {
         List<SessionDto> sessionDtoList = new ArrayList<>();
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
-        for(Session session:sessionList ){
+        for (Session session : sessionList) {
             SessionDto sessionDto = new SessionDto();
             sessionDto.setSessionName(session.getSessionName());
             sessionDto.setIsSent(session.getIsSent());
             sessionDto.setEndDate(session.getEndDate());
             List<ParticipantDto> participantDtoList = new ArrayList<>();
-            for(Participant participant : session.getParticipants()){
+            for (Participant participant : session.getParticipants()) {
                 ParticipantDto participantDto = participantService.ParticipantToParticipantDto(participant);
                 participantDtoList.add(participantDto);
 
@@ -154,11 +154,7 @@ public class SessionServiceImpl implements SessionService {
             sessionDtoList.add(sessionDto);
 
         }
-
-
         return sessionDtoList;
-
-
     }
 
 

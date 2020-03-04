@@ -14,9 +14,14 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public List<Question> findAllActiveQuestions() {
-        List<Question> questions = em.createNamedQuery("Question.findAllActiveQuestions", Question.class)
+        return em.createNamedQuery("Question.findAllActiveQuestions", Question.class)
                 .getResultList();
-        return questions;
+    }
+
+    @Override
+    public List<Question> findAllQuestions() {
+        return em.createNamedQuery("findAllQuestions", Question.class)
+                .getResultList();
     }
 
     @Override
@@ -38,6 +43,16 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
+    public boolean updateQuestion(Question question) {
+        try {
+            em.merge(question);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public Question findById(Long id) {
         Question question = null;
         try {
@@ -45,6 +60,7 @@ public class QuestionDaoImpl implements QuestionDao {
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return question;
     }

@@ -8,9 +8,13 @@ public interface QuestionDao {
 
     List<Question> findAllActiveQuestions();
 
+    List<Question> findAllQuestions();
+
     List<Question> findAllQuestionsTextAndIdByParticipantId(Long id);
 
     boolean createQuestion(Question question);
+
+    boolean updateQuestion (Question question);
 
     Question findById(Long id);
 

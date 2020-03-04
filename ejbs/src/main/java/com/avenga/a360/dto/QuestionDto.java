@@ -16,11 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionDto {
+
     private Long question_id;
     private String question_text;
     private Question.QuestionType question_type;
-    @JsonIgnore
     private Boolean is_active;
-    @JsonIgnore
     private String default_answers;
 }

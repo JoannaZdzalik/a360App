@@ -5,10 +5,7 @@
 
     function FeedbackController($scope, $routeParams, FeedbackService, $location) {
 
-
         $scope.init = function () {
-
-
             $scope.title = "Feedback for ";
             $scope.participantMail = "";
             $scope.sessionId = "";
@@ -18,8 +15,6 @@
             $scope.feedback = [];
             getParticipantByUid();
         };
-
-
 
         function getParticipantByUid() {
 
@@ -77,16 +72,9 @@
             }, function (response) {
 
             });
-
-
-
-
-        }
+        };
         $scope.afterSendFeedback = function () {
-            $location.path('feedbackAfterSend');
-
-
-
-        }
+            $location.path('feedbackCreated');
+        };
     }
 })();

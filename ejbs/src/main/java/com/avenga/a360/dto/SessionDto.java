@@ -1,7 +1,5 @@
 package com.avenga.a360.dto;
 
-import com.avenga.a360.dao.ParticipantDao;
-import com.avenga.a360.model.Participant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -13,6 +11,7 @@ import lombok.Setter;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.List;
+
 @XmlRootElement
 @Getter
 @Setter

@@ -1,14 +1,14 @@
 (function () {
     'use strict';
-    angular.module('a360').service('ActiveSessionService', ActiveSessionService);
-    ActiveSessionService.$inject = ['$resource', '$q'];
-    function ActiveSessionService($resource, $q) {
-        var activeSessionService = {};
-        activeSessionService.getAmountAnswers = function () {
+    angular.module('a360').service('StatisticsService', StatisticsService);
+    StatisticsService.$inject = ['$resource', '$q'];
+    function StatisticsService($resource, $q) {
+        var statisticsService = {};
+        statisticsService.getAmountAnswers = function () {
             var url = '/servlet/a360/answers/getActive' ;
-            var activeSessionsResource = $resource(url);
+            var statisticsResource = $resource(url);
             var deferred = $q.defer();
-            activeSessionsResource.query().$promise.then(
+            statisticsResource.query().$promise.then(
                 function (data) {
                     deferred.resolve(data);
                 }, function (data) {
@@ -17,7 +17,7 @@
 
             return deferred.promise;
         };
-        activeSessionService.getAllSessions = function () {
+        statisticsService.getAllSessions = function () {
             var url = '/servlet/a360/sessions/get' ;
             var activeSessionsResource = $resource(url);
             var deferred = $q.defer();
@@ -31,6 +31,6 @@
             return deferred.promise;
         };
 
-        return activeSessionService;
+        return statisticsService;
     }
 })();

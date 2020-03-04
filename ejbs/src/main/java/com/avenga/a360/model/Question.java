@@ -17,7 +17,8 @@ import java.util.List;
 @Table(name = "questions")
 @NamedQueries({
         @NamedQuery(name = "Question.findAllActiveQuestions", query = "SELECT c FROM Question c where c.isActive = true"),
-        @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q where q.id = :id")
+        @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q where q.id = :id"),
+        @NamedQuery(name = "findAllQuestions", query = "SELECT q FROM Question q")
 })
 @NamedNativeQueries({
         @NamedNativeQuery(

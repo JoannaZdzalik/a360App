@@ -12,6 +12,7 @@ public class SessionDaoImpl implements SessionDao {
     @PersistenceContext(unitName = "a360")
     private EntityManager em;
 
+
     @Override
     public List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow() {
 
@@ -31,6 +32,17 @@ public class SessionDaoImpl implements SessionDao {
     public boolean createSession(Session session) {
         try {
             em.persist(session);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean findSessionByName(String sessionName) {
+        Session session = null;
+        try {
+            session = em.createNamedQuery("findSessionByName", Session.class).setParameter("session_name", sessionName).getSingleResult();
         } catch (Exception e) {
             return false;
         }

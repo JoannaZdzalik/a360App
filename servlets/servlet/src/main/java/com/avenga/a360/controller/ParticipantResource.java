@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/participants")
-public class ParticipantController {
+public class ParticipantResource {
     @Inject
     ParticipantService participantService;
     @Inject

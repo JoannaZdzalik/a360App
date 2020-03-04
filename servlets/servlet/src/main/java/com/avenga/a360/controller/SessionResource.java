@@ -12,33 +12,26 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/sessions")
-public class SessionController {
+public class SessionResource {
     @Inject
     SessionService sessionService;
 
     @Path("/create")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response createSession(final SessionDto sessionDto) {
-
-        Status get = sessionService.createSession(sessionDto, sessionDto.getParticipantList());
-        String status = get.getStatus();
-        return Response.status(Response.Status.OK).entity(status).build();
-
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createSessionFromSessionDto(final SessionDto sessionDto) {
+        Status status = sessionService.createSession(sessionDto, sessionDto.getParticipantList());
+        if (status.getStatus().equals("success")) {
+            return Response.status(Response.Status.CREATED).entity(status).build();
+        } else return Response.status(Response.Status.BAD_REQUEST).entity(status).build();
     }
+
     @Path("/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getActiveSessions(){
-
         List<SessionDto> sessionDtoList = sessionService.findAllSessionsWhereIsSentFalse();
-
-
-
-
         return Response.status(Response.Status.OK).entity(sessionDtoList).build();
     }
-
-
 }

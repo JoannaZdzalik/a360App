@@ -1,0 +1,119 @@
+<div class="container text-center" ng-init="init()" xmlns="http://www.w3.org/1999/html">
+    <div class="page-header">
+        <h3>{{sectionTitles[0]}}</h3>
+    </div>
+
+    <h4 class="mt-20">{{sectionTitles[1]}}</h4>
+    <div class="panel panel-default">
+             <table class="table table-striped table-bordered text-center">
+            <thead>
+            <tr class="text-center">
+                <th ng-repeat="header in tableHeaders">{{header}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="question in questions" ng-if="question.is_active === true">
+                <td class="col-md-5 text-left">{{question.question_text}}</td>
+                <td class="col-md-2">{{question.question_type}}</td>
+                <td class="col-md-3">
+                    <div ng-if="question.is_active === true" >
+                        <button type="submit" class="btn btn-primary setStatusButton" ng-click="editQuestionStatus($index)">
+                            Set Inactive
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4 class="mt-60">{{sectionTitles[2]}}</h4>
+    <div class="panel panel-default">
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+            <tr class="text-center">
+                <th ng-repeat="header in tableHeaders">{{header}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="question in questions" ng-if="question.is_active === false">
+                <td class="col-md-5 text-left">{{question.question_text}}</td>
+                <td class="col-md-2">{{question.question_type}}</td>
+                <td class="col-md-3">
+                    <div ng-if="question.is_active === false">
+                        <button type="submit" class="btn btn-primary setStatusButton" ng-click="editQuestionStatus($index)">
+                            Set Active
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row mt-20 toLeft" data-a360-loading="" data-show="showQuestionLoader">
+        <button type="submit" class="btn btn-primary" ng-click="displayAddForm()">
+            Add new question
+        </button>
+        <button type="submit" class="btn btn-primary" ng-click="goToSessionPage()">
+            Go back
+        </button>
+    </div>
+
+
+    <div class="input-group text-center mt-20" data-ng-form="questionsForm" ng-controller="QuestionsController" ng-if="showQuestionForm">
+
+        <div class="input-group col-md-6 mt-20">
+            <span class="input-group-addon spanWidth">
+                <label for="questionText">Question text: </label>
+            </span>
+            <input type="text" name="questionText" id="questionText" class="form-control"
+                   placeholder="Please enter your question..."
+                   ng-model="questionText" style="width:850px"/>
+        </div>
+
+        <div class="input-group col-md-6 mt-20">
+            <span class="input-group-addon spanWidth">
+                <label for="inputQuestionType">Question type: </label>
+            </span>
+            <select class="form-control" id="inputQuestionType" ng-model="inputQuestionType" name="inputQuestionType"
+                    style="width:850px">
+                <option ng-repeat="type in questionTypeList">{{type}}</option>
+            </select>
+        </div>
+
+        <div class="input-group col-md-6 mt-20">
+            <span class="input-group-addon spanWidth">
+                <label for="defaultAnswers">Possible answers: </label>
+            </span>
+            <input type="text" name="defaultAnswers" id="defaultAnswers" class="form-control"
+                   placeholder="Please enter possible answers..."
+                   ng-model="defaultAnswers" style="width:815px"/>
+            <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="addDefaultAnswer()"><i
+                            class="glyphicon glyphicon-plus"></i></button>
+            </span>
+        </div>
+        <div class="input-group form-group">
+            <table class="table-striped maxTable">
+                <tbody>
+                <tr ng-repeat="answer in defaultAnswersList">
+                    <td class="col-md-10">{{$index+1}}. {{answer}}</td>
+                    <td class="col-md-2 toRight">
+                        <button type="button" class="btn btn-default redInfo" ng-click=""><i
+                                class="glyphicon glyphicon-remove"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row text-center toLeft" data-a360-loading="" data-show="showQuestionLoader">
+            <button type="submit" class="btn btn-primary" ng-click="createQuestion()" ng-disabled="canCreateQuestion()">
+                Add
+            </button>
+        </div>
+    </div>
+
+</div>
+

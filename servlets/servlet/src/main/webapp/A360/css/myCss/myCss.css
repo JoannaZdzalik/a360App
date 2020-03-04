@@ -1,0 +1,64 @@
+div.my {
+    border: 1cm;
+    border-color: #2b542c;
+}
+
+.toRight {
+    text-align: right;
+    padding-right: 0px
+}
+
+.toLeft {
+    text-align: left;
+    padding-right: 0px
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-60 {
+    margin-top: 60px;
+}
+
+.mb-20{
+    margin-bottom:20px;
+}
+
+.strike {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6
+}
+
+.has-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1
+}
+
+.borderBox {
+    margin-top: 20px;
+    border: #bbbbbb solid;
+    background-color: #f9f9f9
+}
+
+.questionBox {
+    width: 50%;
+    border: 1px #bbbbbb solid;
+    background-color: #f9f9f9
+}
+
+.editQuestionsButton {
+    background: darkgrey;
+    border: darkgray;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.redInfo{
+    color: #d13a3a;
+}
+
+
+

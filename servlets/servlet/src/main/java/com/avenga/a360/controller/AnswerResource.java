@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/answers")
-public class AnswerController {
+public class AnswerResource {
     @Inject
     AnswerService answerService;
 
@@ -23,7 +23,6 @@ public class AnswerController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAnswer(final List<AnswerDto> answersDto) {
-
        List<Status> statusList =answerService.createAnswersDto(answersDto);
        return Response.status(Response.Status.OK).entity(statusList).build()  ;
 
@@ -33,8 +32,6 @@ public class AnswerController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAnswersForSessions( ) {
         List<AnswerSessionDto> answerSessionDtoList = answerService.amountOfAnswersForSessionActive();
-
-
             return Response.status(Response.Status.OK)
                     .entity(answerSessionDtoList)
                     .build();
