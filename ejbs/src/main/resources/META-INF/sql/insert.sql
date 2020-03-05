@@ -31,3 +31,6 @@ insert into answers (answer_text, id_participant, id_question) values ('Bad', 1,
 insert into answers (answer_text, id_participant, id_question) values ('answer 2', 1, 2);
 insert into answers (answer_text, id_participant, id_question) values ('answer 3', 1, 3);
 insert into answers (answer_text, id_participant, id_question) values ('Super', 1, 1);
+insert into users (login, password, role) values ('asia', 'asia', 'ADMIN');
+insert into users (login, password, role) values ('iza', '55mojehaslo', 'DESIGNER');
+insert into users (login, password, role) values ('olaf', 'haSLo1', 'DESIGNER');

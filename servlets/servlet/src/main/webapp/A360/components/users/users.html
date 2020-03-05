@@ -1,0 +1,60 @@
+<div class="container text-center" data-ng-controller="UsersController" data-ng-init="init()">
+
+    <h2 class="text-center">{{sectionTitles[0]}}</h2>
+
+    <div class="text-center divsmall">
+        <h3 class="toLeft">{{sectionTitles[1]}}</h3>
+        <table class="table table-striped mt-20">
+            <thead>
+            <tr>
+                <th scope="col">{{tableHeaders[1]}}</th>
+                <th scope="col">{{tableHeaders[2]}}</th>
+                <th scope="col">{{tableHeaders[3]}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users" ng-if="user.role === 'ADMIN'">
+                <td>{{user.login}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <button type="submit" class="btn btn-primary setRoleButton" ng-click="changeRoleType(user.login, 'DESIGNER')"> Make
+                        Designer
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center divsmall mt-60">
+        <h3 class="toLeft">{{sectionTitles[2]}}</h3>
+        <table class="table table-striped mt-20">
+            <thead>
+            <tr>
+                <th scope="col">{{tableHeaders[1]}}</th>
+                <th scope="col">{{tableHeaders[2]}}</th>
+                <th scope="col">{{tableHeaders[3]}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users" ng-if="user.role === 'DESIGNER'">
+                <td>{{user.login}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <button type="submit" class="btn btn-primary setRoleButton" ng-click="changeRoleType(user.login, 'ADMIN')"> Make Admin
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row text-center mt-20 toLeft">
+        <button type="submit" class="btn btn-primary" ng-click="goBackToWelcomePage()">
+            Go back
+        </button>
+    </div>
+
+</div>
+
+

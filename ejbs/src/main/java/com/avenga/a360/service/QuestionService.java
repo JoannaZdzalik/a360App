@@ -19,7 +19,6 @@ public interface QuestionService {
 
     boolean createQuestion(QuestionDto questionDto);
 
-    void updateQuestionIsActive(QuestionEditDto questionEditDto);
 
     List<Question> getAllQuestionBySessionId(Long id);
 

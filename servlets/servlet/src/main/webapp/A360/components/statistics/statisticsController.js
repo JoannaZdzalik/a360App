@@ -5,7 +5,7 @@
 
     function StatisticsController($scope, $filter, $window, StatisticsService) {
         $scope.init = function () {
-            $scope.sectionTitles = ["Admin panel", "Active sessions", "Finished sessions"];
+            $scope.sectionTitles = ["Session manager", "Active sessions", "Finished sessions"];
             $scope.tableHeaders = ["#", "Session name", "End date", "Number of participants", "Participants", "Answers received", "Action"];
             getSessionsAndAnswers();
         };

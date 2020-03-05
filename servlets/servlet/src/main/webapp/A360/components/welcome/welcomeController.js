@@ -12,5 +12,11 @@
         $scope.redirectToCreateSession  = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/session";
         };
+
+        $scope.redirectToUsersManager  = function () {
+            $window.location.href = "http://localhost:81/servlet/A360/#!/users";
+        };
+
+
     }
 })();

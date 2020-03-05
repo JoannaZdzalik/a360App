@@ -71,15 +71,6 @@ public class QuestionServiceImpl implements QuestionService {
         return true;
     }
 
-    @Override
-    public void updateQuestionIsActive(QuestionEditDto questionEditDto) {
-        Question question = questionDao.findById(questionEditDto.getQuestion_id());
-        if (questionEditDto.getIs_active()) {
-            question.setIsActive(true);
-        } else {
-            question.setIsActive(false);
-        }
-    }
 
     @Override
     public List<Question> getAllQuestionBySessionId(Long id) {
