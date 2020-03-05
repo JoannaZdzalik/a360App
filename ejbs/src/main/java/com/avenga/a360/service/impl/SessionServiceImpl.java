@@ -97,6 +97,11 @@ public class SessionServiceImpl implements SessionService {
         return status;
     }
 
+    @Override
+    public boolean removeSession(Long id) {
+        return sessionDao.removeSession(id);
+    }
+
     private boolean validateIsNotNull(Status status, Object o, List<StatusMessage> statusMessageList, String message) {
         if (o == null) {
             statusMessageList.add((new StatusMessage(message)));
@@ -134,8 +139,8 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public List<SessionDto> findAllSessions(){
-      return sessionListToSessionDtoList(sessionDao.findAllSessions());
+    public List<SessionDto> findAllSessions() {
+        return sessionListToSessionDtoList(sessionDao.findAllSessions());
     }
 
     public Session sessionDtoToSession(SessionDto sessionDto) {
@@ -149,6 +154,7 @@ public class SessionServiceImpl implements SessionService {
     public SessionDto convertSessionToSessionDto(Session session) {
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
         SessionDto sessionDto = new SessionDto();
+        sessionDto.setId(session.getId());
         sessionDto.setSessionName(session.getSessionName());
         sessionDto.setEndDate(session.getEndDate());
         sessionDto.setIsSent(session.getIsSent());
@@ -166,6 +172,7 @@ public class SessionServiceImpl implements SessionService {
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
         for (Session session : sessionList) {
             SessionDto sessionDto = new SessionDto();
+            sessionDto.setId(session.getId());
             sessionDto.setSessionName(session.getSessionName());
             sessionDto.setIsSent(session.getIsSent());
             sessionDto.setEndDate(session.getEndDate());
@@ -209,6 +216,4 @@ public class SessionServiceImpl implements SessionService {
         }
         return builder.toString();
     }
-
-
 }

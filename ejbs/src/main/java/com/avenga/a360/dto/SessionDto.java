@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SessionDto {
 
+    private Long id;
     private String sessionName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

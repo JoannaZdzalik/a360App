@@ -67,4 +67,15 @@ public class SessionDaoImpl implements SessionDao {
         }
         return session;
     }
+
+    @Override
+    public boolean removeSession(Long id) {
+        Session session = em.find(Session.class, id);
+        try {
+            em.remove(session);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

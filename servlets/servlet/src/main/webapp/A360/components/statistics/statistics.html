@@ -2,7 +2,7 @@
 
     <h2 class="text-center">{{sectionTitles[0]}}</h2>
 
-    <div>
+    <div class="text-center">
         <h3 class="toLeft">{{sectionTitles[1]}}</h3>
         <table class="table table-striped mt-20">
             <thead>
@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="session in sessions" ng-if="isOngoing(session)">
+            <tr ng-repeat="session in sessions" ng-if="session.isSent === false">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
@@ -38,7 +38,7 @@
                 </td>
                 <td scope="col">
                     <button type="submit" class="btn btn-primary" ng-click="setInactive()">
-                        Set inactive
+                       Later it will force end session
                     </button>
                 </td>
             </tr>
@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <div>
+    <div class="text-center">
         <h3 class="toLeft">{{sectionTitles[2]}}</h3>
         <table class="table table-striped mt-20">
             <thead>
@@ -61,7 +61,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="session in sessions" ng-if="isOngoing(session) === false">
+            <tr ng-repeat="session in sessions" ng-if="session.isSent === true">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
@@ -81,7 +81,8 @@
                     </div>
                 </td>
                 <td scope="col">
-                    <button type="submit" class="btn btn-default" ng-click="deleteInactive()"><i
+                    <p> Id sesji : {{session.id}}</p>
+                    <button type="submit" class="btn btn-default" ng-click="deleteInactive(session.id)"><i
                             class="glyphicon glyphicon-trash"></i>
                     </button>
                 </td>

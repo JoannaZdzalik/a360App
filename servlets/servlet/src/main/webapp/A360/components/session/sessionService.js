@@ -28,7 +28,6 @@
                 });
             return deferred.promise;
         };
-
         return sessionService;
     }
 })();

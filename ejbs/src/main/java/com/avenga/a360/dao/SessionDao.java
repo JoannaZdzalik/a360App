@@ -17,4 +17,6 @@ public interface SessionDao {
     List<Session> findAllSessions();
 
     Session findSessionByParticipantUid(String uId);
+
+    boolean removeSession (Long id);
 }

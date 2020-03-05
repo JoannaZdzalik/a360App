@@ -10,11 +10,10 @@ import java.util.List;
 public interface SessionService {
 
     Status createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto);
+    boolean removeSession(Long id);
     List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow();
     SessionDto findSessionByParticipantUid(String uid);
-
     List<SessionDto> findAllSessions();
-
     List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList);
     List<SessionDto> findAllSessionsWhereIsSentFalse();
 }

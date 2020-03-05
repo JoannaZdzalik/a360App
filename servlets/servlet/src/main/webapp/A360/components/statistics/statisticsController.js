@@ -21,7 +21,21 @@
                 $scope.sessions = data;
                 getParticipantsFromSession();
             }, function (response) {
-                alert('Error on getAllSessions request' + response);
+                console.log('Error on getAllSessions request' + response);
+            });
+        }
+
+        function getParticipantsFromSession() {
+            $scope.participantList = [];
+            $scope.sessions.forEach(function (element) {
+                for (let i = 0; i < element.participantList.length; i++) {
+                    var singleParticipant = {
+                        UId: element.participantList[i].UId,
+                        email: element.participantList[i].email,
+                        sessionId: element.participantList[i].sessionId
+                    };
+                    $scope.participantList.push(singleParticipant);
+                }
             });
         }
 
@@ -31,7 +45,7 @@
                 $scope.answers = data;
                 findAnswersForParticipants();
             }, function (response) {
-                alert('Error on getAllAnswerss request' + response);
+                console.log('Error on getAllAnswerss request' + response);
             });
         }
 
@@ -59,33 +73,22 @@
             });
         }
 
-        function getParticipantsFromSession() {
-            $scope.participantList = [];
-            $scope.sessions.forEach(function (element) {
-                for (let i = 0; i < element.participantList.length; i++) {
-                    var singleParticipant = {
-                        UId: element.participantList[i].UId,
-                        email: element.participantList[i].email,
-                        sessionId: element.participantList[i].sessionId
-                    };
-                    $scope.participantList.push(singleParticipant);
-                }
-            });
-        }
-
         $scope.formatEndDate = function (endDate) {
             return $filter('date')((endDate), 'yyyy-MM-dd hh:mm');
         };
 
-        $scope.isOngoing = function (session) {
-            var currentDate = $filter('date')(new Date, 'yyyy-MM-dd hh:mm');
-            var sessionEndDate = $filter('date')(session.endDate, 'yyyy-MM-dd hh:mm');
-            return sessionEndDate > currentDate;
-        };
-
-        $scope.goBackToWelcomePage = function () {
+         $scope.goBackToWelcomePage = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/welcome";
         };
+
+        $scope.deleteInactive = function (sessionId) {
+            StatisticsService.removeSession(sessionId).then(function (data) {
+                console.log('Session removed ' + data.sessionName);
+                $window.location.reload();
+            }, function () {
+                console.log('Error on remove request ');
+            });
+        }
     }
 
 })();

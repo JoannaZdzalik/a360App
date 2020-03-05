@@ -61,4 +61,32 @@ public class SessionResource {
     }
 
 
+    @Path("/remove/{id}")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteSession(@PathParam("id") Long id) {
+        boolean result = sessionService.removeSession(id);
+        if (result) {
+            return Response.status(Response.Status.OK).entity("Session deleted").build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Session not removed because of the reason").build();
+        }
+    }
+
+//    @Path("/remove")
+//    @DELETE
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.TEXT_PLAIN)
+//    public Response deleteSession(SessionDto sessionDto) {
+//        boolean result = sessionService.removeSession(sessionDto.getId());
+//        if (result) {
+//            return Response.status(Response.Status.OK).entity("Session deleted").build();
+//        } else {
+//            return Response.status(Response.Status.BAD_REQUEST).entity("Session not removed because of the reason").build();
+//        }
+//    }
+
+
+
 }

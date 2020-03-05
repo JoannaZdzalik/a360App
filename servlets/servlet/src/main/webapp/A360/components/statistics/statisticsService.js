@@ -33,6 +33,20 @@
                 });
             return deferred.promise;
         };
+
+        statisticsService.removeSession = function (sessionId) {
+            var url = '/servlet/a360/sessions/remove/' + sessionId;
+            var deleteResource = $resource(url);
+            var deferred = $q.defer();
+            deleteResource.remove().$promise.then(
+                function (data) {
+                    deferred.resolve(data);
+                }, function (response) {
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
         return statisticsService;
     }
 

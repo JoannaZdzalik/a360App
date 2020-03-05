@@ -21,8 +21,8 @@ div.my {
     margin-top: 60px;
 }
 
-.mb-20{
-    margin-bottom:20px;
+.mb-20 {
+    margin-bottom: 20px;
 }
 
 .strike {
@@ -56,8 +56,13 @@ div.my {
     margin-right: 20px;
 }
 
-.redInfo{
+.redInfo {
     color: #d13a3a;
+}
+
+.createButton {
+    background: #74b760;
+    color: #f9f9f9;
 }
 
 

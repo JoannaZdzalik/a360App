@@ -62,7 +62,7 @@ public class Session implements Serializable {
     @OneToMany(mappedBy = "session", cascade = {CascadeType.ALL})
     private List<Participant> participants;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "sessions_questions", joinColumns = {
             @JoinColumn(name = "id_session", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "id_question", referencedColumnName = "id")},

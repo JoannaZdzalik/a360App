@@ -52,7 +52,7 @@ public class Question implements Serializable {
     @Column(name = "default_answers")
     private String defaultAnswers;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "questions")
+    @ManyToMany(mappedBy = "questions") //cascade = {CascadeType.ALL},
     private List<Session> sessions;
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
