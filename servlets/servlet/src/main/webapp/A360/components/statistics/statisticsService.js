@@ -2,35 +2,38 @@
     'use strict';
     angular.module('a360').service('StatisticsService', StatisticsService);
     StatisticsService.$inject = ['$resource', '$q'];
+
     function StatisticsService($resource, $q) {
         var statisticsService = {};
-        statisticsService.getAmountAnswers = function () {
-            var url = '/servlet/a360/answers/getActive' ;
-            var statisticsResource = $resource(url);
-            var deferred = $q.defer();
-            statisticsResource.query().$promise.then(
-                function (data) {
-                    deferred.resolve(data);
-                }, function (data) {
-                    deferred.reject(data);
-                });
 
-            return deferred.promise;
-        };
         statisticsService.getAllSessions = function () {
-            var url = '/servlet/a360/sessions/get' ;
-            var activeSessionsResource = $resource(url);
+            var url = '/servlet/a360/sessions/all';
+            var allSessionsResource = $resource(url);
+
             var deferred = $q.defer();
-            activeSessionsResource.query().$promise.then(
+            allSessionsResource.query().$promise.then(
                 function (data) {
                     deferred.resolve(data);
-                }, function (data) {
-                    deferred.reject(data);
+                }, function (response) {
+                    deferred.reject(response);
                 });
-
             return deferred.promise;
         };
 
+        statisticsService.getAllAnswers = function () {
+            var url = '/servlet/a360/answers/all';
+            var allAnswersResource = $resource(url);
+
+            var deferred = $q.defer();
+            allAnswersResource.query().$promise.then(
+                function (data) {
+                    deferred.resolve(data);
+                }, function (response) {
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
         return statisticsService;
     }
+
 })();

@@ -105,6 +105,34 @@ public class AnswerServiceImpl implements AnswerService {
         return statusList;
     }
 
+    @Override
+    public List<AnswerDto> findAllAnswersDto() {
+        try {
+            List<Answer> answers = answerDao.findAllAnswers();
+            if (answerDao.findAllAnswers().get(0) != null) {
+                return answersToAnswersDto(answers);
+            }
+            return new ArrayList<>();
+
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<AnswerDto> answersToAnswersDto(List<Answer> answers) {
+        List<AnswerDto> answerDtoList = new ArrayList<>();
+        for (Answer answer : answers) {
+            AnswerDto answerDto = new AnswerDto();
+            answerDto.setParticipantId(answer.getParticipant().getId());
+            answerDto.setParticipantUId(answer.getParticipant().getUId());
+            answerDto.setAnswerText(answer.getAnswerText());
+            answerDto.setQuestionId(answer.getQuestion().getId());
+            answerDtoList.add(answerDto);
+        }
+        return answerDtoList;
+    }
+
 //    public List<AnswerDto> answerToAnswerDto(List<Answer> answerList) {
 //        List<AnswerDto> answerDtoList = new ArrayList<>();
 //        for (Answer answer : answerList) {
@@ -121,7 +149,6 @@ public class AnswerServiceImpl implements AnswerService {
     public List<AnswerSessionDto> amountOfAnswersForSessionActive() {
         List<AnswerSessionDto> answerSessionDtoList = new ArrayList<>();
         List<SessionDto> sessionDtoList = sessionService.sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
-
         for (SessionDto sessionDto : sessionDtoList) {
             AnswerSessionDto answerSessionDto = new AnswerSessionDto();
             answerSessionDto.setSessionName(sessionDto.getSessionName());
@@ -129,7 +156,6 @@ public class AnswerServiceImpl implements AnswerService {
             answerSessionDtoList.add(answerSessionDto);
 
             }
-
         return answerSessionDtoList;
     }
 }

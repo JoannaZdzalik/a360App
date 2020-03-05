@@ -11,6 +11,9 @@ public interface AnswerService {
     List<Answer> findAllAnswersByParticipantId(Long id);
 
     Status createAnswer(AnswerDto answerDto);
+
+    List<AnswerDto> findAllAnswersDto();
+
     List<AnswerSessionDto> amountOfAnswersForSessionActive();
 
     List<Status> createAnswersDto(List<AnswerDto> lists);

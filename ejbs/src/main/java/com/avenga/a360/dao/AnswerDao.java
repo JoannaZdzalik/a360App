@@ -12,4 +12,6 @@ public interface AnswerDao {
     List<Answer> findAllAnswersForOneSession(String name);
 
     boolean createAnswer(Answer answer);
+
+    List<Answer> findAllAnswers();
 }

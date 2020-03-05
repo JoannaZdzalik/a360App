@@ -33,6 +33,9 @@ import java.io.Serializable;
                 name = "findAnswersByParticipantIdAndQuestionId",
                 query = "select * from answers a left join participants p on ( a.id_participant = p.id )" +
                         "left join questions q on (a.id_question = q.id) where p.id = :idParticipant and q.id= :idQuestion",
+                resultClass = Answer.class),
+        @NamedNativeQuery(name = "findAllAnswers",
+                query = "SELECT * FROM answers a",
                 resultClass = Answer.class)
 }
 

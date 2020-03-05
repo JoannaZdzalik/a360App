@@ -30,6 +30,11 @@ import java.util.List;
                 name = "Session.findAllSessionsWhereIsSentFalse",
                 query = "select * from sessions where is_sent = false",
                 resultClass = Session.class
+        ),
+        @NamedNativeQuery(
+                name = "findAllSessions",
+                query = "select * from sessions",
+                resultClass = Session.class
         )}
 )
 @NamedQueries({

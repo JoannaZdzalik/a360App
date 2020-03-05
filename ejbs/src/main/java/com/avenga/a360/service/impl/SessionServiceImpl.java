@@ -133,6 +133,11 @@ public class SessionServiceImpl implements SessionService {
         return convertSessionToSessionDto(sessionDao.findSessionByParticipantUid(uid));
     }
 
+    @Override
+    public List<SessionDto> findAllSessions(){
+      return sessionListToSessionDtoList(sessionDao.findAllSessions());
+    }
+
     public Session sessionDtoToSession(SessionDto sessionDto) {
         Session session = new Session();
         session.setSessionName(sessionDto.getSessionName());

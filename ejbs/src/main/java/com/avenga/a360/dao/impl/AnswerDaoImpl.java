@@ -47,4 +47,10 @@ public class AnswerDaoImpl implements AnswerDao {
         }
         return true;
     }
+
+    @Override
+    public List<Answer> findAllAnswers() {
+        return em.createNamedQuery("findAllAnswers", Answer.class)
+                .getResultList();
+    }
 }

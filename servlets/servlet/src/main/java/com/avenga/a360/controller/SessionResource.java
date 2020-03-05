@@ -36,19 +36,29 @@ public class SessionResource {
         return Response.status(Response.Status.OK).entity(sessionDtoList).build();
     }
 
+    @Path("/all")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllSessions() {
+        List<SessionDto> sessionDtoList = sessionService.findAllSessions();
+        if (sessionDtoList != null && !sessionDtoList.isEmpty()) {
+            return Response.status(Response.Status.OK).entity(sessionDtoList).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("No sessions").build();
+        }
+    }
+
     @Path("/get/{uid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSessionByParticipantUid(@PathParam("uid") String uid) {
         SessionDto sessionDto = sessionService.findSessionByParticipantUid(uid);
         if (sessionDto != null) {
-            return Response.status(Response.Status.OK)
-                    .entity(sessionDto)
-                    .build();
+            return Response.status(Response.Status.OK).entity(sessionDto).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Session does not exist")
-                    .build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Session does not exist").build();
         }
     }
+
+
 }

@@ -50,6 +50,12 @@ public class SessionDaoImpl implements SessionDao {
     }
 
     @Override
+    public List<Session> findAllSessions() {
+        return em.createNamedQuery("findAllSessions", Session.class)
+                .getResultList();
+    }
+
+    @Override
     public Session findSessionByParticipantUid(String uId){
         Session session = null;
         try {

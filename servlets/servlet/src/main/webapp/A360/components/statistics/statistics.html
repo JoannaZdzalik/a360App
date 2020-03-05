@@ -1,30 +1,102 @@
-<br>
-<div class="container text-center" data-ng-controller="ActiveSessionController" data-ng-init=(init())>
-    <div style="border: #999999 solid;background-color:#cccccc">
-        <h1>{{title}}</h1>
-    </div>
+<div class="container text-center" data-ng-controller="StatisticsController" data-ng-init="init()">
 
-    <div style="border: #999999 solid 2px">
+    <h2 class="text-center">{{sectionTitles[0]}}</h2>
 
-        <table class="table table-sm">
+    <div>
+        <h3 class="toLeft">{{sectionTitles[1]}}</h3>
+        <table class="table table-striped mt-20">
             <thead>
             <tr>
-                <th scope="col" class="text-center">#</th>
-                <th scope="col" class="text-center">Session Name</th>
-                <th scope="col" class="text-center">End date</th>
-                <th scope="col" class="text-center">Amount of participants</th>
+                <th scope="col">{{tableHeaders[0]}}</th>
+                <th scope="col">{{tableHeaders[1]}}</th>
+                <th scope="col">{{tableHeaders[2]}}</th>
+                <th scope="col">{{tableHeaders[3]}}</th>
+                <th scope="col">{{tableHeaders[4]}}</th>
+                <th scope="col">{{tableHeaders[5]}}</th>
+                <th scope="col">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="session in allActiveSessions">
-                <th scope="row" class="text-center">{{session.number}}</th>
-                <td>{{session.sessionName}}</td>
-                <td>{{session.endDate}}</td>
-                <td>{{session.amountParticipants}}</td>
+            <tr ng-repeat="session in sessions" ng-if="isOngoing(session)">
+                <td scope="col"></td>
+                <td scope="col">{{session.sessionName}}</td>
+                <td scope="col">
+                    {{formatEndDate(session.endDate)}}
+                </td>
+                <td scope="col">{{session.participantList.length}}</td>
+                <th scope="col">
+                    <div ng-repeat="part in session.participantList">
+                        {{$index+1}}. {{part.email}}
+                    </div>
+                </th>
+                <td scope="col">
+                    <div ng-repeat="part in session.participantList">
+                        <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
+                            {{feedback.answers.length}} answers
+                        </div>
+                    </div>
+                </td>
+                <td scope="col">
+                    <button type="submit" class="btn btn-primary" ng-click="setInactive()">
+                        Set inactive
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3 class="toLeft">{{sectionTitles[2]}}</h3>
+        <table class="table table-striped mt-20">
+            <thead>
+            <tr>
+                <th scope="col">{{tableHeaders[0]}}</th>
+                <th scope="col">{{tableHeaders[1]}}</th>
+                <th scope="col">{{tableHeaders[2]}}</th>
+                <th scope="col">{{tableHeaders[3]}}</th>
+                <th scope="col">{{tableHeaders[4]}}</th>
+                <th scope="col">{{tableHeaders[5]}}</th>
+                <th scope="col">{{tableHeaders[6]}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="session in sessions" ng-if="isOngoing(session) === false">
+                <td scope="col"></td>
+                <td scope="col">{{session.sessionName}}</td>
+                <td scope="col">
+                    {{formatEndDate(session.endDate)}}
+                </td>
+                <td scope="col">{{session.participantList.length}}</td>
+                <th scope="col">
+                    <div ng-repeat="part in session.participantList">
+                        {{$index+1}}. {{part.email}}
+                    </div>
+                </th>
+                <td scope="col">
+                    <div ng-repeat="part in session.participantList">
+                        <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
+                            {{feedback.answers.length}} answers
+                        </div>
+                    </div>
+                </td>
+                <td scope="col">
+                    <button type="submit" class="btn btn-default" ng-click="deleteInactive()"><i
+                            class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 
 
+    <div class="row text-center mt-20 toLeft">
+        <button type="submit" class="btn btn-primary" ng-click="goBackToWelcomePage()">
+            Go back
+        </button>
+    </div>
+
 </div>
+
+

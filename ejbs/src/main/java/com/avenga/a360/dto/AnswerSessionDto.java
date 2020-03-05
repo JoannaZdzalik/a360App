@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnswerSessionDto {
+
     private String sessionName;
     private Integer amountOfAnswers;
+
 }
