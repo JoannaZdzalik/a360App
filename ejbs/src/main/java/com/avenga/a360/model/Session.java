@@ -39,6 +39,7 @@ import java.util.List;
 )
 @NamedQueries({
         @NamedQuery(name="findSessionByName",query = "SELECT c FROM Session c where c.sessionName = :session_name")
+
 })
 
 public class Session implements Serializable {
@@ -58,6 +59,9 @@ public class Session implements Serializable {
 
     @Column(name = "is_sent", columnDefinition = "Boolean default 'false'", nullable = false)
     private Boolean isSent;
+
+    @Column(name= "is_active", columnDefinition = "Boolean default 'true'", nullable = false)
+    private boolean isActive;
 
     @OneToMany(mappedBy = "session", cascade = {CascadeType.ALL})
     private List<Participant> participants;

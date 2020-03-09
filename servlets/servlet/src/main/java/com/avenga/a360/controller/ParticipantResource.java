@@ -1,14 +1,13 @@
 package com.avenga.a360.controller;
 
 import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.UserEditDto;
 import com.avenga.a360.model.Participant;
 import com.avenga.a360.service.ParticipantService;
+import com.avenga.a360.service.UserService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,8 +16,8 @@ public class ParticipantResource {
     @Inject
     ParticipantService participantService;
 
-//    @Inject
-//    ParticipantDto participantDto;
+    @Inject
+    UserService userService;
 
     @Path("{uid}")
     @GET
@@ -38,5 +37,15 @@ public class ParticipantResource {
         //  return Application.validator(participant, participantDto,"Participant dosen't exist" );
     }
 
+//    @Path("/editRole")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.TEXT_PLAIN)
+//    public Response editUserRole(UserEditDto userEditDto) {
+//        boolean status = userService.updateUserRole(userEditDto);
+//        if (status) {
+//            return Response.status(Response.Status.CREATED).entity("User role editted").build();
+//        } else return Response.status(Response.Status.BAD_REQUEST).entity("User role not editted").build();
+//    }
 
 }

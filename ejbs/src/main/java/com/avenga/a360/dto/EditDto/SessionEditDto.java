@@ -1,6 +1,5 @@
-package com.avenga.a360.dto;
+package com.avenga.a360.dto.EditDto;
 
-import com.avenga.a360.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEditDto {
+public class SessionEditDto {
 
-    private String login;
-    private User.Role role;
+    private String sessionName;
+    private boolean isActive;
 }

@@ -1,8 +1,11 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.ParticipantDao;
+import com.avenga.a360.dao.UserDao;
 import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.UserEditDto;
 import com.avenga.a360.model.Participant;
+import com.avenga.a360.model.User;
 import com.avenga.a360.service.ParticipantService;
 
 import javax.ejb.Stateless;
@@ -41,12 +44,11 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantDto participantToParticipantDto(Participant participant){
+    public ParticipantDto participantToParticipantDto(Participant participant) {
         ParticipantDto participantDto = new ParticipantDto();
         participantDto.setEmail(participant.getEmail());
         participantDto.setUId(participant.getUId());
         participantDto.setSessionId(participant.getSession().getId());
         return participantDto;
     }
-
 }

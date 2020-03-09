@@ -2,6 +2,7 @@ package com.avenga.a360.model;
 
 
 import lombok.*;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @Table(name = "users")
 
 @NamedQueries({
-        @NamedQuery(name="findUserByLogin",query = "SELECT u FROM User u where u.login = :login"),
+        @NamedQuery(name = "findUserByLogin", query = "SELECT u FROM User u where u.login = :login"),
         @NamedQuery(name = "findAllUsers", query = "SELECT u FROM User u")
 })
 
@@ -25,7 +26,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (unique = true)
+    @Column(unique = true)
     @NonNull
     private String login;
 
@@ -34,14 +35,13 @@ public class User implements Serializable {
     private String password;
 
 
-    @Column (name = "role")
+    @Column(name = "role")
     @NonNull
     @Enumerated(EnumType.STRING)
-    private RoleType role;
+    private Role role;
 
-    public enum RoleType {
+    public enum Role {
         ADMIN,
         DESIGNER
     }
-
 }

@@ -1,20 +1,19 @@
 package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.UserDao;
-import com.avenga.a360.dto.AnswerDto;
 import com.avenga.a360.dto.UserDto;
 import com.avenga.a360.dto.UserEditDto;
-import com.avenga.a360.model.Participant;
-import com.avenga.a360.model.Question;
 import com.avenga.a360.model.User;
 import com.avenga.a360.model.response.Status;
 import com.avenga.a360.model.response.StatusMessage;
 import com.avenga.a360.service.UserService;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@Stateless
 public class UserServiceImpl implements UserService {
 
     @Inject
@@ -24,9 +23,9 @@ public class UserServiceImpl implements UserService {
     public Status createUser(UserDto userDto) {
         Status status = new Status();
         List<StatusMessage> statusMessages = new ArrayList<>();
-
         if (userDto != null) {
             if (userDto.getLogin() == null || userDto.getPassword() == null) {
+                userDto.setRole(User.Role.DESIGNER);
                 status.setStatus("Fail");
                 statusMessages.add(new StatusMessage("Login or password are null"));
             }
@@ -42,11 +41,7 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserRole(UserEditDto userEditDto) {
         User user = userDao.findUserByLogin(userEditDto.getLogin());
         if (user != null) {
-            if (userEditDto.getRole().equals(User.RoleType.ADMIN)) {
-                user.setRole(User.RoleType.ADMIN);
-            } else if (userEditDto.getRole().equals(User.RoleType.DESIGNER)) {
-                user.setRole(User.RoleType.DESIGNER);
-            }
+            user.setRole(userEditDto.getRole());
             userDao.updateUser(user);
             return true;
         }
@@ -68,7 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setId(userDto.getId());
         user.setLogin(userDto.getLogin());
         user.setPassword(userDto.getPassword()); //tutaj zrobic czary mary z szyfrowaniem hasła
-        user.setRole(User.RoleType.DESIGNER);
+        user.setRole(User.Role.DESIGNER);
         return user;
     }
 

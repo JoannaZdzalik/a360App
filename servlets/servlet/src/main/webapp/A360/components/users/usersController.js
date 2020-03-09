@@ -25,8 +25,8 @@
 
         $scope.changeRoleType = function (login, role) {
             UsersService.editUserRole(login, role).then(function (data) {
+                $window.location.reload();
                 console.log('Edit role successful');
-               // $window.location.reload();
             }, function (response) {
                 console.log('Error edit role');
             });

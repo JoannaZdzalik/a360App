@@ -39,7 +39,7 @@ public class SessionDaoImpl implements SessionDao {
     }
 
     @Override
-    public boolean findSessionByName(String sessionName) {
+    public boolean checkIfSessionNameExistsInDB(String sessionName) {
         Session session = null;
         try {
             session = em.createNamedQuery("findSessionByName", Session.class).setParameter("session_name", sessionName).getSingleResult();
@@ -48,6 +48,20 @@ public class SessionDaoImpl implements SessionDao {
         }
         return true;
     }
+
+    @Override
+    public Session findSessionByName(String name) {
+        Session session = null;
+        try {
+            session = em.createNamedQuery("findSessionByName", Session.class)
+                    .setParameter("session_name", name)
+                    .getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return session;
+    }
+
 
     @Override
     public List<Session> findAllSessions() {
@@ -73,6 +87,16 @@ public class SessionDaoImpl implements SessionDao {
         Session session = em.find(Session.class, id);
         try {
             em.remove(session);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateSession(Session session) {
+        try {
+            em.merge(session);
         } catch (Exception e) {
             return false;
         }

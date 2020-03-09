@@ -13,6 +13,10 @@ div.my {
     padding-right: 0px
 }
 
+.centerHeader {
+    text-align: center;
+}
+
 .mt-20 {
     margin-top: 20px;
 }
@@ -65,16 +69,35 @@ div.my {
     color: #f9f9f9;
 }
 
-.setRoleButton{
+.setActionButton {
     background: #c5c0b3;
     border: #c2bdaf;
     color: #1E1E1E;
 }
 
 .divsmall {
-    width: 50%;
+    width: 70%;
+    text-align: center;
+    margin-left: 230px;
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: #f9f9f9 !important;
 
 }
+
+.tooltip .tooltip-inner {
+    color: white;
+    background-color: #000000;
+    border-radius: 15px;
+    position: relative;
+    top: 35px;
+    left: 90%;
+    text-align: left;
+}
+
+
+
 
 
 

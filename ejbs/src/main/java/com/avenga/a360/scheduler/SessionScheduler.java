@@ -31,6 +31,7 @@ public class SessionScheduler {
                 for (Session session : sessionList) {
                     sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithFeedback(session));
                     session.setIsSent(true);
+                    session.setActive(false);
                 }
             }
         }

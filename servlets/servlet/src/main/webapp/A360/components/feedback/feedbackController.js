@@ -6,6 +6,7 @@
     function FeedbackController($scope, $routeParams, FeedbackService, $location) {
 
         $scope.init = function () {
+            checkIfSessionIsActive();
             $scope.title = "Feedback for ";
             $scope.participantMail = "";
             $scope.sessionId = "";
@@ -13,7 +14,7 @@
             $scope.questions = [];
             $scope.participantUId = $routeParams.uId;
             $scope.feedback = [];
-            checkIfSessionIsActive();
+            $scope.showSendAnswersLoader = false;
             getParticipantByUid();
         };
 
@@ -47,7 +48,6 @@
                             question.defaultAnswers.push(answerValue);
 
                         });
-                        question.answer = question.defaultAnswers[0].value;
                     }
                     $scope.questions.push(question);
                 });
@@ -58,6 +58,7 @@
         };
 
         $scope.sendFeedback = function () {
+            $scope.showSendAnswersLoader = true;
             $scope.questions.forEach(function (element) {
                 var feedback = {
                     answerText: element.answer,
@@ -69,9 +70,11 @@
                 }
             });
             FeedbackService.send($scope.feedback).then(function (data) {
+                $scope.showSendAnswersLoader = false;
                 console.log($scope.feedback);
             }, function (response) {
-
+                $scope.showSendAnswersLoader = false;
+                console.log("Error in ")
             });
         };
         $scope.afterSendFeedback = function () {
@@ -81,16 +84,12 @@
         function checkIfSessionIsActive() {
             FeedbackService.getSessionByParticipantUid($routeParams.uId).then(function (data) {
                 console.log("session by uid is ok");
-                if (data.isSent === true) {
-                    //   $window.location.href = "http://localhost:81/servlet/A360/#!/invalidLink"
+                if (data.active=== false) {
                     $location.path('invalidLink')
                 }
             }, function (response) {
                 console.log("Something wrong with get Session By participant UID" + response)
             });
-
         }
-
-
     }
 })();

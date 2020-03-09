@@ -1,6 +1,7 @@
 package com.avenga.a360.service;
 
 import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.UserEditDto;
 import com.avenga.a360.model.Participant;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ParticipantService {
     Participant findByUId(String uId);
 
     ParticipantDto participantToParticipantDto(Participant participant);
+
+ //   boolean updateUserRole(UserEditDto userEditDto);
 }

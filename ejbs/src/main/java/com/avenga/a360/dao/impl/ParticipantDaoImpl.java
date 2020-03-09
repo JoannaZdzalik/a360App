@@ -2,6 +2,7 @@ package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.model.Participant;
+import com.avenga.a360.model.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -50,6 +51,16 @@ public class ParticipantDaoImpl implements ParticipantDao {
     public boolean createParticipant(Participant participant) {
         try {
             em.persist(participant);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateUser1(User user) {
+        try {
+            em.merge(user);
         } catch (Exception e) {
             return false;
         }

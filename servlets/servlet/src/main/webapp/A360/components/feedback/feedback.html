@@ -1,34 +1,28 @@
-<div class="container text-center mt-20" data-ng-controller="FeedbackController" data-ng-init=(init())>
+<div class="container text-center mt-20" data-ng-controller="FeedbackController"  data-ng-form="feedbackForm" data-ng-init=(init())>
     <div style="border: #999999 solid;background-color:#cccccc"><h1>{{title}} {{participantMail}} </h1></div>
     <div style="border: #999999 solid">
         <div data-ng-repeat="question in questions">
-            <div ng-if='question.questionType == "TEXT"' class="row">
-                <br>
-                <div class="col-md-5 ">
+            <div ng-if='question.questionType == "TEXT"' class="row mt-20">
+                <div class="col-md-5 mt-20">
                     {{question.questionText}}
                 </div>
                 <div class="col-md-5">
                 <textarea id="textarea" class="form-control" rows="5" placeholder="...input text"
                           data-ng-model="question.answer"></textarea>
                 </div>
-                <br>
             </div>
-
-            <div ng-if='question.questionType == "RADIO"'>
-                <div class="col-md-5 ">
-                    {{question.questionText}}
-                </div>
-                <br>
+            <div ng-if='question.questionType == "RADIO"' class=" row mt-20">
+                <div class="col-md-5 ">{{question.questionText}}</div>
                 <div style="display: table;margin-left: 43%;border: #999999 solid;padding: 10px;padding-right: 20px ">
                     <div data-ng-repeat="answerValue in question.defaultAnswers">
                         <div style="display: table-row;">
                             <div style="display: table-cell;">
                                 <input class="form-check-input" type="radio" value="{{answerValue.value}}"
-                                       id="{{answerValue.value}}"
+                                       id="defAns" name="question.answer"
                                        data-ng-model="question.answer">
                             </div>
                             <div style="display: table-cell;">
-                                <label class="form-check-label" for="{{answerValue.value}}">
+                                <label class="form-check-label" for="defAns">
                                     {{answerValue.value}}</label>
                             </div>
                         </div>
@@ -36,17 +30,13 @@
                 </div>
             </div>
         </div>
-        <br>
-        <div align="center">
-            <div class="input-group">
-                <button type="submit" class="btn btn-primary btn-lg"
-                        data-ng-click="sendFeedback(); afterSendFeedback()">Send
-                </button>
-            </div>
-            <br>
+        <div class="row text-center mt-20 mb-20" data-a360-loading="" data-show="showSendAnswersLoader">
+            <button type="submit" class="btn btn-primary btn-lg" data-ng-click="sendFeedback(); afterSendFeedback()">
+                Send
+            </button>
         </div>
     </div>
-
 </div>
+
 
 

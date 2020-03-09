@@ -97,7 +97,6 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public List<Status> createAnswersDto(List<AnswerDto> lists) {
         List<Status> statusList = new ArrayList<>();
-
         for (AnswerDto answerDto : lists) {
             statusList.add(createAnswer(answerDto));
 
@@ -133,18 +132,6 @@ public class AnswerServiceImpl implements AnswerService {
         return answerDtoList;
     }
 
-//    public List<AnswerDto> answerToAnswerDto(List<Answer> answerList) {
-//        List<AnswerDto> answerDtoList = new ArrayList<>();
-//        for (Answer answer : answerList) {
-//            AnswerDto answerDto = new AnswerDto();
-//            answerDto.setQuestionId(answer.getQuestion().getId());
-//            answerDto.setParticipantId(answer.getParticipant().getId());
-//            answerDto.setAnswerText(answer.getAnswerText());
-//            answerDtoList.add(answerDto);
-//        }
-//
-//        return answerDtoList;
-//    }
 @Override
     public List<AnswerSessionDto> amountOfAnswersForSessionActive() {
         List<AnswerSessionDto> answerSessionDtoList = new ArrayList<>();
@@ -154,7 +141,6 @@ public class AnswerServiceImpl implements AnswerService {
             answerSessionDto.setSessionName(sessionDto.getSessionName());
             answerSessionDto.setAmountOfAnswers(answerDao.findAllAnswersForOneSession(sessionDto.getSessionName()).size());
             answerSessionDtoList.add(answerSessionDto);
-
             }
         return answerSessionDtoList;
     }

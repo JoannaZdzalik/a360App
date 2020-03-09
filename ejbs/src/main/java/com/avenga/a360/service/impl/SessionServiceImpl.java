@@ -3,6 +3,7 @@ package com.avenga.a360.service.impl;
 import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.SessionDao;
+import com.avenga.a360.dto.EditDto.SessionEditDto;
 import com.avenga.a360.dto.ParticipantDto;
 import com.avenga.a360.dto.SessionDto;
 import com.avenga.a360.model.Participant;
@@ -65,7 +66,7 @@ public class SessionServiceImpl implements SessionService {
                 Session session = sessionDtoToSession(sessionDto);
                 session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
                 session.setQuestions(questions);
-                if (!sessionDao.findSessionByName(session.getSessionName())) {
+                if (!sessionDao.checkIfSessionNameExistsInDB(session.getSessionName())) {
                     sessionDao.createSession(session);
                     status.setStatus("success");
                     statusMessages.add(new StatusMessage("Session object created"));
@@ -100,6 +101,17 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean removeSession(Long id) {
         return sessionDao.removeSession(id);
+    }
+
+    @Override
+    public boolean updateSession(SessionEditDto sessionEditDto) {
+        Session session = sessionDao.findSessionByName(sessionEditDto.getSessionName());
+        if (session != null) {
+            session.setActive(sessionEditDto.isActive());
+            sessionDao.updateSession(session);
+            return true;
+        }
+        return false;
     }
 
     private boolean validateIsNotNull(Status status, Object o, List<StatusMessage> statusMessageList, String message) {
@@ -148,6 +160,7 @@ public class SessionServiceImpl implements SessionService {
         session.setSessionName(sessionDto.getSessionName());
         session.setEndDate(sessionDto.getEndDate());
         session.setIsSent(false);
+        session.setActive(true);
         return session;
     }
 
@@ -176,11 +189,11 @@ public class SessionServiceImpl implements SessionService {
             sessionDto.setSessionName(session.getSessionName());
             sessionDto.setIsSent(session.getIsSent());
             sessionDto.setEndDate(session.getEndDate());
+            sessionDto.setActive(session.isActive());
             List<ParticipantDto> participantDtoList = new ArrayList<>();
             for (Participant participant : session.getParticipants()) {
                 ParticipantDto participantDto = participantService.participantToParticipantDto(participant);
                 participantDtoList.add(participantDto);
-
             }
             sessionDto.setParticipantList(participantDtoList);
             sessionDtoList.add(sessionDto);
@@ -188,7 +201,6 @@ public class SessionServiceImpl implements SessionService {
         }
         return sessionDtoList;
     }
-
 
     public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
         List<Participant> participants = new ArrayList<>();

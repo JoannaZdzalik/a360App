@@ -8,7 +8,7 @@
             $scope.showQuestionLoader = false;
             $scope.showQuestionForm = false;
             $scope.sectionTitles = ["Question manager", "Active questions", "Inactive questions"];
-            $scope.tableHeaders = [ "Question", "Type", " "];
+            $scope.tableHeaders = ["Question", "Type", " "];
             $scope.showEdit = false;
             $scope.questionTypeList = ["TEXT", "RADIO"];
             $scope.defaultAnswers = "";
@@ -23,11 +23,14 @@
                 console.log(data);
                 $scope.questions = data;
                 $scope.showQuestionLoader = false;
+
             }, function (response) {
                 alert('Error on getAllSessions request' + response);
                 $scope.showQuestionLoader = false;
             });
         }
+
+
 
         $scope.editQuestionStatus = function (i) {
             var isActive;
@@ -35,10 +38,12 @@
             var questionId = question.question_id;
 
             if (question.is_active === false) {
-                isActive = true
+                isActive = true;
+
             }
             if (question.is_active === true) {
-                isActive = false
+                isActive = false;
+
             }
             QuestionsService.editQuestionStatus(questionId, isActive).then(function (data) {
                 console.log("Successful edit" + data);
@@ -85,13 +90,6 @@
             $scope.defaultAnswersList = []
         }
 
-        // $scope.editItem = function ($index) {
-        //     $scope.showEdit = true;
-        //     $scope.questionToEdit = $scope.questions[$index];
-        //     $scope.questionTextEdit = $scope.questionToEdit.question_text;
-        //     $scope.inputQuestionTypeEdit = $scope.questionToEdit.question_type
-        // };
-
         $scope.goToSessionPage = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/session";
         };
@@ -100,7 +98,7 @@
             toastr.success("Question created", "Success");
             cleanUp();
             console.log("success" + data);
-          }
+        }
 
         function handleFailure(response) {
             $scope.showQuestionLoader = false;

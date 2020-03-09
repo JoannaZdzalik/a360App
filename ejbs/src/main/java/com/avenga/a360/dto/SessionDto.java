@@ -25,5 +25,6 @@ public class SessionDto {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime endDate;
     private Boolean isSent;
+    private boolean isActive;
     private List<ParticipantDto> participantList;
 }

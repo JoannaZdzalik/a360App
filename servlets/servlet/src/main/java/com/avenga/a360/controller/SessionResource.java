@@ -1,8 +1,7 @@
 package com.avenga.a360.controller;
 
-import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.EditDto.SessionEditDto;
 import com.avenga.a360.dto.SessionDto;
-import com.avenga.a360.model.Session;
 import com.avenga.a360.model.response.Status;
 import com.avenga.a360.service.SessionService;
 
@@ -71,5 +70,16 @@ public class SessionResource {
         } else {
             return Response.status(Response.Status.BAD_REQUEST).entity("Session not removed because of the reason").build();
         }
+    }
+
+    @Path("/edit")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response editUserRole(SessionEditDto sessionEditDto) {
+        boolean status = sessionService.updateSession(sessionEditDto);
+        if (status) {
+            return Response.status(Response.Status.CREATED).entity("Session isActive editted").build();
+        } else return Response.status(Response.Status.BAD_REQUEST).entity("Session isActive not editted").build();
     }
 }

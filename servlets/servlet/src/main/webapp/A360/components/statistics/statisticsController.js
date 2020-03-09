@@ -7,6 +7,7 @@
         $scope.init = function () {
             $scope.sectionTitles = ["Session manager", "Active sessions", "Finished sessions"];
             $scope.tableHeaders = ["#", "Session name", "End date", "Number of participants", "Participants", "Answers received", "Action"];
+            $scope.deactivateTooltip = "Deactivating session means it will be finished immediately and no feedback will be sent to participants.";
             getSessionsAndAnswers();
         };
 
@@ -77,7 +78,7 @@
             return $filter('date')((endDate), 'yyyy-MM-dd hh:mm');
         };
 
-         $scope.goBackToWelcomePage = function () {
+        $scope.goBackToWelcomePage = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/welcome";
         };
 
@@ -88,6 +89,19 @@
             }, function () {
                 console.log('Error on remove request ');
             });
+        };
+
+        $scope.setInactive = function (sessionName) {
+            if ($window.confirm("Do you want to set this session as inactive?  \n\n" + "- participants will no longer be able to fill feedback questionnaires,\n \n" +
+                " -no feedback will be sent to participants, \n" +
+                " -you will not be able to activate it later \n\n" + "Are you sure?")) {
+                StatisticsService.editSessionIsActive(sessionName, false).then(function (data) {
+                    console.log('Session succesfully deactivated ');
+                    $window.location.reload();
+                }, function () {
+                    console.log('Error: session not deactivated ');
+                });
+            }
         }
     }
 

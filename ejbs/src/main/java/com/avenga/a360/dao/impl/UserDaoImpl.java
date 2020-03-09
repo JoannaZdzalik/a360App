@@ -1,9 +1,6 @@
 package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.UserDao;
-import com.avenga.a360.model.Participant;
-import com.avenga.a360.model.Question;
-import com.avenga.a360.model.Session;
 import com.avenga.a360.model.User;
 
 import javax.persistence.EntityManager;

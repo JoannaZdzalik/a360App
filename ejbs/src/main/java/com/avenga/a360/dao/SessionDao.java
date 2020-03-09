@@ -12,11 +12,15 @@ public interface SessionDao {
 
     boolean createSession(Session session);
 
-    boolean findSessionByName(String name);
+    boolean checkIfSessionNameExistsInDB(String name);
+
+    Session findSessionByName(String name);
 
     List<Session> findAllSessions();
 
     Session findSessionByParticipantUid(String uId);
 
-    boolean removeSession (Long id);
+    boolean removeSession(Long id);
+
+    boolean updateSession(Session session);
 }

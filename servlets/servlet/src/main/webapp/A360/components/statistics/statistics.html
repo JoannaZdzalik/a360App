@@ -7,17 +7,17 @@
         <table class="table table-striped mt-20">
             <thead>
             <tr>
-                <th scope="col">{{tableHeaders[0]}}</th>
-                <th scope="col">{{tableHeaders[1]}}</th>
-                <th scope="col">{{tableHeaders[2]}}</th>
-                <th scope="col">{{tableHeaders[3]}}</th>
-                <th scope="col">{{tableHeaders[4]}}</th>
-                <th scope="col">{{tableHeaders[5]}}</th>
-                <th scope="col">{{tableHeaders[6]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[1]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[2]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[3]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[4]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[5]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="session in sessions" ng-if="session.isSent === false">
+            <tr ng-repeat="session in sessions" ng-if="session.active === true">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
@@ -37,8 +37,8 @@
                     </div>
                 </td>
                 <td scope="col">
-                    <button type="submit" class="btn btn-primary" ng-click="setInactive()">
-                        Later it will force end session
+                    <button type="submit" class="btn btn-primary setActionButton" ng-click="setInactive(session.sessionName)" uib-tooltip="{{deactivateTooltip}}" >
+                        Deactivate session
                     </button>
                 </td>
             </tr>
@@ -51,13 +51,13 @@
         <table class="table table-striped mt-20">
             <thead>
             <tr>
-                <th scope="col">{{tableHeaders[0]}}</th>
-                <th scope="col">{{tableHeaders[1]}}</th>
-                <th scope="col">{{tableHeaders[2]}}</th>
-                <th scope="col">{{tableHeaders[3]}}</th>
-                <th scope="col">{{tableHeaders[4]}}</th>
-                <th scope="col">{{tableHeaders[5]}}</th>
-                <th scope="col">{{tableHeaders[6]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[1]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[2]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[3]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[4]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[5]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
             <tbody>
@@ -98,5 +98,6 @@
     </div>
 
 </div>
+
 
 

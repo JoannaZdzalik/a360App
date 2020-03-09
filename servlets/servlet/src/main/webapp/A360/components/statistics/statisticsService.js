@@ -47,7 +47,22 @@
             return deferred.promise;
         };
 
+        statisticsService.editSessionIsActive = function (sessionName, isActive) {
+            var url = '/servlet/a360/sessions/edit';
+            var usersResource = $resource(url);
+            var deferred = $q.defer();
+            usersResource.save({
+                'sessionName' : sessionName,
+                'active' : isActive
+            }).$promise.then(
+                function (data) {
+                    deferred.resolve(data);
+                }, function (response) {
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
         return statisticsService;
     }
-
 })();

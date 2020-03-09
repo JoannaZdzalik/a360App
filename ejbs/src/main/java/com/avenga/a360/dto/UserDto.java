@@ -19,5 +19,5 @@ public class UserDto {
     private Long id;
     private String login;
     private String password;
-    private User.RoleType role;
+    private User.Role role;
 }
