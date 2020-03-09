@@ -1,7 +1,6 @@
 package com.avenga.a360.controller;
 
 import com.avenga.a360.dto.ParticipantDto;
-import com.avenga.a360.dto.UserEditDto;
 import com.avenga.a360.model.Participant;
 import com.avenga.a360.service.ParticipantService;
 import com.avenga.a360.service.UserService;

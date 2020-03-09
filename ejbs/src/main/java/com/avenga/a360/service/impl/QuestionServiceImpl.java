@@ -2,7 +2,7 @@ package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dto.QuestionDto;
-import com.avenga.a360.dto.QuestionEditDto;
+import com.avenga.a360.dto.EditDto.QuestionEditDto;
 import com.avenga.a360.model.Question;
 import com.avenga.a360.service.QuestionService;
 

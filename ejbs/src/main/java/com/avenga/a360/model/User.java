@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.Optional;
 
 @XmlRootElement
 @Getter
@@ -33,7 +34,6 @@ public class User implements Serializable {
     @Column
     @NonNull
     private String password;
-
 
     @Column(name = "role")
     @NonNull

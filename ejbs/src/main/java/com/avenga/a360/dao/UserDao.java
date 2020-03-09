@@ -10,6 +10,8 @@ public interface UserDao {
 
     User findUserByLogin(String login);
 
+    boolean findLoginInDB(String login);
+
     List<User> findAllUsers();
 
     boolean updateUser(User user);

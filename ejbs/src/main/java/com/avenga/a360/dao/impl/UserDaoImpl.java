@@ -1,6 +1,7 @@
 package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.UserDao;
+import com.avenga.a360.model.Session;
 import com.avenga.a360.model.User;
 
 import javax.persistence.EntityManager;
@@ -33,6 +34,17 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public boolean findLoginInDB(String login){
+        User user = null;
+        try {
+            user = em.createNamedQuery("findUserByLogin", User.class).setParameter("login", login).getSingleResult();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @Override

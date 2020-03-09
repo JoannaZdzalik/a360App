@@ -1,4 +1,4 @@
-package com.avenga.a360.dto;
+package com.avenga.a360.dto.EditDto;
 
 
 import lombok.AllArgsConstructor;

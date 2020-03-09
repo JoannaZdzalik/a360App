@@ -2,7 +2,7 @@ package com.avenga.a360.service.impl;
 
 import com.avenga.a360.dao.UserDao;
 import com.avenga.a360.dto.UserDto;
-import com.avenga.a360.dto.UserEditDto;
+import com.avenga.a360.dto.EditDto.UserEditDto;
 import com.avenga.a360.model.User;
 import com.avenga.a360.model.response.Status;
 import com.avenga.a360.model.response.StatusMessage;
@@ -25,13 +25,16 @@ public class UserServiceImpl implements UserService {
         List<StatusMessage> statusMessages = new ArrayList<>();
         if (userDto != null) {
             if (userDto.getLogin() == null || userDto.getPassword() == null) {
-                userDto.setRole(User.Role.DESIGNER);
                 status.setStatus("Fail");
                 statusMessages.add(new StatusMessage("Login or password are null"));
+            } else if (userDao.findLoginInDB(userDto.getLogin())) {
+                status.setStatus("Fail");
+                statusMessages.add(new StatusMessage("Login already exists in a database"));
+            } else {
+                userDao.createUser(convertUserDtoToUser(userDto));
+                status.setStatus("Success");
+                statusMessages.add(new StatusMessage("User created"));
             }
-            userDao.createUser(convertUserDtoToUser(userDto));
-            status.setStatus("Success");
-            statusMessages.add(new StatusMessage("User created"));
         }
         status.setStatusMessageList(statusMessages);
         return status;
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setId(userDto.getId());
         user.setLogin(userDto.getLogin());
-        user.setPassword(userDto.getPassword()); //tutaj zrobic czary mary z szyfrowaniem hasła
+        user.setPassword(PasswordServiceImpl.hashPassword(userDto.getPassword()));
         user.setRole(User.Role.DESIGNER);
         return user;
     }
@@ -71,9 +74,8 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setLogin(user.getLogin());
-        userDto.setPassword(user.getPassword());
+        //  userDto.setPassword(user.getPassword());
         userDto.setRole(user.getRole());
         return userDto;
     }
-
 }

@@ -1,9 +1,8 @@
 package com.avenga.a360.service;
 
 import com.avenga.a360.dto.QuestionDto;
-import com.avenga.a360.dto.QuestionEditDto;
+import com.avenga.a360.dto.EditDto.QuestionEditDto;
 import com.avenga.a360.model.Question;
-import com.avenga.a360.model.response.Status;
 
 import java.util.List;
 
