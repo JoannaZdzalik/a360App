@@ -83,10 +83,10 @@
 
         function checkIfSessionIsActive() {
             FeedbackService.getSessionByParticipantUid($routeParams.uId).then(function (data) {
-                console.log("session by uid is ok");
-                if (data.active=== false) {
+                console.log("session by uid is ok hhhh"  + data.active);
+                if (data.active === false) {
                     $location.path('invalidLink')
-                }
+                   }
             }, function (response) {
                 console.log("Something wrong with get Session By participant UID" + response)
             });

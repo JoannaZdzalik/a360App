@@ -171,6 +171,7 @@ public class SessionServiceImpl implements SessionService {
         sessionDto.setSessionName(session.getSessionName());
         sessionDto.setEndDate(session.getEndDate());
         sessionDto.setIsSent(session.getIsSent());
+        sessionDto.setActive(session.isActive());
         List<ParticipantDto> participantsDto = new ArrayList<>();
         for (Participant participant : session.getParticipants()) {
             ParticipantDto participantDto = participantService.participantToParticipantDto(participant);

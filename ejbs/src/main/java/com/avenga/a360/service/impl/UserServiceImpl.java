@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setId(userDto.getId());
         user.setLogin(userDto.getLogin());
-        user.setPassword(PasswordServiceImpl.hashPassword(userDto.getPassword()));
+        user.setPassword(PasswordService.hashPassword(userDto.getPassword()));
         user.setRole(User.Role.DESIGNER);
         return user;
     }
@@ -74,7 +74,6 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setLogin(user.getLogin());
-        //  userDto.setPassword(user.getPassword());
         userDto.setRole(user.getRole());
         return userDto;
     }
