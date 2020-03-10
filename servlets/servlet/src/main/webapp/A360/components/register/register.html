@@ -1,0 +1,9 @@
+<div class="container text-center borderBox " data-ng-form="registerForm" ng-init="init()">
+    <h3>{{titles[0]}}</h3>
+    <div class="row text-center mt-20 mb-20" data-a360-loading="" data-show="showSendFormLoader">
+        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="canCreateUser()"
+                ng-click="createUser()">
+            Send
+        </button>
+    </div>
+</div>

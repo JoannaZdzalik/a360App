@@ -9,6 +9,8 @@ angular.module('a360', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.
     when('/questions', {templateUrl: 'components/questions/questions.html', controller: 'QuestionsController'}).
     when('/invalidLink', {templateUrl: 'components/feedback/invalidLink.html', controller: 'FeedbackController'}).
     when('/users', {templateUrl: 'components/users/users.html', controller: 'UsersController'}).
+    when('/main', {templateUrl: 'components/login/main.html', controller: 'MainController'}).
+    when('/register', {templateUrl: 'components/register/register.html', controller: 'RegisterController'}).
     otherwise({ redirectTo: '/welcome' });
 });
 

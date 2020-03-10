@@ -24,7 +24,7 @@
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col">
+                <th scope="col" class="centerHeader">
                     <div ng-repeat="part in session.participantList">
                         {{$index+1}}. {{part.email}}
                     </div>
@@ -36,8 +36,8 @@
                         </div>
                     </div>
                 </td>
-                <td scope="col">
-                    <button type="submit" class="btn btn-primary setActionButton" ng-click="setInactive(session.sessionName)" uib-tooltip="{{deactivateTooltip}}" >
+                <td scope="col" >
+                    <button data-a360-loading="" data-show="showLoader" type="submit" class="btn btn-primary setActionButton" ng-click="setInactive(session.sessionName)" uib-tooltip="{{deactivateTooltip}}" >
                         Deactivate session
                     </button>
                 </td>
@@ -60,15 +60,15 @@
                 <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
-            <tbody>
-            <tr ng-repeat="session in sessions" ng-if="session.isSent === true">
+            <tbody >
+            <tr ng-repeat="session in sessions" ng-if="session.active === false && session.isSent===false">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col">
+                <th scope="col" class="centerHeader">
                     <div ng-repeat="part in session.participantList">
                         {{$index+1}}. {{part.email}}
                     </div>
@@ -81,7 +81,54 @@
                     </div>
                 </td>
                 <td scope="col">
-                    <button type="submit" class="btn btn-default" ng-click="deleteInactive(session.id)"><i
+                    <button type="submit" class="btn btn-default" ng-click="delete(session.id)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                    <button data-a360-loading="" data-show="showLoader" type="submit" class="btn btn-primary setActionButton" ng-click="setActive(session.sessionName)" uib-tooltip="{{activateTooltip}}" >
+                        Activate session
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <h3 class="toLeft">{{sectionTitles[3]}}</h3>
+        <table class="table table-striped mt-20">
+            <thead>
+            <tr>
+                <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[1]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[2]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[3]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[4]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[5]}}</th>
+                <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="session in sessions" ng-if="session.isSent === true">
+                <td scope="col"></td>
+                <td scope="col">{{session.sessionName}}</td>
+                <td scope="col">
+                    {{formatEndDate(session.endDate)}}
+                </td>
+                <td scope="col">{{session.participantList.length}}</td>
+                <th scope="col" class="centerHeader">
+                    <div ng-repeat="part in session.participantList">
+                        {{$index+1}}. {{part.email}}
+                    </div>
+                </th>
+                <td scope="col">
+                    <div ng-repeat="part in session.participantList">
+                        <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
+                            {{feedback.answers.length}} answers
+                        </div>
+                    </div>
+                </td>
+                <td scope="col">
+                    <button type="submit" class="btn btn-default" ng-click="delete(session.id)"><i
                             class="glyphicon glyphicon-trash"></i>
                     </button>
                 </td>

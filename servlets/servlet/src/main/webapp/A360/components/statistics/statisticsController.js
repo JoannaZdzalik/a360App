@@ -1,14 +1,16 @@
 (function () {
     "use strict";
     angular.module('a360').controller('StatisticsController', StatisticsController);
-    StatisticsController.$inject = ['$scope', '$filter', '$window', 'StatisticsService'];
+    StatisticsController.$inject = ['$scope', '$filter', '$window', 'toastr', 'StatisticsService'];
 
-    function StatisticsController($scope, $filter, $window, StatisticsService) {
+    function StatisticsController($scope, $filter, $window, toastr, StatisticsService) {
         $scope.init = function () {
-            $scope.sectionTitles = ["Session manager", "Active sessions", "Finished sessions"];
+            $scope.sectionTitles = ["Session manager", "Active sessions", "Inactive sessions", "Finished sessions"];
             $scope.tableHeaders = ["#", "Session name", "End date", "Number of participants", "Participants", "Answers received", "Action"];
             $scope.deactivateTooltip = "Deactivating session means it will be finished immediately and no feedback will be sent to participants.";
+            $scope.activateTooltip = "Activating session means participants will be enabled to give their feedbacks. If end date is past now, all gathered answers will be sent immediately";
             getSessionsAndAnswers();
+            $scope.showLoader = false;
         };
 
         function getSessionsAndAnswers() {
@@ -82,24 +84,43 @@
             $window.location.href = "http://localhost:81/servlet/A360/#!/welcome";
         };
 
-        $scope.deleteInactive = function (sessionId) {
+        $scope.delete = function (sessionId) {
             StatisticsService.removeSession(sessionId).then(function (data) {
                 console.log('Session removed ' + data.sessionName);
                 $window.location.reload();
+                toastr.success("Session removed", 'Success');
             }, function () {
                 console.log('Error on remove request ');
             });
         };
 
         $scope.setInactive = function (sessionName) {
-            if ($window.confirm("Do you want to set this session as inactive?  \n\n" + "- participants will no longer be able to fill feedback questionnaires,\n \n" +
-                " -no feedback will be sent to participants, \n" +
-                " -you will not be able to activate it later \n\n" + "Are you sure?")) {
+            $scope.showLoader = true;
+            if ($window.confirm("Do you want to set this session as inactive?  \n\n" + "- participants will no longer be able to fill feedback questionnaires,\n" +
+                " -no feedback will be sent to participants \n\n" + "Are you sure?")) {
                 StatisticsService.editSessionIsActive(sessionName, false).then(function (data) {
+                    $scope.showLoader = false;
                     console.log('Session succesfully deactivated ');
                     $window.location.reload();
                 }, function () {
+                    $scope.showLoader = false;
                     console.log('Error: session not deactivated ');
+                    toastr.error("Session not deactivated", 'Fail');
+                });
+            }
+        };
+
+        $scope.setActive = function (sessionName) {
+            $scope.showLoader = true;
+            if ($window.confirm("Do you want to set this session as active?  \n\n" + "If end date is past now, participants will receive their feedback immediately.")) {
+                StatisticsService.editSessionIsActive(sessionName, true).then(function (data) {
+                    $scope.showLoader = false;
+                    console.log('Session succesfully activated ');
+                    $window.location.reload();
+                }, function () {
+                    $scope.showLoader = false;
+                    console.log('Error: session not activated ');
+                    toastr.error("Session not activated", 'Fail');
                 });
             }
         }

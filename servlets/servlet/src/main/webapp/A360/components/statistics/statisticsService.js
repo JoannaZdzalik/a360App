@@ -9,7 +9,6 @@
         statisticsService.getAllSessions = function () {
             var url = '/servlet/a360/sessions/all';
             var allSessionsResource = $resource(url);
-
             var deferred = $q.defer();
             allSessionsResource.query().$promise.then(
                 function (data) {

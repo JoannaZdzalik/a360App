@@ -29,13 +29,14 @@ public class SessionScheduler {
             List<Session> sessionList = sessionService.findAllSessionsIsSentFalseAndEndDateIsAfterNow();
             if (!(sessionList == null)) {
                 for (Session session : sessionList) {
-                    sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithFeedback(session));
-                    session.setIsSent(true);
-                    session.setActive(false);
+                    if(session.isActive()){
+                        sendService.sendEmailsToAllParticipants(emailService.createEmailsToParticipantsWithFeedback(session));
+                        session.setIsSent(true);
+                        session.setActive(false);
+                    }
                 }
             }
         }
-
     }
     @Timeout
     public void programmaticTimeout(Timer timer) {

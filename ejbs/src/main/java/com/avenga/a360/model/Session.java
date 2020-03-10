@@ -74,5 +74,4 @@ public class Session implements Serializable {
             }
     )
     private List<Question> questions;
-
 }

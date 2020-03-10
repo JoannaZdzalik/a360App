@@ -112,7 +112,7 @@
             $window.location.href = "http://localhost:81/servlet/A360/#!/questions";
         };
 
-        $scope.goToWelcomePage = function () {
+        $scope.goBackToWelcomePage = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/welcome";
         };
 
