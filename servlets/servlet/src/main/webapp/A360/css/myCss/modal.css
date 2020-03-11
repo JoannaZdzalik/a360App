@@ -2,9 +2,10 @@
     width: 20%;
 }
 
-.marginR {
-    margin-right: 20px;
+.marginR25 {
+    margin-right: 25px;
 }
+
 
 .active, .inactive {
     font-size: 46px;
@@ -25,5 +26,9 @@ i.inactive {
 }
 
 .submitted .ng-invalid{
-    border: 1px solid red;
+    border: 1px solid #ba4844;
+}
+
+.red {
+    color: #ba4844;
 }

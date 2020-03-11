@@ -26,7 +26,7 @@
 
         $scope.save = function () {
             if ($scope.appParamsForm.from.$invalid) {
-               console.log("bad email format")
+                console.log("bad email format")
             } else if ($scope.appParamsForm.port.$invalid) {
                 console.log("Port must be an int");
             } else {

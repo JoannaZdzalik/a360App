@@ -5,11 +5,12 @@
             <input id="host" type="text" class="form-control"
                    ng-value="originalAppParams.host" ng-model="host" name="host">
         </div>
-        <div class="input-group col-md-10 noMarginLR mt-20" >
+        <div class="input-group col-md-10 noMarginLR mt-20">
             <span class="input-group-addon spanWidth">Port: </span>
             <input id="port" type="text" class="form-control" ng-value="originalAppParams.port"
                    ng-model="port" name="port" ng-pattern="portInput" ng-class="{'submitted': submitted}">
         </div>
+
         <div class="input-group col-md-10 noMarginLR mt-20">
             <span class="input-group-addon spanWidth">From: </span>
             <input id="from" type="text" class="form-control" ng-value="originalAppParams.from" ng-pattern="emailFormat"
@@ -28,13 +29,13 @@
             <i class="fa fa-toggle-on fa-rotate-180 inactive" ng-if="originalAppParams.auth == false"
                ng-click="changeAuthStatus();"></i>
         </div>
+
     </div>
-    <div align="right" class="mb-20 mt-20 marginR">
+    <div align="right" class="mb-20 mt-20 marginR25">
         <div style="display: inline">
             <button type="button" class="btn btn-primary" data-ng-click="cancel()">Close</button>
         </div>
         <div style="display: inline">
-<!--            <button type="button" class="btn btn-success" data-ng-click="save()">Save</button>-->
             <button type="submit" class="btn btn-success" ng-click="submitted= true; save();">Save</button>
         </div>
     </div>
