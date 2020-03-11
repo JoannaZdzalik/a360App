@@ -16,21 +16,44 @@
         $scope.sectionTitle = ["Create - Avenga 360 feedback session", "Details", "Participants", "Questions"];
         $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
-        var file = document.getElementById('docpicker');
-        file.addEventListener('change', importFile);
+       var file = document.getElementById('docpicker');
+       file.addEventListener('change', importFile);
+
+        // $(document).ready(function () {
+        //     $('#docpicker').on('change', function (evt) {
+        //         var files = evt.target.files;
+        //         if (files) {
+        //             for (var i = 0, f; f = files[i]; i++) {
+        //                 var reader = new FileReader();
+        //                 reader.onload = (function () {
+        //                     return function (e) {
+        //                         var content = processExcel(e.target.result);
+        //                         console.log(content);
+        //                     };
+        //                 })(f, i + 1);
+        //                 reader.readAsBinaryString(f);
+        //             }
+        //         } else {
+        //             console.log("Failed to load file(s)");
+        //         }
+        //     });
+        // });
 
         function importFile(evt) {
-            var f = evt.target.files[0];
-            if (f) {
-                var r = new FileReader();
-                r.onload = e => {
-                    var contents = processExcel(e.target.result);
-                    console.log(contents);
-                    console.log("File loaded succesfully")
-                };
-                r.readAsBinaryString(f);
+            var files = evt.target.files;
+            if (files) {
+                for (var i = 0, f; f = files[i]; i++) {
+                    var r = new FileReader();
+                    r.onload = (function () {
+                        return function (e) {
+                            var contents = processExcel(e.target.result);
+                            console.log(contents);
+                        };
+                    })(f, i + 1);
+                    r.readAsBinaryString(f);
+                }
             } else {
-                console.log("Failed to load file");
+                console.log("Failed to load file(s)");
             }
         }
 
@@ -38,11 +61,11 @@
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            var data = toArray(workbook);
+            var data = uploadResultToList(workbook);
             return data
         }
 
-        function toArray(workbook) {
+        function uploadResultToList(workbook) {
             var result = [];
             workbook.Strings.forEach(function (participantEmail) {
                 if ($scope.emailFormat.test(participantEmail.t)) {
@@ -52,14 +75,15 @@
             });
             $scope.uploadSelected = function () {
                 result.forEach(function (participantEmail) {
-                    if(participantCanBeAdded(participantEmail)){
+                    if (participantCanBeAdded(participantEmail)) {
                         $scope.participants.push(participantEmail)
                     }
                 });
             };
+            return result;
         }
 
-        function participantCanBeAdded(participantEmail){
+        function participantCanBeAdded(participantEmail) {
             return $scope.participants.indexOf(participantEmail) === -1
         }
 
