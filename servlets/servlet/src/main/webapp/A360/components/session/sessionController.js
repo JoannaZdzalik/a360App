@@ -16,6 +16,49 @@
         $scope.sectionTitle = ["Create - Avenga 360 feedback session", "Details", "Participants", "Questions"];
         $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
+
+        // var file = document.getElementById('docpicker');
+        // var viewer = document.getElementById('dataviewer');
+        // file.addEventListener('change', importFile);
+        //
+        // function importFile(evt) {
+        //     var f = evt.target.files[0];
+        //
+        //     if (f) {
+        //         var r = new FileReader();
+        //         r.onload = e => {
+        //             var contents = processExcel(e.target.result);
+        //             console.log(contents)
+        //         };
+        //         r.readAsBinaryString(f);
+        //     } else {
+        //         console.log("Failed to load file");
+        //     }
+        // }
+        //
+        // function processExcel(data) {
+        //     var workbook = XLSX.read(data, {
+        //         type: 'binary'
+        //     });
+        //
+        //     var firstSheet = workbook.SheetNames[0];
+        //     var data = to_json(workbook);
+        //     return data
+        // }
+        //
+        // function to_json(workbook) {
+        //     var result = {};
+        //     workbook.SheetNames.forEach(function(sheetName) {
+        //         var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+        //             header: 1
+        //         });
+        //         if (roa.length) result[sheetName] = roa;
+        //     });
+        //     return JSON.stringify(result, 2, 2);
+        // }
+
+
+
         function getAllActiveQuestions() {
             SessionService.getActiveQuestions().then(function (response) {
                 console.log('GET questions successful ' + response);
