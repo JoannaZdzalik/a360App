@@ -23,3 +23,7 @@ i.active {
 i.inactive {
     color: #ba4844;
 }
+
+.submitted .ng-invalid{
+    border: 1px solid red;
+}

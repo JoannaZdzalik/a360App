@@ -23,7 +23,7 @@ public class EmailConf {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String host;
-    private String port;
+    private int port;
     @Column(name = "fromadress")
     private String from;
     private String username;

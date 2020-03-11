@@ -35,7 +35,6 @@
             $scope.modalInstance.result.then(function () {
                 $window.location.reload();
             });
-
         };
 
         $scope.redirectToWelcome = function () {

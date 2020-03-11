@@ -34,4 +34,4 @@ insert into answers (answer_text, id_participant, id_question) values ('Super', 
 insert into users (login, password, role) values ('asia', 'asia', 'ADMIN');
 insert into users (login, password, role) values ('iza', '55mojehaslo', 'DESIGNER');
 insert into users (login, password, role) values ('olaf', 'haSLo1', 'DESIGNER');
-insert into configuration (host, port, fromAdress, username, password, auth, debug) values ('localhost', '25', 'ja@a360session.com', 'admin', 'admin','true', 'true');
+insert into configuration (host, port, fromAdress, username, password, auth, debug) values ('localhost', 25, 'ja@a360session.com', 'admin', 'admin','true', 'true');

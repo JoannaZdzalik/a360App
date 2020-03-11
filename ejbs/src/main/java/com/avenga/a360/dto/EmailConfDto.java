@@ -13,7 +13,7 @@ public class EmailConfDto {
 
     private Long id;
     private String host;
-    private String port;
+    private int port;
     private String from;
     private String username;
     private String password;
