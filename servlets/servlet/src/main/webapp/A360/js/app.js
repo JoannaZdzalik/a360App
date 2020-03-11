@@ -11,6 +11,9 @@ angular.module('a360', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.
     when('/users', {templateUrl: 'components/users/users.html', controller: 'UsersController'}).
     when('/main', {templateUrl: 'components/login/main.html', controller: 'MainController'}).
     when('/register', {templateUrl: 'components/register/register.html', controller: 'RegisterController'}).
+    when('/registerSuccess', {templateUrl: 'components/register/registerSuccess.html', controller: 'RegisterController'}).
+    when('/config', {templateUrl: 'components/appParameters/appConfig.html', controller: 'AppParamsController'}).
+    when('/modalEditConfig', {templateUrl: 'components/appParameters/appConfig.html', controller: 'ModalController'}).
     otherwise({ redirectTo: '/welcome' });
 });
 

@@ -17,6 +17,10 @@
             $window.location.href = "http://localhost:81/servlet/A360/#!/users";
         };
 
+        $scope.redirectToApplicationParameters  = function () {
+            $window.location.href = "http://localhost:81/servlet/A360/#!/config";
+        };
+
 
     }
 })();

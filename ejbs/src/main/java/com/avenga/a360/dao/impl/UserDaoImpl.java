@@ -1,6 +1,7 @@
 package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.UserDao;
+import com.avenga.a360.model.EmailConf;
 import com.avenga.a360.model.Session;
 import com.avenga.a360.model.User;
 
@@ -62,4 +63,5 @@ public class UserDaoImpl implements UserDao {
         }
         return true;
     }
+
 }

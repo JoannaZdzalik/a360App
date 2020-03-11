@@ -15,9 +15,6 @@ public class ParticipantResource {
     @Inject
     ParticipantService participantService;
 
-    @Inject
-    UserService userService;
-
     @Path("{uid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,18 +30,5 @@ public class ParticipantResource {
                     .entity("Participant dosen't exist")
                     .build();
         }
-        //  return Application.validator(participant, participantDto,"Participant dosen't exist" );
     }
-
-//    @Path("/editRole")
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public Response editUserRole(UserEditDto userEditDto) {
-//        boolean status = userService.updateUserRole(userEditDto);
-//        if (status) {
-//            return Response.status(Response.Status.CREATED).entity("User role editted").build();
-//        } else return Response.status(Response.Status.BAD_REQUEST).entity("User role not editted").build();
-//    }
-
 }

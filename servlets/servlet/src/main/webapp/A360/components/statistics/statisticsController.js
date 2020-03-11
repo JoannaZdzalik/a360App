@@ -102,6 +102,7 @@
                     $scope.showLoader = false;
                     console.log('Session succesfully deactivated ');
                     $window.location.reload();
+                    $window.location.reload();
                 }, function () {
                     $scope.showLoader = false;
                     console.log('Error: session not deactivated ');
@@ -116,6 +117,7 @@
                 StatisticsService.editSessionIsActive(sessionName, true).then(function (data) {
                     $scope.showLoader = false;
                     console.log('Session succesfully activated ');
+                    $window.location.reload();
                     $window.location.reload();
                 }, function () {
                     $scope.showLoader = false;

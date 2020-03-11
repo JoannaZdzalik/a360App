@@ -44,13 +44,19 @@ div.my {
 .borderBox {
     margin-top: 20px;
     border: #bbbbbb solid;
-    background-color: #f9f9f9
+    background-color: #f9f9f9;
+    text-align: center;
 }
 
-.questionBox {
+.smallBox {
     width: 50%;
     border: 1px #bbbbbb solid;
     background-color: #f9f9f9
+}
+
+.small{
+    width: 50%;
+    text-align: center;
 }
 
 .editQuestionsButton {
@@ -87,7 +93,7 @@ div.my {
 }
 
 .tooltip .tooltip-inner {
-    color: white;
+       color: white;
     background-color: #000000;
     border-radius: 15px;
     position: relative;
@@ -99,6 +105,8 @@ div.my {
 .tableCenter {
     text-align: center;
 }
+
+
 
 
 

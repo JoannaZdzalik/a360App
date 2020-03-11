@@ -1,0 +1,25 @@
+.modalSize {
+    width: 20%;
+}
+
+.marginR {
+    margin-right: 20px;
+}
+
+.active, .inactive {
+    font-size: 46px;
+    cursor: pointer;
+}
+
+.active, .inactive {
+    font-size: 46px;
+    cursor: pointer;
+}
+
+i.active {
+    color: #5cb85c;
+}
+
+i.inactive {
+    color: #ba4844;
+}

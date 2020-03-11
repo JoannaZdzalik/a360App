@@ -1,0 +1,37 @@
+<div class="container text-center borderBox " data-ng-form="appParamsForm" ng-init="init()">
+    <h3>{{titles[0]}}</h3>
+
+    <div class="row" align="center">
+        <div class="input-group col-md-3 mt-20">
+            <span class="input-group-addon  text-center toLeft"><b>Host:</b> </span>
+            <span class="input-group-addon text-center">{{appParams.host}}</span>
+        </div>
+        <div class="input-group col-md-3  mt-20">
+            <span class="input-group-addon spanWidth text-center toLeft"><b>Port:</b> </span>
+            <span class="input-group-addon spanWidth text-center">{{appParams.port}}</span>
+        </div>
+        <div class="input-group col-md-3  mt-20">
+            <span class="input-group-addon spanWidth text-center toLeft"><b>From:</b> </span>
+            <span class="input-group-addon spanWidth text-center">{{appParams.from}}</span>
+        </div>
+        <div class="input-group col-md-3  mt-20">
+            <span class="input-group-addon spanWidth text-center toLeft"> <b>Debug:</b> </span>
+            <span class="input-group-addon spanWidth text-center">{{appParams.debug}}</span>
+        </div>
+        <div class="input-group col-md-3  mt-20 mb-20">
+            <span class="input-group-addon spanWidth text-center toLeft"><b>Auth:</b> </span>
+            <span class="input-group-addon spanWidth text-center">{{appParams.auth}}</span>
+        </div>
+    </div>
+
+    <div class="row text-center mt-20 mb-20">
+        <button type="button" class="btn btn-primary" ng-click="redirectToWelcome()">
+            Go back
+        </button>
+        <button type="submit" class="btn btn-primary"
+                ng-click="editAppParams()">
+            Edit
+        </button>
+    </div>
+
+</div>

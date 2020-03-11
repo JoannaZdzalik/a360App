@@ -29,11 +29,11 @@ public class UserServiceImpl implements UserService {
                 statusMessages.add(new StatusMessage("Login or password are null"));
             } else if (userDao.findLoginInDB(userDto.getLogin())) {
                 status.setStatus("Fail");
-                statusMessages.add(new StatusMessage("Login already exists in a database"));
+                statusMessages.add(new StatusMessage("User with this login already exists."));
             } else {
                 userDao.createUser(convertUserDtoToUser(userDto));
                 status.setStatus("Success");
-                statusMessages.add(new StatusMessage("User created"));
+                statusMessages.add(new StatusMessage("Account created"));
             }
         }
         status.setStatusMessageList(statusMessages);

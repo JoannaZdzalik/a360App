@@ -1,9 +1,37 @@
 <div class="container text-center borderBox " data-ng-form="registerForm" ng-init="init()">
     <h3>{{titles[0]}}</h3>
-    <div class="row text-center mt-20 mb-20" data-a360-loading="" data-show="showSendFormLoader">
+
+
+    <div class="row mt-20" align="center">
+        <div class="input-group col-md-6 text-left">
+            <small id="registerHelp" class="form-text text-muted redInfo">All fields are mandatory.</small>
+        </div>
+        <div class="input-group col-md-6 noMarginLR">
+            <span class="input-group-addon spanWidth text-center"> <i
+                    class="glyphicon glyphicon-user"></i> Login: </span>
+            <input id="login" type="text" class="form-control" placeholder="Please enter login..."
+                   ng-required="true" ng-model="login" name="login">
+        </div>
+        <div class="input-group col-md-6 mt-20">
+            <span class="input-group-addon spanWidth">Password: </span>
+            <input id="password" type="password" class="form-control"
+                   ng-required="true" ng-model="password"
+                   placeholder="Please enter password..." name="password" ng-change="analyzePassword(password)"/>
+            <span class="input-group-addon spanWidth text-center"> <i
+                    class="glyphicon glyphicon-info-sign" uib-tooltip="{{passwordPatternTooltip}}"></i></span>
+        </div>
+        <div class="input-group col-md-6 text-left">
+            <small class="form-text text-muted " ng-style="passwordStrength">{{analyzeResult}}</small>
+        </div>
+    </div>
+
+    <div class="row text-center mt-20 mb-20" data-a360-loading="" data-show="showLoader">
         <button type="submit" class="btn btn-primary btn-lg" ng-disabled="canCreateUser()"
                 ng-click="createUser()">
             Send
         </button>
     </div>
+
 </div>
+
+

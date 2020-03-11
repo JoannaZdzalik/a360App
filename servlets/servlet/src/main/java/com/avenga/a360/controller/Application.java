@@ -17,6 +17,7 @@ public class Application extends javax.ws.rs.core.Application {
         set.add(QuestionResource.class);
         set.add(SessionResource.class);
         set.add(UserResource.class);
+        set.add(EmailConfResource.class);
         return set;
     }
 
