@@ -23,7 +23,6 @@ import java.io.Serializable;
                 query = "SELECT a.id_participant,a.id_question FROM answers a \n" +
                         " join participants p on p.id = a.id_participant \n" +
                         " join sessions s on s.id = p.id_session ",
-
                 resultClass = Answer.class),
         @NamedNativeQuery(name = "Answer.shouldFindAllAnswersForOneSession",
                 query = "SELECT answers.* from participants left join sessions  on sessions.id = participants.id_session" +
@@ -36,7 +35,11 @@ import java.io.Serializable;
                 resultClass = Answer.class),
         @NamedNativeQuery(name = "findAllAnswers",
                 query = "SELECT * FROM answers a",
-                resultClass = Answer.class)
+                resultClass = Answer.class),
+        @NamedNativeQuery(name = "findAnswersBySessionId",
+                query = "SELECT answers.* from participants left join sessions  on sessions.id = participants.id_session" +
+                        " right join answers on answers.id_participant = participants.id where sessions.id=:sessionId ",
+                resultClass = Answer.class),
 }
 
 )
@@ -50,11 +53,11 @@ public class Answer implements Serializable {
     @Column(name = "answer_text")
     private String answerText;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "id_question")
     private Question question;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne()
     @JoinColumn(name = "id_participant")
     private Participant participant;
 

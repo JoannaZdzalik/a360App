@@ -10,8 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "configuration")
-//@Singleton
-
+//Singleton
 @NamedNativeQuery(
         name = "findEmailConfiguration",
         query = "select * from configuration where id = 1",
@@ -22,12 +21,18 @@ public class EmailConf {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String host;
+    @Column(nullable = false)
     private int port;
-    @Column(name = "fromadress")
+    @Column(name = "fromadress", nullable = false)
     private String from;
     private String username;
     private String password;
+
+    @Column(nullable = false)
     private boolean auth;
+    @Column(nullable = false)
     private boolean debug;
 }

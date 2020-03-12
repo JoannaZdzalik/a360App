@@ -55,7 +55,7 @@ public class Question implements Serializable {
     @ManyToMany(mappedBy = "questions")
     private List<Session> sessions;
 
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     public enum QuestionType {

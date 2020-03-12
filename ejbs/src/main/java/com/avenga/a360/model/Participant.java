@@ -37,7 +37,7 @@ public class Participant implements Serializable {
     @Column(name = "uid", nullable = false, length = 15, unique = true)
     private String uId;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "id_session")
     private Session session;
 
