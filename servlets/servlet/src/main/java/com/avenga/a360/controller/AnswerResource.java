@@ -37,7 +37,6 @@ public class AnswerResource {
                     .entity(answerSessionDtoList)
                     .build();
         }
-        //  return Application.validator(participant, participantDto,"Participant dosen't exist" );
 
     @Path("/all")
     @GET
@@ -49,7 +48,6 @@ public class AnswerResource {
         } else
             return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("no answers found")))).build();
     }
-
 }
 
 

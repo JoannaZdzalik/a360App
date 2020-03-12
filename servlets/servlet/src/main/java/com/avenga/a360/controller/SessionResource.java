@@ -64,12 +64,8 @@ public class SessionResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteSession(@PathParam("id") Long id) {
-        boolean result = sessionService.removeSession(id);
-        if (result) {
-            return Response.status(Response.Status.OK).entity("Session deleted").build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Session not removed because of the reason").build();
-        }
+        sessionService.removeSession(id);
+        return Response.status(Response.Status.OK).entity("Session deleted").build();
     }
 
     @Path("/edit")

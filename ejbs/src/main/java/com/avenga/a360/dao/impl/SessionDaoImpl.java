@@ -62,6 +62,19 @@ public class SessionDaoImpl implements SessionDao {
         return session;
     }
 
+    @Override
+    public Session findSessionById(Long id) {
+        Session session = null;
+        try {
+            session = em.createNamedQuery("findSessionById", Session.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return session;
+    }
+
 
     @Override
     public List<Session> findAllSessions() {

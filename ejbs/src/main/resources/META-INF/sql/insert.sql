@@ -1,4 +1,4 @@
-insert into sessions (session_name, end_date) values ('session 1', '2020-09-08 14:30:00');
+insert into sessions (session_name, end_date) values ('session 1', '2020-01-08 14:30:00');
 insert into sessions (session_name, end_date) values ('session 2', '2020-03-19 11:30:00');
 insert into sessions (session_name, end_date) values ('session 3', '2020-02-08 14:30:00');
 insert into questions (question_text, question_type, default_answers) values ('What do you value him for ?', 'TEXT', null);

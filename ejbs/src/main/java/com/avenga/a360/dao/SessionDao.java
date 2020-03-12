@@ -16,6 +16,8 @@ public interface SessionDao {
 
     Session findSessionByName(String name);
 
+    Session findSessionById(Long id);
+
     List<Session> findAllSessions();
 
     Session findSessionByParticipantUid(String uId);

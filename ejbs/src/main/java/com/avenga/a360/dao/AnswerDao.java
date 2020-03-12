@@ -14,4 +14,8 @@ public interface AnswerDao {
     boolean createAnswer(Answer answer);
 
     List<Answer> findAllAnswers();
+
+    void deleteAnswer(Answer answer);
+
+    //boolean removeAnswersBySessionId(Long sessionId);
 }

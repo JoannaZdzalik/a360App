@@ -1,11 +1,13 @@
 package com.avenga.a360.service.impl;
 
+import com.avenga.a360.dao.AnswerDao;
 import com.avenga.a360.dao.ParticipantDao;
 import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.SessionDao;
 import com.avenga.a360.dto.EditDto.SessionEditDto;
 import com.avenga.a360.dto.ParticipantDto;
 import com.avenga.a360.dto.SessionDto;
+import com.avenga.a360.model.Answer;
 import com.avenga.a360.model.Participant;
 import com.avenga.a360.model.Question;
 import com.avenga.a360.model.Session;
@@ -43,6 +45,9 @@ public class SessionServiceImpl implements SessionService {
 
     @Inject
     EmailService emailService;
+
+    @Inject
+    AnswerDao answerDao;
 
 
     @Override
@@ -99,8 +104,23 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public boolean removeSession(Long id) {
-        return sessionDao.removeSession(id);
+    public void removeSession(Long id) {
+        Session sessionToRemove = sessionDao.findSessionById(id);
+        if (sessionToRemove != null && !sessionToRemove.isActive()) {
+            cleanUpAnswers(sessionToRemove);
+            sessionDao.removeSession(sessionToRemove.getId());
+        }
+        //  answerDao.removeAnswersBySessionId(id);
+        // return sessionDao.removeSession(id);
+    }
+
+    private void cleanUpAnswers(Session sessionToRemove) {
+        List<Answer> answers = answerDao.findAllAnswersForOneSession(sessionToRemove.getSessionName());
+        for (Answer answer : answers) {
+            if (answer != null) {
+                answerDao.deleteAnswer(answer);
+            }
+        }
     }
 
     @Override
@@ -114,7 +134,8 @@ public class SessionServiceImpl implements SessionService {
         return false;
     }
 
-    private boolean validateIsNotNull(Status status, Object o, List<StatusMessage> statusMessageList, String message) {
+    private boolean validateIsNotNull(Status status, Object o, List<StatusMessage> statusMessageList, String
+            message) {
         if (o == null) {
             statusMessageList.add((new StatusMessage(message)));
             status.setStatus("fail");
@@ -203,7 +224,8 @@ public class SessionServiceImpl implements SessionService {
         return sessionDtoList;
     }
 
-    public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session session) {
+    public List<Participant> participantDtoListToParticipantList(List<ParticipantDto> participantsDto, Session
+            session) {
         List<Participant> participants = new ArrayList<>();
         for (ParticipantDto participantDto : participantsDto) {
             Participant participant = new Participant();

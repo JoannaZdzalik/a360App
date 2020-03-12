@@ -38,8 +38,8 @@ import java.util.List;
         )}
 )
 @NamedQueries({
-        @NamedQuery(name="findSessionByName",query = "SELECT c FROM Session c where c.sessionName = :session_name")
-
+        @NamedQuery(name="findSessionByName",query = "SELECT c FROM Session c where c.sessionName = :session_name"),
+        @NamedQuery(name="findSessionById",query = "SELECT c FROM Session c where c.id = :id")
 })
 
 public class Session implements Serializable {

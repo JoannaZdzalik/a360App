@@ -11,7 +11,7 @@ import java.util.List;
 public interface SessionService {
 
     Status createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto);
-    boolean removeSession(Long id);
+    void removeSession(Long id);
 
     boolean updateSession(SessionEditDto sessionEditDto);
 

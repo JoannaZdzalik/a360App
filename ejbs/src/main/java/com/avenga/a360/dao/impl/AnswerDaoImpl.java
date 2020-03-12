@@ -2,6 +2,7 @@ package com.avenga.a360.dao.impl;
 
 import com.avenga.a360.dao.AnswerDao;
 import com.avenga.a360.model.Answer;
+import com.avenga.a360.model.Session;
 
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
@@ -52,5 +53,23 @@ public class AnswerDaoImpl implements AnswerDao {
     public List<Answer> findAllAnswers() {
         return em.createNamedQuery("findAllAnswers", Answer.class)
                 .getResultList();
+    }
+
+//    @Override
+//    public boolean removeAnswersBySessionId(Long sessionId) {
+//        List<Answer> answers = em.createNamedQuery("findAnswersBySessionId", Answer.class)
+//                .setParameter("sessionId",sessionId)
+//                .getResultList();
+//        try {
+//            em.remove(answers);
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
+//    }
+
+    @Override
+    public void deleteAnswer(Answer answer) {
+        em.remove(answer);
     }
 }
