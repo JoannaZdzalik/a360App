@@ -57,7 +57,7 @@ public class Answer implements Serializable {
     @JoinColumn(name = "id_question")
     private Question question;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "id_participant")
     private Participant participant;
 
