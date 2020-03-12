@@ -16,30 +16,11 @@
         $scope.sectionTitle = ["Create - Avenga 360 feedback session", "Details", "Participants", "Questions"];
         $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
-       var file = document.getElementById('docpicker');
-       file.addEventListener('change', importFile);
-
-        // $(document).ready(function () {
-        //     $('#docpicker').on('change', function (evt) {
-        //         var files = evt.target.files;
-        //         if (files) {
-        //             for (var i = 0, f; f = files[i]; i++) {
-        //                 var reader = new FileReader();
-        //                 reader.onload = (function () {
-        //                     return function (e) {
-        //                         var content = processExcel(e.target.result);
-        //                         console.log(content);
-        //                     };
-        //                 })(f, i + 1);
-        //                 reader.readAsBinaryString(f);
-        //             }
-        //         } else {
-        //             console.log("Failed to load file(s)");
-        //         }
-        //     });
-        // });
+        var file = document.getElementById('docpicker');
+        file.addEventListener('change', importFile);
 
         function importFile(evt) {
+            $scope.allMails = [];
             var files = evt.target.files;
             if (files) {
                 for (var i = 0, f; f = files[i]; i++) {
@@ -47,7 +28,7 @@
                     r.onload = (function () {
                         return function (e) {
                             var contents = processExcel(e.target.result);
-                            console.log(contents);
+                            $scope.allMails.push(contents[i]);
                         };
                     })(f, i + 1);
                     r.readAsBinaryString(f);
@@ -66,22 +47,22 @@
         }
 
         function uploadResultToList(workbook) {
-            var result = [];
             workbook.Strings.forEach(function (participantEmail) {
                 if ($scope.emailFormat.test(participantEmail.t)) {
                     var participantEmails = participantEmail.t;
-                    result.push(participantEmails);
+                    $scope.allMails.push(participantEmails);
                 }
             });
-            $scope.uploadSelected = function () {
-                result.forEach(function (participantEmail) {
-                    if (participantCanBeAdded(participantEmail)) {
-                        $scope.participants.push(participantEmail)
-                    }
-                });
-            };
-            return result;
+            return $scope.allMails;
         }
+
+        $scope.uploadSelected = function () {
+            $scope.allMails.forEach(function (participantEmail) {
+                if (participantCanBeAdded(participantEmail)) {
+                    $scope.participants.push(participantEmail)
+                }
+            });
+        };
 
         function participantCanBeAdded(participantEmail) {
             return $scope.participants.indexOf(participantEmail) === -1
