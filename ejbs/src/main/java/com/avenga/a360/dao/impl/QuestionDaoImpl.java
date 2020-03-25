@@ -19,6 +19,11 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
+    public List<Question> findAllDefaultQuestions() {
+        return em.createNamedQuery("findAllDefaultQuestions", Question.class).getResultList();
+    }
+
+    @Override
     public List<Question> findAllQuestions() {
         return em.createNamedQuery("findAllQuestions", Question.class)
                 .getResultList();

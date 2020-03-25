@@ -1,10 +1,10 @@
 insert into sessions (session_name, end_date) values ('session 1', '2020-01-08 14:30:00');
 insert into sessions (session_name, end_date) values ('session 2', '2020-03-19 11:30:00');
 insert into sessions (session_name, end_date) values ('session 3', '2020-02-08 14:30:00');
-insert into questions (question_text, question_type, default_answers) values ('What do you value him for ?', 'TEXT', null);
-insert into questions (question_text, question_type, default_answers) values ('What''s he or she doing wrong ?', 'TEXT', null);
-insert into questions (question_text, question_type, default_answers) values ('What can change to make working with him or her better ?', 'TEXT', null);
-insert into questions (question_text, question_type, default_answers) values ('How his person affects the atmosphere in team ?', 'RADIO', 'Positive;Neutral;Negative');
+insert into questions (question_text, question_type, is_default, default_answers) values ('What do you value him for ?', 'TEXT', true, null);
+insert into questions (question_text, question_type,is_default, default_answers) values ('What''s he or she doing wrong ?', 'TEXT',true, null);
+insert into questions (question_text, question_type,is_default, default_answers) values ('What can change to make working with him or her better ?','TEXT', true,null);
+insert into questions (question_text, question_type,is_default, default_answers) values ('How his person affects the atmosphere in team ?', 'RADIO',true, 'Positive;Neutral;Negative');
 insert into sessions_questions (id_session, id_question) values (1, 1);
 insert into sessions_questions (id_session, id_question) values (1, 2);
 insert into sessions_questions (id_session, id_question) values (1, 3);

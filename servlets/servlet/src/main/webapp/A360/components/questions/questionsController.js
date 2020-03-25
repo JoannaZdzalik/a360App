@@ -31,11 +31,11 @@
         }
 
 
-
         $scope.editQuestionStatus = function (i) {
             var isActive;
             var question = $scope.questions[i];
             var questionId = question.question_id;
+            var isDefault = question.is_default;
 
             if (question.is_active === false) {
                 isActive = true;
@@ -45,7 +45,7 @@
                 isActive = false;
 
             }
-            QuestionsService.editQuestionStatus(questionId, isActive).then(function (data) {
+            QuestionsService.editQuestion(questionId, isActive, isDefault).then(function (data) {
                 console.log("Successful edit" + data);
                 $window.location.reload();
             }, function (response) {

@@ -21,5 +21,6 @@ public class QuestionDto {
     private String question_text;
     private Question.QuestionType question_type;
     private Boolean is_active;
+    private Boolean is_default;
     private String default_answers;
 }

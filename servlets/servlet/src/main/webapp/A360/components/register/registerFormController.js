@@ -46,7 +46,7 @@
                 $scope.analyzeResult = "Strong password"
             } else if (mediumRegex.test(password)) {
                 $scope.passwordStrength["color"] = "#ffa139";
-                $scope.analyzeResult = "Medium password"
+                $scope.analyzeResult = "Medium strength password"
             } else {
                 $scope.passwordStrength["color"] = "#d13a3a";
                 $scope.analyzeResult = "Weak password"

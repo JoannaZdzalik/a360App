@@ -23,8 +23,32 @@
                 console.log('GET all sessions request succesful ');
                 $scope.sessions = data;
                 getParticipantsFromSession();
+                findSessionsByStatus();
             }, function (response) {
                 console.log('Error on getAllSessions request' + response);
+            });
+        }
+
+        function findSessionsByStatus(){
+            $scope.activeSessions = [];
+            $scope.inactiveSessions = [];
+            $scope.finishedSessions = [];
+            $scope.sessions.forEach(function (session) {
+               if (session.active)
+                    $scope.activeSessions.push(session);
+               else if (!session.active && !session.isSent){
+                   $scope.inactiveSessions.push(session);
+               } else if (session.isSent){
+                   $scope.finishedSessions.push(session)
+               }
+            });
+        }
+
+        function findInactiveSessions(){
+            $scope.inactiveSessions = [];
+            $scope.sessions.forEach(function (session) {
+                if (!session.active)
+                    $scope.activeSessions.push(session);
             });
         }
 
@@ -102,7 +126,6 @@
                     $scope.showLoader = false;
                     console.log('Session succesfully deactivated ');
                     $window.location.reload();
-                    $window.location.reload();
                 }, function () {
                     $scope.showLoader = false;
                     console.log('Error: session not deactivated ');
@@ -117,7 +140,6 @@
                 StatisticsService.editSessionIsActive(sessionName, true).then(function (data) {
                     $scope.showLoader = false;
                     console.log('Session succesfully activated ');
-                    $window.location.reload();
                     $window.location.reload();
                 }, function () {
                     $scope.showLoader = false;

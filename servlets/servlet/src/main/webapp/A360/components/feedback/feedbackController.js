@@ -19,7 +19,6 @@
         };
 
         function getParticipantByUid() {
-
             FeedbackService.getParticipant($routeParams.uId).then(function (data) {
                 console.log('GET participant  ' + data.email + data.sessionId);
                 $scope.participantMail = data.email;
@@ -46,14 +45,12 @@
                                 value: el
                             };
                             question.defaultAnswers.push(answerValue);
-
                         });
                     }
                     $scope.questions.push(question);
                 });
-
             }, function (response) {
-
+                console.log("Error in GetAllQuestions request")
             });
         };
 
@@ -71,10 +68,8 @@
             });
             FeedbackService.send($scope.feedback).then(function (data) {
                 $scope.showSendAnswersLoader = false;
-                console.log($scope.feedback);
             }, function (response) {
                 $scope.showSendAnswersLoader = false;
-                console.log("Error in ")
             });
         };
         $scope.afterSendFeedback = function () {
@@ -83,12 +78,12 @@
 
         function checkIfSessionIsActive() {
             FeedbackService.getSessionByParticipantUid($routeParams.uId).then(function (data) {
-                console.log("session by uid is ok hhhh"  + data.active);
+                console.log("session by uid is ok");
                 if (data.active === false) {
                     $location.path('invalidLink')
                    }
             }, function (response) {
-                console.log("Something wrong with get Session By participant UID" + response)
+                console.log("Something wrong with get Session By participant UID: " + response)
             });
         }
     }

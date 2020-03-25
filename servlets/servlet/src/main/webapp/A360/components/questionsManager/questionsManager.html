@@ -1,0 +1,66 @@
+<div class="container text-center borderBox" ng-init="init()" xmlns="http://www.w3.org/1999/html">
+    <div class="page-header">
+        <h3>{{sectionTitles[0]}}</h3>
+    </div>
+
+    <h4 class="mt-20">{{sectionTitles[1]}}</h4>
+    <div class="panel panel-default">
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+            <tr class="text-center">
+                <th ng-repeat="header in tableHeaders">{{header}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="question in questions" ng-if="question.is_default === true">
+                <td class="col-md-5 text-left">{{question.question_text}}</td>
+                <td class="col-md-2">{{question.question_type}}</td>
+                <td class="col-md-3">
+                    <div ng-if="question.is_default === true" >
+                        <button type="submit" class="btn btn-primary setStatusButton" ng-click="editQuestion($index)">
+                            Undo default
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h4 class="mt-60" ng-if="showNonDefaultQuestions">{{sectionTitles[2]}}</h4>
+    <div class="panel panel-default" ng-if="showNonDefaultQuestions" >
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+            <tr class="text-center">
+                <th ng-repeat="header in tableHeaders">{{header}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="question in questions" ng-if="question.is_default === false">
+                <td class="col-md-5 text-left">{{question.question_text}}</td>
+                <td class="col-md-2">{{question.question_type}}</td>
+                <td class="col-md-3">
+                    <div ng-if="question.is_default === false">
+                        <button type="submit" class="btn btn-primary setStatusButton" ng-click="editQuestion($index)">
+                            Set Default
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-20 mb-20 toLeft" data-a360-loading="" data-show="showQuestionLoader">
+        <button type="submit" class="btn createButton" ng-click="openModal()">
+            Add new question
+        </button>
+        <button type="submit" class="btn btn-primary" ng-click="changeQuestionsVisibility()" ng-if="showNonDefaultQuestions == false">
+            See non-default questions
+        </button>
+        <button type="submit" class="btn btn-primary" ng-click="changeQuestionsVisibility()" ng-if="showNonDefaultQuestions == true">
+            Hide non-default questions
+        </button>
+        <button type="submit" class="btn btn-primary" ng-click="goToWelcomePage()">
+            Go back
+        </button>
+    </div>
+</div>

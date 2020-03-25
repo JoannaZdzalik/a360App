@@ -1,0 +1,60 @@
+<div ng-init="init()" data-ng-form="addQuestionForm" ng-class="{'submitted': submitted}" data-ng-submit="save()">
+    <div>
+        <h3 align="center">Add question</h3>
+        <div class="input-group margins25  mt-20">
+            <span class="input-group-addon ">Question text: </span>
+            <input id="questionText" type="text" class="form-control"
+                   ng-model="questionText" name="questionText" placeholder="Please enter question text...">
+        </div>
+
+        <div class="input-group margins25 mt-20">
+            <span class="input-group-addon ">Question type: </span>
+            <label class="radio-inline marginL10" ng-repeat="type in questionTypeList">
+                <input class="form-check-input border " type="radio" value="{{type}}" id="inputQuestionType"
+                       ng-click="setInputQuestionType(type)"> {{type}}
+            </label>
+        </div>
+
+        <div class="input-group margins25 mt-20">
+            <span class="input-group-addon">Possible answers:</span>
+            <input type="text" name="defaultAnswer" id="defaultAnswer" class="form-control"
+                   placeholder="Please enter possible answers..."
+                   ng-model="defaultAnswer"/>
+            <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="addDefaultAnswer()"><i
+                            class="glyphicon glyphicon-plus"></i></button>
+            </span>
+        </div>
+        <div class="input-group form-group">
+            <table class="table-striped maxTable mt-20 margins25">
+                <tbody>
+                <tr ng-repeat="answer in defaultAnswersList">
+                    <td class="col-md-10">{{$index+1}}. {{answer}}</td>
+                    <td class="col-md-2 toRight">
+                        <button type="button" class="btn btn-default" ng-click="removeDefaultAnswer($index)"><i
+                                class="glyphicon glyphicon-trash"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="input-group margins25 mt-20">
+            <span class="input-group-addon">Set as default: </span>
+            <div class="onoffswitch marginL10">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner" ng-click="changeIsDefault()"></span>
+                    <span class="onoffswitch-switch" ng-click="changeIsDefault()"></span>
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+    <div align="right" class="mb-20 mt-20 marginR25">
+        <p class="lead">
+            <button type="button" class="btn btn-primary" data-ng-click="cancel()">Close</button>
+            <button type="submit" class="btn btn-success" ng-click="save();" ng-disabled="canCreateQuestion()">Add</button>
+        </p>
+    </div>
+</div>

@@ -72,8 +72,9 @@
             SessionService.getActiveQuestions().then(function (response) {
                 console.log('GET questions successful ' + response);
                 $scope.questions = response;
-            }, function () {
+            }, function (response) {
                 alert('GET question request failed');
+                console.log(response);
             });
         }
 

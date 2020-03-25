@@ -8,6 +8,8 @@ public interface QuestionDao {
 
     List<Question> findAllActiveQuestions();
 
+    List<Question> findAllDefaultQuestions();
+
     List<Question> findAllQuestions();
 
     List<Question> findAllQuestionsTextAndIdByParticipantId(Long id);

@@ -27,6 +27,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<QuestionDto> findAllDefaultQuestions() {
+        List<Question> questions = questionDao.findAllDefaultQuestions();
+        return questions.stream()
+                .map(question -> convertQuestionToQuestionDto(question))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<QuestionDto> findAllQuestions() {
         List<Question> questions = questionDao.findAllQuestions();
         return questions.stream()
@@ -62,11 +70,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public boolean updateQuestion(QuestionEditDto questionEditDto) {
         Question question = questionDao.findById(questionEditDto.getQuestion_id());
-        if (questionEditDto.getIs_active()) {
-            question.setIsActive(true);
-        } else {
-            question.setIsActive(false);
-        }
+        question.setIsActive(questionEditDto.getIs_active());
+        question.setIsDefault(questionEditDto.getIs_default());
+//        if (questionEditDto.getIs_active()) {
+//            question.setIsActive(true);
+//        } else {
+//            question.setIsActive(false);
+//        }
         questionDao.updateQuestion(question);
         return true;
     }
@@ -76,7 +86,6 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> getAllQuestionBySessionId(Long id) {
         return questionDao.getAllQuestionBySessionId(id);
     }
-
 
     @Override
     public List<QuestionDto> convertQuestionListToQuestionDtoList(List<Question> questionList) {
@@ -88,6 +97,7 @@ public class QuestionServiceImpl implements QuestionService {
             questionDto.setQuestion_type(q.getQuestionType());
             questionDto.setDefault_answers(q.getDefaultAnswers());
             questionDto.setIs_active(q.getIsActive());
+            questionDto.setIs_default(q.getIsDefault());
             questionDtos.add(questionDto);
         }
         return questionDtos;
@@ -100,6 +110,7 @@ public class QuestionServiceImpl implements QuestionService {
         questionDto.setQuestion_type(question.getQuestionType());
         questionDto.setDefault_answers(question.getDefaultAnswers());
         questionDto.setIs_active(question.getIsActive());
+        questionDto.setIs_default(question.getIsDefault());
         return questionDto;
     }
 
@@ -108,8 +119,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setQuestionText(questionDto.getQuestion_text());
         question.setQuestionType(questionDto.getQuestion_type());
         question.setDefaultAnswers(questionDto.getDefault_answers());
+        question.setIsDefault(questionDto.getIs_default());
         return question;
     }
-
-
 }

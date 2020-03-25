@@ -1,10 +1,11 @@
-<div class="container text-center" data-ng-controller="StatisticsController" data-ng-init="init()">
+<div class="container text-center borderBox" data-ng-controller="StatisticsController" data-ng-init="init()">
 
     <h2 class="text-center">{{sectionTitles[0]}}</h2>
 
-    <div class="text-center">
+    <div class="text-center" >
         <h3 class="toLeft">{{sectionTitles[1]}}</h3>
-        <table class="table table-striped mt-20">
+        <p class="toLeft" ng-if="activeSessions.length ===0">No active sessions at the moment</p>
+        <table class="table table-bordered mt-20" ng-if="activeSessions.length !==0">
             <thead>
             <tr>
                 <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
@@ -17,14 +18,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="session in sessions" ng-if="session.active === true">
+            <tr ng-repeat="session in activeSessions">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col" class="centerHeader">
+                <th scope="col" class="participantListLeft">
                     <div ng-repeat="part in session.participantList">
                         {{$index+1}}. {{part.email}}
                     </div>
@@ -48,7 +49,8 @@
 
     <div class="text-center">
         <h3 class="toLeft">{{sectionTitles[2]}}</h3>
-        <table class="table table-striped mt-20">
+        <p class="toLeft" ng-if="inactiveSessions.length ===0">No inactive sessions at the moment</p>
+        <table class="table table-bordered mt-20" ng-if="inactiveSessions.length !==0">
             <thead>
             <tr>
                 <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
@@ -61,14 +63,14 @@
             </tr>
             </thead>
             <tbody >
-            <tr ng-repeat="session in sessions" ng-if="session.active === false && session.isSent===false">
+            <tr ng-repeat="session in inactiveSessions">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col" class="centerHeader">
+                <th scope="col" class="participantListLeft">
                     <div ng-repeat="part in session.participantList">
                         {{$index+1}}. {{part.email}}
                     </div>
@@ -95,7 +97,8 @@
 
     <div class="text-center">
         <h3 class="toLeft">{{sectionTitles[3]}}</h3>
-        <table class="table table-striped mt-20">
+        <p class="toLeft" ng-if="finishedSessions.length ===0">No finished sessions to display</p>
+        <table class="table table-bordered mt-20" ng-if="finishedSessions.length !==0">
             <thead>
             <tr>
                 <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
@@ -108,14 +111,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="session in sessions" ng-if="session.isSent === true">
+            <tr ng-repeat="session in finishedSessions">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
                 <td scope="col">
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col" class="centerHeader">
+                <th scope="col" class="participantListLeft">
                     <div ng-repeat="part in session.participantList">
                         {{$index+1}}. {{part.email}}
                     </div>
@@ -138,7 +141,7 @@
     </div>
 
 
-    <div class="row text-center mt-20 toLeft">
+    <div class="row text-center mt-20 mb-20 toLeft marginL10">
         <button type="submit" class="btn btn-primary" ng-click="goBackToWelcomePage()">
             Go back
         </button>

@@ -17,6 +17,7 @@ import java.util.List;
 @Table(name = "questions")
 @NamedQueries({
         @NamedQuery(name = "Question.findAllActiveQuestions", query = "SELECT c FROM Question c where c.isActive = true"),
+        @NamedQuery(name = "findAllDefaultQuestions", query = "SELECT c FROM Question c where c.isDefault = true"),
         @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q where q.id = :id"),
         @NamedQuery(name = "findAllQuestions", query = "SELECT q FROM Question q")
 })
@@ -49,6 +50,9 @@ public class Question implements Serializable {
     @Column(name = "is_active", columnDefinition = "Boolean default 'true'", nullable = false)
     private Boolean isActive = true;
 
+    @Column(name = "is_default", columnDefinition = "Boolean default 'false'", nullable = false)
+    private Boolean isDefault = false;
+
     @Column(name = "default_answers")
     private String defaultAnswers;
 
@@ -60,8 +64,7 @@ public class Question implements Serializable {
 
     public enum QuestionType {
         TEXT,
-        RADIO,
-        CHECKBOX
+        RADIO
     }
 
 }

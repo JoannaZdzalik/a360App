@@ -4827,9 +4827,9 @@ function annotate(fn, strictDi, name) {
  * @example
  * Here are some examples of creating value services.
  * ```js
- *   $provide.value('ADMIN_USER', 'admin');
+ *   $provide.value('ADMIN_USER', 'x');
  *
- *   $provide.value('RoleLookup', { admin: 0, writer: 1, reader: 2 });
+ *   $provide.value('RoleLookup', { x: 0, writer: 1, reader: 2 });
  *
  *   $provide.value('halfOf', function(value) {
  *     return value / 2;

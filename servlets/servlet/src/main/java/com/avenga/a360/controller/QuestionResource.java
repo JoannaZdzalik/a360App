@@ -42,6 +42,16 @@ public class QuestionResource {
         } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No active questions found")))).build();
     }
 
+    @Path("/default")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDefaultQuestions() {
+        List<QuestionDto> questionDtoList = questionService.findAllDefaultQuestions();
+        if (!questionDtoList.isEmpty()) {
+            return Response.status(Response.Status.OK).entity(questionDtoList).build();
+        } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No default questions found")))).build();
+    }
+
     @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,7 +59,7 @@ public class QuestionResource {
         List<QuestionDto> questionDtoList = questionService.findAllQuestions();
         if (!questionDtoList.isEmpty()) {
             return Response.status(Response.Status.OK).entity(questionDtoList).build();
-        } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No active questions found")))).build();
+        } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No questions found")))).build();
     }
 
     @Path("/add")

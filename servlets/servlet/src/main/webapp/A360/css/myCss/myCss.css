@@ -13,6 +13,12 @@ div.my {
     padding-right: 0px
 }
 
+.participantListLeft {
+    /*text-align: left;*/
+    padding-left: 50px;
+    padding-right: 0px
+}
+
 .centerHeader {
     text-align: center;
 }
@@ -89,7 +95,6 @@ div.my {
 
 .tooltip.top .tooltip-arrow {
     border-top-color: #f9f9f9 !important;
-
 }
 
 .tooltip .tooltip-inner {

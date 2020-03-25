@@ -9,6 +9,7 @@ import java.util.List;
 public interface QuestionService {
 
     List<QuestionDto> findAllActiveQuestions();
+    List<QuestionDto> findAllDefaultQuestions();
 
     List<QuestionDto> findAllQuestions();
 

@@ -5,6 +5,7 @@
 
     function AppParamsController($scope, $window, toastr, $uibModal, AppParamsService) {
         $scope.init = function () {
+            $scope.showLoader=true;
             $scope.titles = ["Application parameters"];
             $scope.showLoader = false;
             getAppParams();
@@ -13,6 +14,7 @@
         function getAppParams() {
             AppParamsService.getAppParams().then(function (data) {
                 $scope.appParams = data;
+                $scope.showLoader=false;
                 console.log('GET Application parameters successfull  ');
             }, function (response) {
                 console.log("Fail on GET app parameters")
