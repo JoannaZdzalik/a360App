@@ -1,10 +1,11 @@
 (function () {
     "use strict";
     angular.module('a360').controller('ModalAddQuestionController', ModalAddQuestionController);
-    ModalAddQuestionController.$inject = ['$scope', '$uibModalInstance', 'QuestionsService'];
+    ModalAddQuestionController.$inject = ['$scope', 'questionTypes','$uibModalInstance', 'QuestionsService'];
 
-    function ModalAddQuestionController($scope, $uibModalInstance, QuestionsService) {
-        $scope.questionTypeList = ["TEXT", "RADIO"];
+    function ModalAddQuestionController($scope, questionTypes, $uibModalInstance, QuestionsService) {
+        $scope.questionTypeList = questionTypes;
+       // $scope.questionTypeList = ["TEXT", "RADIO"];
         $scope.defaultAnswer = "";
         $scope.defaultAnswersList = [];
         $scope.isDefault = false;
@@ -21,28 +22,27 @@
         };
 
         $scope.cancel = function () {
-            $uibModalInstance.dismiss();
+             $uibModalInstance.dismiss("cancel");
         };
 
         $scope.setInputQuestionType = function (type) {
             $scope.inputQuestionType = type;
         };
 
-        function convertDefaultAnswersToString() {
-            $scope.defaultAnswersString = $scope.defaultAnswersList.join(";");
-        }
+
 
         $scope.addDefaultAnswer = function () {
-            if (!isDuplicated()) {
+            if (!$scope.isDuplicated()) {
                 $scope.defaultAnswersList.push($scope.defaultAnswer);
                 $scope.defaultAnswer = "";
                 console.log("Answer added")
             } else {
+                $scope.analyzeInput();
                 console.log("Duplicated default answer")
             }
         };
 
-        function isDuplicated() {
+         $scope.isDuplicated = function() {
             var temp = [];
             if ($scope.defaultAnswersList.length === 0) {
                 return false;
@@ -54,7 +54,7 @@
                 var compared = $scope.defaultAnswer.toLowerCase();
                 return temp.indexOf(compared) !== -1;
             }
-        }
+        };
 
         $scope.removeDefaultAnswer = function ($index) {
             $scope.defaultAnswersList.splice($index, 1);
@@ -62,6 +62,19 @@
 
         $scope.changeIsDefault = function () {
             $scope.isDefault = !$scope.isDefault;
+        };
+
+        function convertDefaultAnswersToString() {
+            $scope.defaultAnswersString = $scope.defaultAnswersList.join(";");
+        }
+
+        $scope.analyzeInput = function () {
+            $scope.duplicateInfo = {};
+            if ($scope.isDuplicated()) {
+                $scope.duplicateInfo["color"] = "#d13a3a";
+                $scope.analyzeResult = "Duplicated value!";
+                return true;
+            }
         };
 
         $scope.canCreateQuestion = function () {

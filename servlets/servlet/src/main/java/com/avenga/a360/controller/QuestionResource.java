@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/questions")
@@ -60,6 +61,19 @@ public class QuestionResource {
         if (!questionDtoList.isEmpty()) {
             return Response.status(Response.Status.OK).entity(questionDtoList).build();
         } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No questions found")))).build();
+    }
+
+    @Path("/questionTypes")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAvailableQuestionTypes() {
+        List<Question.QuestionType> questionTypes = new ArrayList<>();
+        for (Question.QuestionType qt:  Question.QuestionType.values()) {
+            questionTypes.add(qt);
+        }
+        if (!questionTypes.isEmpty()) {
+            return Response.status(Response.Status.OK).entity(questionTypes).build();
+        } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No question types found")))).build();
     }
 
     @Path("/add")

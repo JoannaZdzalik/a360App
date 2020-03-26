@@ -1,7 +1,6 @@
 <div class="container text-center borderBox" data-ng-controller="StatisticsController" data-ng-init="init()">
 
     <h2 class="text-center">{{sectionTitles[0]}}</h2>
-
     <div class="text-center" >
         <h3 class="toLeft">{{sectionTitles[1]}}</h3>
         <p class="toLeft" ng-if="activeSessions.length ===0">No active sessions at the moment</p>
@@ -139,7 +138,6 @@
             </tbody>
         </table>
     </div>
-
 
     <div class="row text-center mt-20 mb-20 toLeft marginL10">
         <button type="submit" class="btn btn-primary" ng-click="goBackToWelcomePage()">

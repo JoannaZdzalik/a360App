@@ -1,18 +1,16 @@
 (function () {
     "use strict";
     angular.module('a360').controller('QuestionsManagerController', QuestionsManagerController);
-    QuestionsManagerController.$inject = ['$scope', '$window', 'toastr', '$uibModal','QuestionsService'];
+    QuestionsManagerController.$inject = ['$scope', '$window', 'toastr', '$uibModal', 'QuestionsService'];
 
     function QuestionsManagerController($scope, $window, toastr, $uibModal, QuestionsService) {
         $scope.init = function () {
             $scope.sectionTitles = ["Question manager", "Default questions", "Other questions"];
             $scope.tableHeaders = ["Question", "Type", " "];
-            $scope.questionTypeList = ["TEXT", "RADIO"];
-            $scope.defaultAnswers = "";
-            $scope.defaultAnswersList = [];
             $scope.showQuestionLoader = false;
             $scope.showNonDefaultQuestions = false;
             getAllQuestions();
+            getQuestionTypes();
         };
 
         function getAllQuestions() {
@@ -52,11 +50,18 @@
                 templateUrl: "components/questionsManager/modalAddQuestion.html",
                 controller: "ModalAddQuestionController",
                 backdrop: 'static',
+                resolve: {
+                    questionTypes: function () {
+                        return $scope.questionTypeList;
+                    },
+                },
                 size: 'lg'
-            });
-
-            $scope.modalInstance.result.then(function () {
+            }).result.then(function () {
                 $window.location.reload();
+            }, function (res) {
+                if (!(res === 'cancel' || res === 'escape key press' || res === 'backdrop click')) {
+                    return res;
+                }
             });
         };
 
@@ -65,7 +70,17 @@
         };
 
         $scope.changeQuestionsVisibility = function () {
-            $scope.showNonDefaultQuestions = ! $scope.showNonDefaultQuestions;
+            $scope.showNonDefaultQuestions = !$scope.showNonDefaultQuestions;
+        };
+
+        function getQuestionTypes() {
+            QuestionsService.getQuestionTypes().then(function (data) {
+                $scope.questionTypeList = data;
+                console.log(data);
+            }, function (response) {
+                console.log('Error on getQuestionTypes request' + response);
+                $scope.showQuestionLoader = false;
+            });
         }
     }
 })();

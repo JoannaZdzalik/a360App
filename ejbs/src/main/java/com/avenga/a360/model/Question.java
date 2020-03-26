@@ -62,6 +62,7 @@ public class Question implements Serializable {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
+
     public enum QuestionType {
         TEXT,
         RADIO

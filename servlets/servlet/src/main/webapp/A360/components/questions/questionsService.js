@@ -52,6 +52,20 @@
                 });
             return deferred.promise;
         };
+
+        questionsService.getQuestionTypes = function () {
+            var url = '/servlet/a360/questions/questionTypes';
+            var questionsResource = $resource(url);
+            var deferred = $q.defer();
+            questionsResource.query().$promise.then(
+                function (data) {
+                    deferred.resolve(data);
+                }, function (response) {
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
         return questionsService;
     }
 })();
