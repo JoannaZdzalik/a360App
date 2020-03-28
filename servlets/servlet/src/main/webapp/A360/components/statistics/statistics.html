@@ -1,7 +1,7 @@
 <div class="container text-center borderBox" data-ng-controller="StatisticsController" data-ng-init="init()">
 
     <h2 class="text-center">{{sectionTitles[0]}}</h2>
-    <div class="text-center" >
+    <div class="text-center">
         <h3 class="toLeft">{{sectionTitles[1]}}</h3>
         <p class="toLeft" ng-if="activeSessions.length ===0">No active sessions at the moment</p>
         <table class="table table-bordered mt-20" ng-if="activeSessions.length !==0">
@@ -36,10 +36,18 @@
                         </div>
                     </div>
                 </td>
-                <td scope="col" >
-                    <button data-a360-loading="" data-show="showLoader" type="submit" class="btn btn-primary setActionButton" ng-click="setInactive(session.sessionName)" uib-tooltip="{{deactivateTooltip}}" >
-                        Deactivate session
-                    </button>
+                <td scope="col">
+                    <div class="btn-group" uib-dropdown keyboard-nav>
+                        <button type="button" class="btn setActionButton" uib-dropdown-toggle>
+                            Options <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                            <li role="menuitem"><a ng-click="openModal(session.participantList)">See participants</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem">
+                                <a ng-click="setInactive(session.sessionName)" uib-tooltip="{{deactivateTooltip}}">Deactivate session</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -61,7 +69,7 @@
                 <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
-            <tbody >
+            <tbody>
             <tr ng-repeat="session in inactiveSessions">
                 <td scope="col"></td>
                 <td scope="col">{{session.sessionName}}</td>
@@ -82,12 +90,18 @@
                     </div>
                 </td>
                 <td scope="col">
-                    <button type="submit" class="btn btn-default" ng-click="delete(session.id)">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </button>
-                    <button data-a360-loading="" data-show="showLoader" type="submit" class="btn btn-primary setActionButton" ng-click="setActive(session.sessionName)" uib-tooltip="{{activateTooltip}}" >
-                        Activate session
-                    </button>
+                    <div class="btn-group" uib-dropdown keyboard-nav>
+                        <button type="button" class="btn setActionButton" uib-dropdown-toggle>
+                            Options <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                            <li role="menuitem"><a ng-click="openModal(session.participantList)">See participants</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem">
+                                <a ng-click="setActive(session.sessionName)" uib-tooltip="{{activateTooltip}}">Activate session</a></li>
+                            <li role="menuitem"><a ng-click="delete(session.id)">Remove session</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -130,9 +144,16 @@
                     </div>
                 </td>
                 <td scope="col">
-                    <button type="submit" class="btn btn-default" ng-click="delete(session.id)"><i
-                            class="glyphicon glyphicon-trash"></i>
-                    </button>
+
+                    <div class="btn-group" uib-dropdown keyboard-nav>
+                        <button type="button" class="btn setActionButton" uib-dropdown-toggle>
+                            Options <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                            <li role="menuitem"><a ng-click="openModal(session.participantList)">See participants</a></li>
+                            <li role="menuitem"><a ng-click="delete(session.id)">Remove session</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -146,6 +167,9 @@
     </div>
 
 </div>
+
+
+
 
 
 

@@ -14,6 +14,7 @@ angular.module('a360', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.
     when('/invalidLink', {templateUrl: 'components/feedback/invalidLink.html', controller: 'FeedbackController'}).
 
     when('/statistics', {templateUrl: 'components/statistics/statistics.html', controller: 'StatisticsController'}).
+    when('/modalSeeParticipants', {templateUrl: 'components/statistics/statistics.html', controller: 'ModalSeeParticipantsController'}).
     when('/questionsManager', {templateUrl: 'components/questionsManager/questionsManager.html', controller: 'QuestionsManagerController'}).
     when('/modalAddQuestion', {templateUrl: 'components/questionsManager/questionsManager.html', controller: 'ModalAddQuestionController'}).
     when('/users', {templateUrl: 'components/users/users.html', controller: 'UsersController'}).

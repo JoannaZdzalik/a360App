@@ -31,12 +31,16 @@
                         return $scope.appParams;
                     }
                 },
-                size: 'modalSize'
+                size: 'modalSize20'
             });
 
             $scope.modalInstance.result.then(function () {
                 $window.location.reload();
-            });
+            }, function (res) {
+                if (!(res === 'cancel' || res === 'escape key press')) {
+                    throw res;
+                }
+            })
         };
 
         $scope.redirectToWelcome = function () {

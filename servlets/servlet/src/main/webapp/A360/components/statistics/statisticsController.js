@@ -1,9 +1,9 @@
 (function () {
     "use strict";
     angular.module('a360').controller('StatisticsController', StatisticsController);
-    StatisticsController.$inject = ['$scope', '$filter', '$window', 'toastr', 'StatisticsService'];
+    StatisticsController.$inject = ['$scope', '$filter', '$window', '$uibModal', 'toastr', 'StatisticsService'];
 
-    function StatisticsController($scope, $filter, $window, toastr, StatisticsService) {
+    function StatisticsController($scope, $filter, $window, $uibModal, toastr, StatisticsService) {
         $scope.init = function () {
             $scope.sectionTitles = ["Session manager", "Active sessions", "Inactive sessions", "Finished sessions"];
             $scope.tableHeaders = ["#", "Session name", "End date", "Number of participants", "Participants", "Answers received", "Action"];
@@ -29,26 +29,18 @@
             });
         }
 
-        function findSessionsByStatus(){
+        function findSessionsByStatus() {
             $scope.activeSessions = [];
             $scope.inactiveSessions = [];
             $scope.finishedSessions = [];
             $scope.sessions.forEach(function (session) {
-               if (session.active)
+                if (session.active)
                     $scope.activeSessions.push(session);
-               else if (!session.active && !session.isSent){
-                   $scope.inactiveSessions.push(session);
-               } else if (session.isSent){
-                   $scope.finishedSessions.push(session)
-               }
-            });
-        }
-
-        function findInactiveSessions(){
-            $scope.inactiveSessions = [];
-            $scope.sessions.forEach(function (session) {
-                if (!session.active)
-                    $scope.activeSessions.push(session);
+                else if (!session.active && !session.isSent) {
+                    $scope.inactiveSessions.push(session);
+                } else if (session.isSent) {
+                    $scope.finishedSessions.push(session)
+                }
             });
         }
 
@@ -132,6 +124,7 @@
                     toastr.error("Session not deactivated", 'Fail');
                 });
             }
+            $scope.showLoader = false;
         };
 
         $scope.setActive = function (sessionName) {
@@ -147,7 +140,31 @@
                     toastr.error("Session not activated", 'Fail');
                 });
             }
-        }
+        };
+
+        $scope.openModal = function (participants) {
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: "components/statistics/modalSeeParticipants.html",
+                controller: "ModalSeeParticipantsController",
+                backdrop: 'static',
+                resolve: {
+                    participants: function () {
+                        return participants;
+                    },
+                    feedback: function () {
+                        return $scope.allFeedbacks;
+                    }
+                },
+                size: 'modalSize70'
+            }).result.then(function () {
+                $window.location.reload();
+            }, function (res) {
+                if (!(res === 'cancel' || res === 'escape key press' || res === 'backdrop click')) {
+                    return res;
+                }
+            });
+        };
+
     }
 
 })();

@@ -1,0 +1,36 @@
+<div ng-init="init()" ng-class="{'submitted': submitted}">
+
+    <div class="row mt-20 margins25">
+        <table class="table table-bordered mt-20">
+            <thead style="border: none;">
+            <tr>
+                <th scope="col" style="background: rgb(201,237,246)">
+                    <img src="./images/participants.jpg" height="40"> Participants
+                </th>
+                <th scope="col" style="background: rgb(201,237,246)">
+                    <img src="./images/doc.jpg" height="40">Answers received
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="part in participants">
+                <td>
+                    {{$index+1}}. {{part.email}}
+                </td>
+                <td>
+                    <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
+                        {{feedback.answers.length}} answers in total
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div align="right" class="mb-20 marginR25">
+        <p class="lead">
+            <button type="button" class="btn btn-primary" data-ng-click="cancel()">Close</button>
+        </p>
+    </div>
+
+</div>
