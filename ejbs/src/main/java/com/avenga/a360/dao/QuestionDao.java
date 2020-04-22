@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface QuestionDao {
 
-    List<Question> findAllActiveQuestions();
-
     List<Question> findAllDefaultQuestions();
 
     List<Question> findAllQuestions();

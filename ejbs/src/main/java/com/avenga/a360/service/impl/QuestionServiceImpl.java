@@ -18,13 +18,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Inject
     QuestionDao questionDao;
 
-    @Override
-    public List<QuestionDto> findAllActiveQuestions() {
-        List<Question> questions = questionDao.findAllActiveQuestions();
-        return questions.stream()
-                .map(question -> convertQuestionToQuestionDto(question))
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<QuestionDto> findAllDefaultQuestions() {
@@ -70,13 +63,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public boolean updateQuestion(QuestionEditDto questionEditDto) {
         Question question = questionDao.findById(questionEditDto.getQuestion_id());
-        question.setIsActive(questionEditDto.getIs_active());
         question.setIsDefault(questionEditDto.getIs_default());
-//        if (questionEditDto.getIs_active()) {
-//            question.setIsActive(true);
-//        } else {
-//            question.setIsActive(false);
-//        }
         questionDao.updateQuestion(question);
         return true;
     }
@@ -96,20 +83,18 @@ public class QuestionServiceImpl implements QuestionService {
             questionDto.setQuestion_text(q.getQuestionText());
             questionDto.setQuestion_type(q.getQuestionType());
             questionDto.setDefault_answers(q.getDefaultAnswers());
-            questionDto.setIs_active(q.getIsActive());
             questionDto.setIs_default(q.getIsDefault());
             questionDtos.add(questionDto);
         }
         return questionDtos;
     }
 
-    private QuestionDto convertQuestionToQuestionDto(Question question) {
+    public QuestionDto convertQuestionToQuestionDto(Question question) {
         QuestionDto questionDto = new QuestionDto();
         questionDto.setQuestion_id(question.getId());
         questionDto.setQuestion_text(question.getQuestionText());
         questionDto.setQuestion_type(question.getQuestionType());
         questionDto.setDefault_answers(question.getDefaultAnswers());
-        questionDto.setIs_active(question.getIsActive());
         questionDto.setIs_default(question.getIsDefault());
         return questionDto;
     }

@@ -6,24 +6,29 @@
     function StatisticsController($scope, $filter, $window, $uibModal, toastr, StatisticsService) {
         $scope.init = function () {
             $scope.sectionTitles = ["Session manager", "Active sessions", "Inactive sessions", "Finished sessions"];
-            $scope.tableHeaders = ["#", "Session name", "End date", "Number of participants", "Participants", "Answers received", "Action"];
+            $scope.tableHeaders = ["#", "Session name", "End date", "Number of participants", "Action"];
             $scope.deactivateTooltip = "Deactivating session means it will be finished immediately and no feedback will be sent to participants.";
             $scope.activateTooltip = "Activating session means participants will be enabled to give their feedbacks. If end date is past now, all gathered answers will be sent immediately";
-            getSessionsAndAnswers();
+           // getSessionsAndAnswers();
+            getSessions();
+            getParticipantsFromSession();
+            findSessionsByStatus();
+            getAllAnswers();
+            findAnswersForParticipants();
             $scope.showLoader = false;
         };
 
-        function getSessionsAndAnswers() {
-            getSessions();
-            getAllAnswers()
-        }
+        // function getSessionsAndAnswers() {
+        //     getSessions();
+        //     getAllAnswers()
+        // }
 
         function getSessions() {
             StatisticsService.getAllSessions().then(function (data) {
                 console.log('GET all sessions request succesful ');
                 $scope.sessions = data;
-                getParticipantsFromSession();
-                findSessionsByStatus();
+               // getParticipantsFromSession();
+               // findSessionsByStatus();
             }, function (response) {
                 console.log('Error on getAllSessions request' + response);
             });
@@ -62,7 +67,7 @@
             StatisticsService.getAllAnswers().then(function (data) {
                 console.log('GET all answers request succesful ');
                 $scope.answers = data;
-                findAnswersForParticipants();
+              //  findAnswersForParticipants();
             }, function (response) {
                 console.log('Error on getAllAnswerss request' + response);
             });

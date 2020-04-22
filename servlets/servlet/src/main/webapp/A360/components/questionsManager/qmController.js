@@ -19,9 +19,8 @@
                 $scope.questions = data;
                 console.log(data);
                 $scope.showQuestionLoader = false;
-
             }, function (response) {
-                alert('Error on getAllQuestions request' + response);
+                console.log('Error on getAllQuestions request' + response);
                 $scope.showQuestionLoader = false;
             });
         }
@@ -30,18 +29,16 @@
             var isDefault;
             var question = $scope.questions[i];
             var questionId = question.question_id;
-            var isActive = question.is_active;
             if (question.is_default === false) {
                 isDefault = true;
             }
             if (question.is_default === true) {
                 isDefault = false;
             }
-            QuestionsService.editQuestion(questionId, isActive, isDefault).then(function (data) {
-                console.log("Successfully editted " + data);
+            QuestionsService.editQuestion(questionId, isDefault).then(function (data) {
                 $window.location.reload();
             }, function (response) {
-                alert('Error on edit Question' + response);
+                console.log('Error on edit Question' + response);
             });
         };
 
@@ -49,11 +46,11 @@
             $scope.modalInstance = $uibModal.open({
                 templateUrl: "components/questionsManager/modalAddQuestion.html",
                 controller: "ModalAddQuestionController",
-                backdrop: 'static',
+                backdrop: true,
                 resolve: {
                     questionTypes: function () {
                         return $scope.questionTypeList;
-                    },
+                    }
                 },
                 size: 'lg'
             }).result.then(function () {

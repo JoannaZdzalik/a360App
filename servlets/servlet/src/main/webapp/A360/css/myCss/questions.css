@@ -2,3 +2,14 @@
 background: #9a9588;
     border:#9a9588;
 }
+
+.box {
+    margin-top: 20px;
+    border: #bba7a3 solid;
+    background-color: rgba(254, 224, 229, 0.51);
+    text-align: center;
+}
+
+.greenBackground {
+    background: #d7ffd9;
+}

@@ -10,11 +10,20 @@
             <input id="port" type="text" class="form-control" ng-value="originalAppParams.port"
                    ng-model="port" name="port" ng-pattern="portInput" ng-class="{'submitted': submitted}">
         </div>
-
         <div class="input-group col-md-10 noMarginLR mt-20">
             <span class="input-group-addon spanWidth">From: </span>
             <input id="from" type="text" class="form-control" ng-value="originalAppParams.from" ng-pattern="emailFormat"
                    ng-model="from" name="from">
+        </div>
+        <div class="input-group col-md-10 noMarginLR mt-20">
+            <span class="input-group-addon spanWidth">Username: </span>
+            <input id="username" type="text" class="form-control"
+                   ng-value="originalAppParams.username" ng-model="username" name="username">
+        </div>
+        <div class="input-group col-md-10 noMarginLR mt-20">
+            <span class="input-group-addon spanWidth">Password: </span>
+            <input id="password" type="text" class="form-control"
+                   ng-value="originalAppParams.password" ng-model="password" name="password">
         </div>
         <div class="input-group col-md-10 toLeft mt-20">
             Debug:

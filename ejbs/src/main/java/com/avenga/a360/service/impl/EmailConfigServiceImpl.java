@@ -29,6 +29,8 @@ public class EmailConfigServiceImpl implements EmailConfigService {
             emailConf.setFrom(emailConfDto.getFrom());
             emailConf.setPort(emailConfDto.getPort());
             emailConf.setHost(emailConfDto.getHost());
+            emailConf.setUsername(emailConfDto.getUsername());
+            emailConf.setPassword(emailConfDto.getPassword());
             emailConfDao.updateEmailConf(emailConf);
             return true;
         }
@@ -42,7 +44,8 @@ public class EmailConfigServiceImpl implements EmailConfigService {
         emailConfDto.setFrom(emailConf.getFrom());
         emailConfDto.setAuth(emailConf.isAuth());
         emailConfDto.setDebug(emailConf.isDebug());
-        //ewentualnie wiecej pól?
+        emailConfDto.setUsername(emailConf.getUsername());
+        emailConfDto.setPassword(emailConf.getPassword());
         return emailConfDto;
     }
 }

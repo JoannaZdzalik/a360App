@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "questions")
 @NamedQueries({
-        @NamedQuery(name = "Question.findAllActiveQuestions", query = "SELECT c FROM Question c where c.isActive = true"),
         @NamedQuery(name = "findAllDefaultQuestions", query = "SELECT c FROM Question c where c.isDefault = true"),
         @NamedQuery(name = "Question.findById", query = "SELECT q FROM Question q where q.id = :id"),
         @NamedQuery(name = "findAllQuestions", query = "SELECT q FROM Question q")
@@ -46,9 +45,6 @@ public class Question implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "question_type", nullable = false)
     private QuestionType questionType;
-
-    @Column(name = "is_active", columnDefinition = "Boolean default 'true'", nullable = false)
-    private Boolean isActive = true;
 
     @Column(name = "is_default", columnDefinition = "Boolean default 'false'", nullable = false)
     private Boolean isDefault = false;

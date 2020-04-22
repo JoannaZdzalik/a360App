@@ -21,12 +21,6 @@ public class SessionDaoImpl implements SessionDao {
                 .getResultList();
         return sessions;
     }
-    @Override
-    public List<Session> findAllSessionsWhereIsSentFalse() {
-        List<Session> sessions = em.createNamedQuery("Session.findAllSessionsWhereIsSentFalse", Session.class)
-                .getResultList();
-        return sessions;
-    }
 
     @Override
     public boolean createSession(Session session) {

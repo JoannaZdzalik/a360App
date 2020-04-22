@@ -33,7 +33,6 @@
                 },
                 size: 'modalSize20'
             });
-
             $scope.modalInstance.result.then(function () {
                 $window.location.reload();
             }, function (res) {

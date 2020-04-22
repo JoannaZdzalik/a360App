@@ -1,110 +1,69 @@
 (function () {
     "use strict";
     angular.module('a360').controller('QuestionsController', QuestionsController);
-    QuestionsController.$inject = ['$scope', '$window', 'toastr', 'QuestionsService'];
+    QuestionsController.$inject = ['$scope', '$rootScope', '$window', 'toastr', '$uibModal', 'QuestionsService'];
 
-    function QuestionsController($scope, $window, toastr, QuestionsService) {
+    function QuestionsController($scope, $rootScope, $window, toastr, $uibModal, QuestionsService) {
         $scope.init = function () {
             $scope.showQuestionLoader = false;
-            $scope.showQuestionForm = false;
-            $scope.sectionTitles = ["Question manager", "Active questions", "Inactive questions"];
+            $scope.sectionTitles = ["Manage questions for your session", "Active questions", "Default questions"];
             $scope.tableHeaders = ["Question", "Type", " "];
-            $scope.showEdit = false;
-            $scope.questionTypeList = ["TEXT", "RADIO"];
-            $scope.defaultAnswers = "";
-            $scope.defaultAnswersList = [];
-            getAllQuestions();
-
+            $scope.questions = [];
+            getDefaultQuestions();
+            getQuestionsInSession();
         };
 
-        function getAllQuestions() {
+        function getDefaultQuestions() {
             $scope.showQuestionLoader = true;
-            QuestionsService.getAllQuestions().then(function (data) {
-                console.log(data);
-                $scope.questions = data;
+            QuestionsService.getDefaultQuestions().then(function (data) {
+                $scope.defaultQuestions = data;
+                $scope.availableDefaultQuestions = [];
+                $scope.defaultQuestions.forEach(function (defaultQuestion) {
+                    if ($scope.questionsInSession.indexOf(defaultQuestion) === -1) {
+                        $scope.availableDefaultQuestions.push(defaultQuestion)
+                    }
+                });
+
                 $scope.showQuestionLoader = false;
-
             }, function (response) {
-                alert('Error on getAllSessions request' + response);
+                console.log('Error on getDefaultQuestions request' + response);
                 $scope.showQuestionLoader = false;
             });
         }
 
-
-        $scope.editQuestionStatus = function (i) {
-            var isActive;
-            var question = $scope.questions[i];
-            var questionId = question.question_id;
-            var isDefault = question.is_default;
-
-            if (question.is_active === false) {
-                isActive = true;
-
-            }
-            if (question.is_active === true) {
-                isActive = false;
-
-            }
-            QuestionsService.editQuestion(questionId, isActive, isDefault).then(function (data) {
-                console.log("Successful edit" + data);
-                $window.location.reload();
-            }, function (response) {
-                alert('Error on edit Question' + response);
-            });
-        };
-
-        $scope.displayAddForm = function () {
-            $scope.showQuestionForm = true;
-            $scope.showEdit = false;
-        };
-
-        $scope.createQuestion = function () {
-            $scope.showQuestionLoader = true;
-            convertDefaultAnswersToString();
-            QuestionsService.sendQuestion($scope.questionText,
-                $scope.inputQuestionType, $scope.defaultAnswersString).then(function (data) {
-                $window.location.reload();
-                handleSuccess(data)
-            }, function (response) {
-                handleFailure(response)
-            });
-        };
-
-        $scope.canCreateQuestion = function () {
-            return $scope.questionText === undefined || $scope.inputQuestionType === undefined;
-        };
-
-        function convertDefaultAnswersToString() {
-            $scope.defaultAnswersString = $scope.defaultAnswersList.join(";");
+        function getQuestionsInSession() {
+            $scope.questionsInSession = QuestionsService.getListOfQuestionsInSession();
         }
 
-        $scope.addDefaultAnswer = function () {
-            $scope.defaultAnswersList.push($scope.defaultAnswers);
-            $scope.defaultAnswers = "";
+        $scope.removeFromQuestionList = function ($index, question) {
+            QuestionsService.removeFromList($index);
+            $scope.availableDefaultQuestions.push(question)
         };
 
-        function cleanUp() {
-            $scope.showQuestionLoader = false;
-            $scope.questionText = "";
-            $scope.inputQuestionType = "";
-            $scope.defaultAnswersList = []
-        }
+        $scope.uploadToQuestionList = function (question) {
+            QuestionsService.addQuestionToList(question);
+            $scope.availableDefaultQuestions.splice($scope.availableDefaultQuestions.indexOf(question), 1)
+        };
+
+        $scope.openModal = function () {
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: "components/questions/modalQues.html",
+                controller: "ModalQuesController",
+                backdrop: true,
+                resolve: {
+                },
+                size: 'lg'
+            }).result.then(function () {
+            }, function (res) {
+                if (!(res === 'cancel' || res === 'escape key press' || res === 'backdrop click')) {
+                    return res;
+                }
+            });
+        };
 
         $scope.goToSessionPage = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/session";
         };
-
-        function handleSuccess(data) {
-            toastr.success("Question created", "Success");
-            cleanUp();
-            console.log("success" + data);
-        }
-
-        function handleFailure(response) {
-            $scope.showQuestionLoader = false;
-            toastr.error("Question cannot be created", "Fail");
-            console.log(response);
-        }
     }
 })();
 

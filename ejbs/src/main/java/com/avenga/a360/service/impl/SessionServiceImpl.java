@@ -6,6 +6,7 @@ import com.avenga.a360.dao.QuestionDao;
 import com.avenga.a360.dao.SessionDao;
 import com.avenga.a360.dto.EditDto.SessionEditDto;
 import com.avenga.a360.dto.ParticipantDto;
+import com.avenga.a360.dto.QuestionDto;
 import com.avenga.a360.dto.SessionDto;
 import com.avenga.a360.model.Answer;
 import com.avenga.a360.model.Participant;
@@ -34,8 +35,6 @@ public class SessionServiceImpl implements SessionService {
     @Inject
     SessionDao sessionDao;
 
-    @Inject
-    QuestionDao questionDao;
 
     @Inject
     ParticipantDao participantDao;
@@ -51,26 +50,23 @@ public class SessionServiceImpl implements SessionService {
 
 
     @Override
-    public Status createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto) {
+    public Status createSession(SessionDto sessionDto, List<ParticipantDto> participantsDto, List<QuestionDto> questionsDto) {
         Status status = new Status();
         List<StatusMessage> statusMessages = new ArrayList<>();
 
-        List<Question> questions = questionDao.findAllActiveQuestions();
-
         validateIsNotNull(status, sessionDto, statusMessages, "Session object is null");
         validateIsNotNull(status, participantsDto, statusMessages, "Participant object is null");
-        validateIsNotNull(status, questions, statusMessages, "Question object is null.");
+        validateIsNotNull(status, questionsDto, statusMessages, "Question object is null.");
 
-
-        if (validateIsNotNull(sessionDto) && validateIsNotNull(participantsDto) && validateIsNotNull(questions)) {
+        if (validateIsNotNull(sessionDto) && validateIsNotNull(participantsDto) && validateIsNotNull(questionsDto)) {
             validateIsNotNull(status, (Integer) participantsDto.size(), statusMessages, "Participant list is empty");
 
             if (sessionDto.getSessionName() != null && sessionDto.getEndDate() != null &&
                     !(sessionDto.getEndDate().isBefore(LocalDateTime.now())) &&
-                    questions.size() != 0 && participantsDto.size() != 0) {
+                    questionsDto.size() != 0 && participantsDto.size() != 0) {
                 Session session = sessionDtoToSession(sessionDto);
                 session.setParticipants(participantDtoListToParticipantList(participantsDto, session));
-                session.setQuestions(questions);
+                session.setQuestions(questionsDtoListToQuestions(questionsDto, session));
                 if (!sessionDao.checkIfSessionNameExistsInDB(session.getSessionName())) {
                     sessionDao.createSession(session);
                     status.setStatus("success");
@@ -110,8 +106,6 @@ public class SessionServiceImpl implements SessionService {
             cleanUpAnswers(sessionToRemove);
             sessionDao.removeSession(sessionToRemove.getId());
         }
-        //  answerDao.removeAnswersBySessionId(id);
-        // return sessionDao.removeSession(id);
     }
 
     private void cleanUpAnswers(Session sessionToRemove) {
@@ -161,10 +155,6 @@ public class SessionServiceImpl implements SessionService {
         return sessionDao.findAllSessionsIsSentFalseAndEndDateIsAfterNow();
     }
 
-    @Override
-    public List<SessionDto> findAllSessionsWhereIsSentFalse() {
-        return sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
-    }
 
     @Override
     public SessionDto findSessionByParticipantUid(String uid) {
@@ -187,6 +177,7 @@ public class SessionServiceImpl implements SessionService {
 
     public SessionDto convertSessionToSessionDto(Session session) {
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
+        QuestionServiceImpl questionService = new QuestionServiceImpl();
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(session.getId());
         sessionDto.setSessionName(session.getSessionName());
@@ -199,12 +190,20 @@ public class SessionServiceImpl implements SessionService {
             participantsDto.add(participantDto);
         }
         sessionDto.setParticipantList(participantsDto);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        for (Question question : session.getQuestions()) {
+            QuestionDto questionDto = questionService.convertQuestionToQuestionDto(question);
+            questionDtoList.add(questionDto);
+        }
+        sessionDto.setQuestionList(questionDtoList);
+
         return sessionDto;
     }
 
     public List<SessionDto> sessionListToSessionDtoList(List<Session> sessionList) {
         List<SessionDto> sessionDtoList = new ArrayList<>();
         ParticipantServiceImpl participantService = new ParticipantServiceImpl();
+     //   QuestionServiceImpl questionService = new QuestionServiceImpl();
         for (Session session : sessionList) {
             SessionDto sessionDto = new SessionDto();
             sessionDto.setId(session.getId());
@@ -212,14 +211,22 @@ public class SessionServiceImpl implements SessionService {
             sessionDto.setIsSent(session.getIsSent());
             sessionDto.setEndDate(session.getEndDate());
             sessionDto.setActive(session.isActive());
+
             List<ParticipantDto> participantDtoList = new ArrayList<>();
             for (Participant participant : session.getParticipants()) {
                 ParticipantDto participantDto = participantService.participantToParticipantDto(participant);
                 participantDtoList.add(participantDto);
             }
             sessionDto.setParticipantList(participantDtoList);
-            sessionDtoList.add(sessionDto);
 
+//            List<QuestionDto> questionDtoList = new ArrayList<>();
+//            for (Question question : session.getQuestions()) {
+//                QuestionDto questionDto = questionService.convertQuestionToQuestionDto(question);
+//                questionDtoList.add(questionDto);
+//            }
+//            sessionDto.setQuestionList(questionDtoList);
+
+            sessionDtoList.add(sessionDto);
         }
         return sessionDtoList;
     }
@@ -241,6 +248,19 @@ public class SessionServiceImpl implements SessionService {
             participants.add(participant);
         }
         return participants;
+    }
+
+    public List<Question> questionsDtoListToQuestions(List<QuestionDto> questionsDto, Session session) {
+        List<Question> questions = new ArrayList<>();
+        for (QuestionDto questionDto : questionsDto) {
+            Question question = new Question();
+            question.setQuestionText(questionDto.getQuestion_text());
+            question.setQuestionType(questionDto.getQuestion_type());
+            question.setIsDefault(questionDto.getIs_default());
+            question.setDefaultAnswers(questionDto.getDefault_answers());
+            questions.add(question);
+        }
+        return questions;
     }
 
     public String generateUIdForParticipant(int count) {

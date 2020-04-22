@@ -8,8 +8,6 @@ public interface SessionDao {
 
     List<Session> findAllSessionsIsSentFalseAndEndDateIsAfterNow();
 
-    List<Session> findAllSessionsWhereIsSentFalse();
-
     boolean createSession(Session session);
 
     boolean checkIfSessionNameExistsInDB(String name);

@@ -132,17 +132,5 @@ public class AnswerServiceImpl implements AnswerService {
         return answerDtoList;
     }
 
-@Override
-    public List<AnswerSessionDto> amountOfAnswersForSessionActive() {
-        List<AnswerSessionDto> answerSessionDtoList = new ArrayList<>();
-        List<SessionDto> sessionDtoList = sessionService.sessionListToSessionDtoList(sessionDao.findAllSessionsWhereIsSentFalse());
-        for (SessionDto sessionDto : sessionDtoList) {
-            AnswerSessionDto answerSessionDto = new AnswerSessionDto();
-            answerSessionDto.setSessionName(sessionDto.getSessionName());
-            answerSessionDto.setAmountOfAnswers(answerDao.findAllAnswersForOneSession(sessionDto.getSessionName()).size());
-            answerSessionDtoList.add(answerSessionDto);
-            }
-        return answerSessionDtoList;
-    }
 }
 

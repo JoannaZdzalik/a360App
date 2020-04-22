@@ -12,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Path("/questions")
@@ -33,15 +34,15 @@ public class QuestionResource {
         return Application.validator(questionDtos, questionDtos, "Questions not exist.");
     }
 
-    @Path("/active")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllActiveQuestions() {
-        List<QuestionDto> questionDtoList = questionService.findAllActiveQuestions();
-        if (!questionDtoList.isEmpty()) {
-            return Response.status(Response.Status.OK).entity(questionDtoList).build();
-        } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No active questions found")))).build();
-    }
+//    @Path("/active")
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response getAllActiveQuestions() {
+//        List<QuestionDto> questionDtoList = questionService.findAllActiveQuestions();
+//        if (!questionDtoList.isEmpty()) {
+//            return Response.status(Response.Status.OK).entity(questionDtoList).build();
+//        } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No active questions found")))).build();
+//    }
 
     @Path("/default")
     @GET
@@ -68,9 +69,7 @@ public class QuestionResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAvailableQuestionTypes() {
         List<Question.QuestionType> questionTypes = new ArrayList<>();
-        for (Question.QuestionType qt:  Question.QuestionType.values()) {
-            questionTypes.add(qt);
-        }
+        questionTypes.addAll(Arrays.asList(Question.QuestionType.values()));
         if (!questionTypes.isEmpty()) {
             return Response.status(Response.Status.OK).entity(questionTypes).build();
         } else return Response.status(Response.Status.BAD_REQUEST).entity(new Status("fail", List.of(new StatusMessage("No question types found")))).build();
@@ -91,7 +90,7 @@ public class QuestionResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response editQuestionIsActive(QuestionEditDto questionEditDto) {
+    public Response editQuestion(QuestionEditDto questionEditDto) {
         boolean status = questionService.updateQuestion(questionEditDto);
         if (status) {
             return Response.status(Response.Status.CREATED).entity("Question editted").build();

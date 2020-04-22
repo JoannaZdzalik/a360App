@@ -12,11 +12,6 @@ public class QuestionDaoImpl implements QuestionDao {
     @PersistenceContext(unitName = "a360")
     private EntityManager em;
 
-    @Override
-    public List<Question> findAllActiveQuestions() {
-        return em.createNamedQuery("Question.findAllActiveQuestions", Question.class)
-                .getResultList();
-    }
 
     @Override
     public List<Question> findAllDefaultQuestions() {

@@ -26,35 +26,6 @@ public class QuestionServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void shouldFindAllActiveQuestions() {
-        List<Question> questions = new ArrayList<>();
-        Question question = new Question();
-        question.setQuestionText("'What do you value him for?");
-        question.setQuestionType(Question.QuestionType.TEXT);
-        question.setDefaultAnswers(null);
-        questions.add(question);
-
-        Mockito.when(questionDao.findAllActiveQuestions()).thenReturn(questions);
-
-        Assert.assertEquals(questionService.findAllActiveQuestions().get(0).getQuestion_text(), questions.get(0).getQuestionText());
-    }
-
-    @Test
-    public void shouldReturnAllNoActiveQuestion() {
-        List<Question> questions = new ArrayList<>();
-        Question question = new Question();
-        question.setQuestionText("'What do you value him for?");
-        question.setQuestionType(Question.QuestionType.TEXT);
-        question.setDefaultAnswers(null);
-        question.setIsActive(false);
-        questions.add(question);
-
-        Mockito.when(questionDao.findAllActiveQuestions()).thenReturn(questions);
-
-        Assert.assertEquals(false, questions.get(0).getIsActive());
-
-    }
 
     @Test
     public void shouldFindAllQuestionsByParticipantId() {

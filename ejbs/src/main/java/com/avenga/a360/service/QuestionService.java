@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface QuestionService {
 
-    List<QuestionDto> findAllActiveQuestions();
+
     List<QuestionDto> findAllDefaultQuestions();
 
     List<QuestionDto> findAllQuestions();
@@ -18,7 +18,6 @@ public interface QuestionService {
     List<Question> findAllQuestionsTextAndIdByParticipantId(Long id);
 
     boolean createQuestion(QuestionDto questionDto);
-
 
     List<Question> getAllQuestionBySessionId(Long id);
 

@@ -7,6 +7,7 @@ angular.module('a360', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.
 
     when('/session', {templateUrl: 'components/session/createSession.html', controller: 'SessionController'}).
     when('/sessionCreated', {templateUrl: 'components/session/sessionCreated.html', controller: 'SessionController'}).
+    when('/modalQues', {templateUrl: 'components/questions/questions.html', controller: 'ModalQuesController'}).
     when('/questions', {templateUrl: 'components/questions/questions.html', controller: 'QuestionsController'}).
 
     when('/feedback/:uId', {templateUrl: 'components/feedback/feedback.html', controller: 'FeedbackController'}).

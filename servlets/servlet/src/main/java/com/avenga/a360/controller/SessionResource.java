@@ -21,18 +21,10 @@ public class SessionResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createSessionFromSessionDto(final SessionDto sessionDto) {
-        Status status = sessionService.createSession(sessionDto, sessionDto.getParticipantList());
+        Status status = sessionService.createSession(sessionDto, sessionDto.getParticipantList(), sessionDto.getQuestionList());
         if (status.getStatus().equals("success")) {
             return Response.status(Response.Status.CREATED).entity(status).build();
         } else return Response.status(Response.Status.BAD_REQUEST).entity(status).build();
-    }
-
-    @Path("/get")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getActiveSessions() {
-        List<SessionDto> sessionDtoList = sessionService.findAllSessionsWhereIsSentFalse();
-        return Response.status(Response.Status.OK).entity(sessionDtoList).build();
     }
 
     @Path("/all")

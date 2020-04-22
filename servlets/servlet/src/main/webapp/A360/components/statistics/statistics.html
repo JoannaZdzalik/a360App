@@ -1,10 +1,10 @@
-<div class="container text-center borderBox" data-ng-controller="StatisticsController" data-ng-init="init()">
+<div class="container text-center borderBox" style="width: 70%" data-ng-controller="StatisticsController" data-ng-init="init()">
 
     <h2 class="text-center">{{sectionTitles[0]}}</h2>
     <div class="text-center">
         <h3 class="toLeft">{{sectionTitles[1]}}</h3>
         <p class="toLeft" ng-if="activeSessions.length ===0">No active sessions at the moment</p>
-        <table class="table table-bordered mt-20" ng-if="activeSessions.length !==0">
+        <table class="table table-bordered mt-20 "  ng-if="activeSessions.length !==0">
             <thead>
             <tr>
                 <th scope="col" class="centerHeader">{{tableHeaders[0]}}</th>
@@ -12,8 +12,6 @@
                 <th scope="col" class="centerHeader">{{tableHeaders[2]}}</th>
                 <th scope="col" class="centerHeader">{{tableHeaders[3]}}</th>
                 <th scope="col" class="centerHeader">{{tableHeaders[4]}}</th>
-                <th scope="col" class="centerHeader">{{tableHeaders[5]}}</th>
-                <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
             <tbody>
@@ -24,18 +22,6 @@
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col" class="participantListLeft">
-                    <div ng-repeat="part in session.participantList">
-                        {{$index+1}}. {{part.email}}
-                    </div>
-                </th>
-                <td scope="col">
-                    <div ng-repeat="part in session.participantList">
-                        <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
-                            {{feedback.answers.length}} answers
-                        </div>
-                    </div>
-                </td>
                 <td scope="col">
                     <div class="btn-group" uib-dropdown keyboard-nav>
                         <button type="button" class="btn setActionButton" uib-dropdown-toggle>
@@ -65,8 +51,6 @@
                 <th scope="col" class="centerHeader">{{tableHeaders[2]}}</th>
                 <th scope="col" class="centerHeader">{{tableHeaders[3]}}</th>
                 <th scope="col" class="centerHeader">{{tableHeaders[4]}}</th>
-                <th scope="col" class="centerHeader">{{tableHeaders[5]}}</th>
-                <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
             <tbody>
@@ -77,18 +61,6 @@
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col" class="participantListLeft">
-                    <div ng-repeat="part in session.participantList">
-                        {{$index+1}}. {{part.email}}
-                    </div>
-                </th>
-                <td scope="col">
-                    <div ng-repeat="part in session.participantList">
-                        <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
-                            {{feedback.answers.length}} answers
-                        </div>
-                    </div>
-                </td>
                 <td scope="col">
                     <div class="btn-group" uib-dropdown keyboard-nav>
                         <button type="button" class="btn setActionButton" uib-dropdown-toggle>
@@ -119,8 +91,6 @@
                 <th scope="col" class="centerHeader">{{tableHeaders[2]}}</th>
                 <th scope="col" class="centerHeader">{{tableHeaders[3]}}</th>
                 <th scope="col" class="centerHeader">{{tableHeaders[4]}}</th>
-                <th scope="col" class="centerHeader">{{tableHeaders[5]}}</th>
-                <th scope="col" class="centerHeader">{{tableHeaders[6]}}</th>
             </tr>
             </thead>
             <tbody>
@@ -131,20 +101,7 @@
                     {{formatEndDate(session.endDate)}}
                 </td>
                 <td scope="col">{{session.participantList.length}}</td>
-                <th scope="col" class="participantListLeft">
-                    <div ng-repeat="part in session.participantList">
-                        {{$index+1}}. {{part.email}}
-                    </div>
-                </th>
                 <td scope="col">
-                    <div ng-repeat="part in session.participantList">
-                        <div ng-repeat="feedback in allFeedbacks" ng-if="feedback.participantUid===part.UId">
-                            {{feedback.answers.length}} answers
-                        </div>
-                    </div>
-                </td>
-                <td scope="col">
-
                     <div class="btn-group" uib-dropdown keyboard-nav>
                         <button type="button" class="btn setActionButton" uib-dropdown-toggle>
                             Options <span class="caret"></span>

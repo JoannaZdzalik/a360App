@@ -13,6 +13,5 @@ import lombok.Setter;
 public class QuestionEditDto {
 
     private Long question_id;
-    private Boolean is_active;
     private Boolean is_default;
 }

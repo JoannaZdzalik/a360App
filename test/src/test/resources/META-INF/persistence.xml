@@ -11,7 +11,7 @@
         <class>com.avenga.a360.model.Session</class>
         <class>com.avenga.a360.model.Answer</class>
         <class>com.avenga.a360.model.Participant</class>
-        <!--                <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
+                        <!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
         <!-- add classes -->
 
         <properties>

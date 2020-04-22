@@ -1,16 +1,17 @@
 (function () {
     "use strict";
     angular.module('a360').controller('SessionController', SessionController);
-    SessionController.$inject = ['$scope', '$window', '$filter', 'toastr', 'SessionService'];
+    SessionController.$inject = ['$scope', '$rootScope', '$window', '$filter', 'toastr', 'SessionService', 'QuestionsService'];
 
-    function SessionController($scope, $window, $filter, toastr, SessionService) {
+    function SessionController($scope, $rootScope, $window, $filter, toastr, SessionService, QuestionsService) {
         $scope.init = function () {
             $scope.participants = [];
             $scope.sessionName = "";
             $scope.endDate = addDaysToDate(new Date, 1);
             $scope.participantEmail = "";
             $scope.showSendSessionLoader = false;
-            getAllActiveQuestions();
+            getQuestionsInSession();
+
         };
 
         $scope.sectionTitle = ["Create - Avenga 360 feedback session", "Details", "Participants", "Questions"];
@@ -58,40 +59,55 @@
 
         $scope.uploadSelected = function () {
             $scope.allMails.forEach(function (participantEmail) {
-                if (participantCanBeAdded(participantEmail)) {
+                if (participantIsUnique(participantEmail)) {
                     $scope.participants.push(participantEmail)
                 }
             });
         };
 
-        function participantCanBeAdded(participantEmail) {
+        function participantIsUnique(participantEmail) {
             return $scope.participants.indexOf(participantEmail) === -1
         }
 
-        function getAllActiveQuestions() {
-            SessionService.getActiveQuestions().then(function (response) {
-                console.log('GET questions successful ' + response);
-                $scope.questions = response;
-            }, function (response) {
-                alert('GET question request failed');
-                console.log(response);
+        function getQuestionsInSession() {
+            $scope.questionsInSession = QuestionsService.getListOfQuestionsInSession();
+        }
+
+        $scope.addParticipant = function () {
+            if (inputEmailsAreMultiple()) {
+                addMultipleFromOneInsert();
+            } else {
+                if (!participantIsUnique($scope.participantEmail)) {
+                    toastr.warning("Duplicated email", 'Invalid input');
+                } else {
+                    $scope.participants.push($scope.participantEmail);
+                    $scope.participantEmail = "";
+                }
+            }
+        };
+
+        $scope.addButtonDisabled = function () {
+            if (!inputEmailsAreMultiple()) {
+                if ($scope.participantEmail.length === 0 || !$scope.emailFormat.test($scope.participantEmail)) {
+                    return true;
+                }
+            }
+        };
+
+        function addMultipleFromOneInsert() {
+            $scope.participantEmail.split(/;|,/).forEach(function (el) {
+                var singleMail = el.trim();
+                if ($scope.emailFormat.test(singleMail) && participantIsUnique(singleMail)) {
+                    $scope.participants.push(singleMail);
+                    $scope.participantEmail = "";
+                }
             });
         }
 
-        $scope.endDatePopup = {
-            opened: false
-        };
-
-        $scope.addParticipant = function () {
-            if ($scope.participants.indexOf($scope.participantEmail) !== -1) {
-                toastr.warning("Duplicated email", 'Invalid input');
-            } else if ($scope.participantEmail.length === 0) {
-                toastr.warning("Please enter valid participant email", 'Invalid input');
-            } else {
-                $scope.participants.push($scope.participantEmail);
-                $scope.participantEmail = "";
-            }
-        };
+        function inputEmailsAreMultiple() {
+            var separators = [";", ","];
+            return separators.some(el => $scope.participantEmail.includes(el))
+        }
 
         $scope.removeParticipant = function ($index) {
             if ($window.confirm("Do you want to delete this email from participant list?")) {
@@ -111,6 +127,10 @@
             startingDay: 1
         };
 
+        $scope.endDatePopup = {
+            opened: false
+        };
+
         function addDaysToDate(date, days) {
             var result = new Date(date);
             result.setDate(result.getDate() + days);
@@ -123,13 +143,15 @@
 
         $scope.canCreateSession = function () {
             return $scope.participants.length < 3 || $scope.sessionForm.sessionName.$invalid || $scope.sessionForm.endDate.$invalid
+                || $scope.questionsInSession.length < 1
         };
 
         $scope.createSession = function () {
             $scope.showSendSessionLoader = true;
             var convertedEndDate = $filter('date')(new Date($scope.endDate), 'yyyy-MM-dd hh:mm');
             var participants = $scope.convertParticipantEmailsToJson();
-            SessionService.sendSession($scope.sessionName, convertedEndDate, participants).then(function (data) {
+            var questions = convertQuestionsToJson();
+            SessionService.sendSession($scope.sessionName, convertedEndDate, participants, questions).then(function (data) {
                 $scope.showSendSessionLoader = false;
                 $scope.handleSuccess(data);
             }, function (response) {
@@ -161,7 +183,22 @@
             return partArray;
         };
 
-        $scope.goToEditPage = function () {
+        function convertQuestionsToJson() {
+            let questionsJson = [];
+            for (let i = 0; i < $scope.questionsInSession.length; i++) {
+                var questionJson =
+                    {
+                        default_answers: $scope.questionsInSession[i].default_answers,
+                        is_default: false,
+                        question_text: $scope.questionsInSession[i].question_text,
+                        question_type: $scope.questionsInSession[i].question_type
+                    };
+                questionsJson.push(questionJson)
+            }
+            return questionsJson;
+        }
+
+        $scope.goToQuestionsPage = function () {
             $window.location.href = "http://localhost:81/servlet/A360/#!/questions";
         };
 

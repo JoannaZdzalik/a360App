@@ -30,8 +30,9 @@
             } else if ($scope.appParamsForm.port.$invalid) {
                 console.log("Port must be an int");
             } else {
-                AppParamsService.editAppParams($scope.auth, $scope.debug, $scope.from, $scope.host, $scope.port).then(function (data) {
-                    console.log('Application parameters successfully edited' + $scope.from);
+                AppParamsService.editAppParams($scope.auth, $scope.debug, $scope.from, $scope.host, $scope.port, $scope.username, $scope.password)
+                    .then(function (data) {
+                    console.log('Application parameters successfully edited.');
                     $uibModalInstance.close();
                 }, function () {
                     console.log('Application parameters not editted');

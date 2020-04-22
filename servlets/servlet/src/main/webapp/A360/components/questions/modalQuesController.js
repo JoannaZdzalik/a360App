@@ -1,24 +1,39 @@
 (function () {
     "use strict";
-    angular.module('a360').controller('ModalAddQuestionController', ModalAddQuestionController);
-    ModalAddQuestionController.$inject = ['$scope', 'questionTypes', '$uibModalInstance', 'QuestionsService'];
+    angular.module('a360').controller('ModalQuesController', ModalQuesController);
+    ModalQuesController.$inject = ['$scope', '$uibModalInstance', 'QuestionsService'];
 
-    function ModalAddQuestionController($scope, questionTypes, $uibModalInstance, QuestionsService) {
-        $scope.questionTypeList = questionTypes;
-        $scope.defaultAnswer = "";
-        $scope.defaultAnswersList = [];
-        $scope.isDefault = false;
+    function ModalQuesController($scope, $uibModalInstance, QuestionsService) {
+        $scope.init = function () {
+            getQuestionTypes();
+            $scope.defaultAnswer = "";
+            $scope.defaultAnswersList = [];
+            $scope.isDefault = false;
+        };
 
         $scope.save = function () {
             convertDefaultAnswersToString();
-            QuestionsService.sendQuestion($scope.questionText,
-                $scope.inputQuestionType, $scope.defaultAnswersString, $scope.isDefault).then(function (data) {
-                console.log('New question saved.');
-                $uibModalInstance.close();
-            }, function () {
-                console.log('Question not saved. ');
-            });
+            addQuestionToSession();
+            $uibModalInstance.close("New question saved");
         };
+
+        function getQuestionTypes() {
+            QuestionsService.getQuestionTypes().then(function (data) {
+                $scope.questionTypeList = data;
+            }, function (response) {
+                console.log('Error on getQuestionTypes request' + response);
+            });
+        }
+
+        function addQuestionToSession() {
+            var question = {
+                default_answers: $scope.defaultAnswersString,
+                is_default: false,
+                question_text: $scope.questionText,
+                question_type: $scope.inputQuestionType
+            };
+            QuestionsService.addQuestionToList(question);
+        }
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss("cancel");
@@ -57,10 +72,6 @@
             $scope.defaultAnswersList.splice($index, 1);
         };
 
-        $scope.changeIsDefault = function () {
-            $scope.isDefault = !$scope.isDefault;
-        };
-
         function convertDefaultAnswersToString() {
             $scope.defaultAnswersString = $scope.defaultAnswersList.join(";");
         }
@@ -74,7 +85,7 @@
             }
         };
 
-        $scope.canCreateQuestion = function () {
+        $scope.unableToCreateQuestion = function () {
             return $scope.questionText === undefined || $scope.inputQuestionType === undefined ||
                 ($scope.inputQuestionType === 'RADIO' && $scope.defaultAnswersList.length < 2)
         };

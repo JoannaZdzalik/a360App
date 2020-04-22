@@ -39,9 +39,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean findLoginInDB(String login){
-        User user = null;
         try {
-            user = em.createNamedQuery("findUserByLogin", User.class).setParameter("login", login).getSingleResult();
+            em.createNamedQuery("findUserByLogin", User.class).setParameter("login", login).getSingleResult();
         } catch (Exception e) {
             return false;
         }

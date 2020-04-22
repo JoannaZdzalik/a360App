@@ -27,4 +27,5 @@ public class SessionDto {
     private Boolean isSent;
     private boolean isActive;
     private List<ParticipantDto> participantList;
+    private List<QuestionDto> questionList;
 }

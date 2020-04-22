@@ -28,15 +28,6 @@ public class AnswerResource {
        return Response.status(Response.Status.OK).entity(statusList).build()  ;
 
     }
-    @Path("/getActive")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllAnswersForSessions( ) {
-        List<AnswerSessionDto> answerSessionDtoList = answerService.amountOfAnswersForSessionActive();
-            return Response.status(Response.Status.OK)
-                    .entity(answerSessionDtoList)
-                    .build();
-        }
 
     @Path("/all")
     @GET
