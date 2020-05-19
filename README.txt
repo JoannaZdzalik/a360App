@@ -44,4 +44,4 @@ TECHNOLOGIES AND TOOLS USED:
 - AngularJS, JavaScript
 -JUnit, Mockito
 
-This app was being created during internship; assumption was that all interns switch repositories every 1-2weeks, so this project has multiple contributors. Above version is the last I was working at.
+This app was being created during internship; assumption was that all interns switch repositories every 1-2weeks, so this project has multiple contributors. Above version is the last I was working at + new features developed after internship
