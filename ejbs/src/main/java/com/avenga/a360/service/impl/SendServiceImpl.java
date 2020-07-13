@@ -31,8 +31,10 @@ public class SendServiceImpl implements SendService {
             Properties properties = System.getProperties();
             properties.put("mail.smtp.host", emailConf.getHost());
             properties.put("mail.smtp.port", emailConf.getPort());
-            //properties.put("mail.smtp.ssl.enable", "true");
             properties.put("mail.smtp.auth", emailConf.isAuth());
+
+            properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
             Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {

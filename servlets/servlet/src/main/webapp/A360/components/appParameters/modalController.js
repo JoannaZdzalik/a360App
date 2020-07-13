@@ -10,6 +10,8 @@
         $scope.port = $scope.originalAppParams.port;
         $scope.auth = $scope.originalAppParams.auth;
         $scope.debug = $scope.originalAppParams.debug;
+        $scope.debug = $scope.originalAppParams.username;
+        $scope.debug = $scope.originalAppParams.password;
 
         $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
         $scope.portInput = /^[0-9]{1,}$/;

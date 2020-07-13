@@ -1,0 +1,24 @@
+<div class="container text-center borderBox " data-ng-form="loginForm">
+    <h3>Avenga A360 Feedback Application</h3>
+    <h3>Login or <a class="blue" ng-click="redirectToRegister()" >Create Account</a></h3>
+    <div class="row mt-20" align="center">
+        <div class="input-group col-md-6 noMarginLR">
+            <span class="input-group-addon spanWidth text-center"> <i
+                    class="glyphicon glyphicon-user"></i> Login: </span>
+            <input id="login" type="text" class="form-control"
+                   ng-required="true" ng-model="login" name="login">
+        </div>
+        <div class="input-group col-md-6 mt-20">
+            <span class="input-group-addon spanWidth text-center"> <i
+                    class="glyphicon glyphicon-lock"></i> Password: </span>
+            <input id="password" type="password" class="form-control"
+                   ng-required="true" ng-model="password"
+                   name="password"/>
+        </div>
+    </div>
+
+    <div class="row text-center mt-20 mb-20 ">
+        <button type="submit" class="btn createButton marginRight900" ng-click="logIn()">Log in</button>
+    </div>
+
+</div>

@@ -1,6 +1,6 @@
 angular.module('a360', ['ngRoute', 'ngResource', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'toastr'], function($routeProvider) {
     $routeProvider.
-    when('/main', {templateUrl: 'components/login/main.html', controller: 'MainController'}).
+    when('/login', {templateUrl: 'components/login/login.html', controller: 'LoginController'}).
     when('/register', {templateUrl: 'components/register/register.html', controller: 'RegisterController'}).
     when('/registerSuccess', {templateUrl: 'components/register/registerSuccess.html', controller: 'RegisterController'}).
     when('/welcome', {templateUrl: 'components/welcome/welcome.html', controller: 'WelcomeController'}).

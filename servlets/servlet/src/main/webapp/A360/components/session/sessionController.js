@@ -199,15 +199,15 @@
         }
 
         $scope.goToQuestionsPage = function () {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/questions";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/questions";
         };
 
         $scope.goBackToWelcomePage = function () {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/welcome";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/welcome";
         };
 
         function goToSuccessPage() {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/sessionCreated";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/sessionCreated";
         }
     }
 })();

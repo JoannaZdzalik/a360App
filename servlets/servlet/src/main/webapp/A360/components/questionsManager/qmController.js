@@ -63,7 +63,7 @@
         };
 
         $scope.goToWelcomePage = function () {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/welcome";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/welcome";
         };
 
         $scope.changeQuestionsVisibility = function () {

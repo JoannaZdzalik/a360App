@@ -28,7 +28,7 @@
         $scope.changeRoleType = function (login, role) {
             findAdmins();
             if (role === 'DESIGNER' && $scope.admins.length === 1) {
-                toastr.warning("There must be at least one x", 'Invalid action');
+                toastr.warning("There must be at least one admin", 'Invalid action');
             } else {
                 showLoader(role);
                 UsersService.editUserRole(login, role).then(function (data) {

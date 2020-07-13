@@ -62,7 +62,7 @@
         };
 
         $scope.goToSessionPage = function () {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/session";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/session";
         };
     }
 })();

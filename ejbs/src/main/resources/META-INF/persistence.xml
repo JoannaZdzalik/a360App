@@ -8,7 +8,6 @@
         <jta-data-source>java:/a360</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
-
         <properties>
             <property name="hibernate.generate_statistics" value="true"/>
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
@@ -17,7 +16,6 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.hbm2ddl.import_files" value="META-INF/sql/insert.sql"/>
-
         </properties>
     </persistence-unit>
 </persistence>

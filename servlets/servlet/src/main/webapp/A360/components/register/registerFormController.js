@@ -32,11 +32,11 @@
         };
 
         $scope.goBackToMainPage = function () {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/main";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/main";
         };
 
         function goToRegisterSuccess() {
-            $window.location.href = "http://localhost:81/servlet/A360/#!/registerSuccess";
+            $window.location.href = "http://localhost:8080/servlet/A360/#!/registerSuccess";
         }
 
         $scope.analyzePassword = function (password) {

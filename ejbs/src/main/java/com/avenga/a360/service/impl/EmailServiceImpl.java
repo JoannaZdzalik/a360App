@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
 
     private final static Logger LOGGER = Logger.getLogger(EmailServiceImpl.class);
 
-    private static final String APP_URL = "http://localhost:81/servlet/A360/#!/feedback/";
+    private static final String APP_URL = "http://localhost:8080/servlet/A360/#!/feedback/";
 
     @Inject
     AnswerDao answerDao;
@@ -84,8 +84,8 @@ public class EmailServiceImpl implements EmailService {
                         mailBodyBuilder.append("Feedback for: ");
                         mailBodyBuilder.append(participant.getEmail());
                         mailBodyBuilder.append(" - ").append(APP_URL).append(participant.getUId()).append("\n");
-                        emailEmailList.add(new String(participant.getEmail()));
-                        emailLinkList.add(new String(APP_URL + participant.getUId()));
+                        emailEmailList.add(participant.getEmail());
+                        emailLinkList.add(APP_URL + participant.getUId());
                     }
                 }
                 Email email = new Email((mailRecipient.getEmail()), mailSubject, mailBodyBuilder.toString(), emailEmailList, emailLinkList, null, null);

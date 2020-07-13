@@ -27,7 +27,7 @@ public class ParticipantResource {
                     .build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Participant dosen't exist")
+                    .entity("Participant doesn't exist")
                     .build();
         }
     }
